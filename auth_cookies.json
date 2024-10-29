@@ -1,10 +1,10 @@
 [
   {
     "name": "portal_do_cliente_session",
-    "value": "eyJpdiI6IkJoNFNhTGd0WTlhRnUvblZxY292Zmc9PSIsInZhbHVlIjoiY3ByRTVQMEtTYVZlNW9iazROaWh1ZXhSTVR5dkh1SmgwaTNZR3MwZFc1VFNHT1ArM2VyeE5DbmUvNmNXVnZpSWhlWmd0Y0tXSWZueHRqVWpCY2pDNlpHc0kyUzBzRjBjdWRRb1p3QzNxdVB6TWgvL29QQkYxa01mdFhicStYc0wiLCJtYWMiOiI4ZmUzOTc5NzlhZmMwNjJjNjg2YWRlN2I2NmJjMmY2ZTZlNGMzNTliNTQ1ZDVjOGI0ODQ1ZGI3YjMxN2Y0YTM5IiwidGFnIjoiIn0%3D",
+    "value": "eyJpdiI6ImpNd3pIQ0I3NVIzajRROGZac2lwbGc9PSIsInZhbHVlIjoidzhobElYbFM4MGdWaVdCV1pBWGMxcDlXRU1ZRGlQb3gwVXFva1BYN1Z4enFLVzdQSldWcHNtMHpYMzJVallENjR1VmVyaWhla3d2MW9td0s5VlhwV0JZamJYR0xkaFRLY0toMUFVQXN0MWdxeDFMaDJGdGVjZlQ2M1N0OXZwK00iLCJtYWMiOiI0MThiN2RkN2RlNjRiZTkwODk5ZTk1Y2JkMDJhYzQ5M2M2YTBlNjljZGE2MmVjMzg1NTQyOGYyMzdkNTRiOTIwIiwidGFnIjoiIn0%3D",
     "domain": "localhost",
     "path": "/",
-    "expires": 1730238091.997114,
+    "expires": 1730240737.631775,
     "size": 367,
     "httpOnly": true,
     "secure": false,
@@ -16,10 +16,10 @@
   },
   {
     "name": "XSRF-TOKEN",
-    "value": "eyJpdiI6IlBJMnc3b3VhdFJUT0ZWaHNMeUI5VUE9PSIsInZhbHVlIjoiaXlrb0xsQlArb3JNQ1JlVEU3Q0ZxNHQ3bXlhdFdDSnN4dzR4eTFBSFM1eHl1bngrZEJjeDB5UUdhSTlRalduVzUzeGM2eWwwOUZkWFNvS0FLOG11UTA2R1RuTEtHOXNwQjVUVWUwQjlhZ2RXaXkvdnA4NktzM2kxaUthOWdrcW4iLCJtYWMiOiI4YmY5YWEyYWQ2MjUzNWIyZmZjM2Y0YTc5NmFhYjRlOWRiYTdlNDI0NGE1MjU3MzZiZTlkMmZkNjRkMTg0M2I2IiwidGFnIjoiIn0%3D",
+    "value": "eyJpdiI6ImRvKzRVTjZBcFE2T2diNjczZjRvNkE9PSIsInZhbHVlIjoibTdRdXpMOFhIRVdHL0ZZUER5QVN5amdBUjBDNGg3N3hEdTFLeFRMYXJjNXZtQ3V4MnBHNXFHWHJmZmZ2QzdGVGxySTUyVUExdlZ3d0E2bDhVMnZMRm1keDNadkkzdjIxUVI5dXRNdE80cG5nYThRNFpkRnB4RTlJcXBFZEJSKzAiLCJtYWMiOiJkNjNmMGIwM2MyNDEwNTRmY2ZmODZmMmViM2QyZjA5ODdhZjEwZDA4ZTk5YThjZGVmZjlkOTdhOGU0ZDFkMzg4IiwidGFnIjoiIn0%3D",
     "domain": "localhost",
     "path": "/",
-    "expires": 1730238091.996954,
+    "expires": 1730240737.631596,
     "size": 352,
     "httpOnly": false,
     "secure": false,

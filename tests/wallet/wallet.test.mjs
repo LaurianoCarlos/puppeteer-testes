@@ -1,8 +1,9 @@
 import puppeteer from 'puppeteer';
 import { expect } from 'chai';
-import { login } from '../../login.mjs';
+import { login } from '../login.mjs';
 import { searchWalletById, searchWalletByIdNotFound } from './searchById.mjs';
 import { searchWalletByName, searchWalletByNameNotFound } from './searchByWallet.mjs';
+import { createWallet } from './createWallet.mjs';
 
 let browser;
 let page;
@@ -51,4 +52,19 @@ describe('Wallet Search Tests', function () {
     const results = await searchWalletByNameNotFound(page, walletName);
     expect(results.some(result => result.includes(walletName))).to.be.false;
   });
+
+
+  it('Deve criar uma nova carteira com sucesso', async () => {
+    const walletData = {
+      name: 'carteira de teste front',
+      description: 'descrição da carteira teste',
+      achievementId: '1'
+    };
+
+    const { successMessage, protocolData } = await createWallet(page, walletData);
+
+    expect(successMessage).to.include('Carteira enviada para registro com sucesso!')
+    expect(protocolData).to.not.be.null;
+  })
+
 });

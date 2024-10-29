@@ -2,10 +2,8 @@ import chalk from 'chalk';
 import fs from 'fs/promises';
 
 export async function login(page) {
-  // Acesse a página de login
   await page.goto('http://localhost:8023/login');
 
-  // Preencha o formulário de login
   await page.type('input[name="username"]', 'alex-teixeira'); 
   await page.type('input[name="password"]', 'abc@123'); 
 
@@ -18,7 +16,6 @@ export async function login(page) {
   if (url.includes('/')) {
     console.log(chalk.green('Teste de Login Passou!'));
 
-    // Salve os cookies após o login bem-sucedido
     const cookies = await page.cookies();
     await fs.writeFile('./auth_cookies.json', JSON.stringify(cookies, null, 2));
   } else {
