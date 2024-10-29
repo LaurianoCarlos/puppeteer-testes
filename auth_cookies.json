@@ -1,0 +1,32 @@
+[
+  {
+    "name": "portal_do_cliente_session",
+    "value": "eyJpdiI6IkJoNFNhTGd0WTlhRnUvblZxY292Zmc9PSIsInZhbHVlIjoiY3ByRTVQMEtTYVZlNW9iazROaWh1ZXhSTVR5dkh1SmgwaTNZR3MwZFc1VFNHT1ArM2VyeE5DbmUvNmNXVnZpSWhlWmd0Y0tXSWZueHRqVWpCY2pDNlpHc0kyUzBzRjBjdWRRb1p3QzNxdVB6TWgvL29QQkYxa01mdFhicStYc0wiLCJtYWMiOiI4ZmUzOTc5NzlhZmMwNjJjNjg2YWRlN2I2NmJjMmY2ZTZlNGMzNTliNTQ1ZDVjOGI0ODQ1ZGI3YjMxN2Y0YTM5IiwidGFnIjoiIn0%3D",
+    "domain": "localhost",
+    "path": "/",
+    "expires": 1730238091.997114,
+    "size": 367,
+    "httpOnly": true,
+    "secure": false,
+    "session": false,
+    "sameSite": "Lax",
+    "priority": "Medium",
+    "sameParty": false,
+    "sourceScheme": "NonSecure"
+  },
+  {
+    "name": "XSRF-TOKEN",
+    "value": "eyJpdiI6IlBJMnc3b3VhdFJUT0ZWaHNMeUI5VUE9PSIsInZhbHVlIjoiaXlrb0xsQlArb3JNQ1JlVEU3Q0ZxNHQ3bXlhdFdDSnN4dzR4eTFBSFM1eHl1bngrZEJjeDB5UUdhSTlRalduVzUzeGM2eWwwOUZkWFNvS0FLOG11UTA2R1RuTEtHOXNwQjVUVWUwQjlhZ2RXaXkvdnA4NktzM2kxaUthOWdrcW4iLCJtYWMiOiI4YmY5YWEyYWQ2MjUzNWIyZmZjM2Y0YTc5NmFhYjRlOWRiYTdlNDI0NGE1MjU3MzZiZTlkMmZkNjRkMTg0M2I2IiwidGFnIjoiIn0%3D",
+    "domain": "localhost",
+    "path": "/",
+    "expires": 1730238091.996954,
+    "size": 352,
+    "httpOnly": false,
+    "secure": false,
+    "session": false,
+    "sameSite": "Lax",
+    "priority": "Medium",
+    "sameParty": false,
+    "sourceScheme": "NonSecure"
+  }
+]
