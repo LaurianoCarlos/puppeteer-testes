@@ -1,8 +1,10 @@
 import { expect } from 'chai';
-import { setup, closeBrowser } from '../loginSetup.mjs';
+import { setup, closeBrowser } from '../../service/loginSetup.mjs';
 import { searchWalletById, searchWalletByIdNotFound } from './searchById.mjs';
 import { searchWalletByName, searchWalletByNameNotFound } from './searchByWallet.mjs';
 import { createWallet } from './createWallet.mjs';
+import { fetchProtocol } from '../../core/api-de-interface-clientes.js';
+import chalk from 'chalk';
 
 let page;
 
@@ -54,5 +56,11 @@ describe('Wallet Search Tests', function () {
 
     expect(successMessage).to.include('Carteira enviada para registro com sucesso!')
     expect(protocolData).to.not.be.null;
+
+    console.log(chalk.yellow(protocolData, protocolData.protocolId));
+  
+    const fetchedProtocol = await fetchProtocol(protocolData.protocolId, page);
+
+    expect(fetchedProtocol.protocol_id).to.equal(protocolData.protocolId);
   })
 });
