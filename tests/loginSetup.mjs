@@ -17,6 +17,6 @@ export async function setup() {
 export async function closeBrowser() {
   if (browser) {
     await browser.close();
-    browser = null; // Permite que o navegador seja reiniciado na próxima execução
+    browser = null;
   }
 }
