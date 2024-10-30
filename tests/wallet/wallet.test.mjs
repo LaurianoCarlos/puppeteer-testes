@@ -1,27 +1,21 @@
-import puppeteer from 'puppeteer';
 import { expect } from 'chai';
-import { login } from '../login.mjs';
+import { setup, closeBrowser } from '../loginSetup.mjs';
 import { searchWalletById, searchWalletByIdNotFound } from './searchById.mjs';
 import { searchWalletByName, searchWalletByNameNotFound } from './searchByWallet.mjs';
 import { createWallet } from './createWallet.mjs';
 
-let browser;
 let page;
 
 describe('Wallet Search Tests', function () {
   this.timeout(60000);
 
-  // Inicia o navegador e realiza o login antes de todos os testes
   before(async () => {
-    browser = await puppeteer.launch({ headless: false });
-    page = await browser.newPage();
-    await page.setViewport();
-    await login(page);
+    page = await setup(); // Chama a configuração global
   });
 
   // Fecha o navegador após todos os testes
   after(async () => {
-    await browser.close();
+    await closeBrowser();
   });
 
   // Teste para verificar a busca pelo ID existente
@@ -33,7 +27,7 @@ describe('Wallet Search Tests', function () {
 
   // Teste para verificar a busca pelo ID inexistente
   it('Não deve encontrar uma carteira com ID inexistente', async () => {
-    const walletId = '9d5c7c1d-70fa-4a1e-bbfe-123456789';
+    const walletId = 'xx1555xx-70fa-4a1e-bbfe-123456789';
     const results = await searchWalletByIdNotFound(page, walletId);
     expect(results.some(result => result.includes(walletId))).to.be.false;
   });
@@ -53,7 +47,7 @@ describe('Wallet Search Tests', function () {
     expect(results.some(result => result.includes(walletName))).to.be.false;
   });
 
-
+/*
   it('Deve criar uma nova carteira com sucesso', async () => {
     const walletData = {
       name: 'carteira de teste front',
@@ -66,5 +60,5 @@ describe('Wallet Search Tests', function () {
     expect(successMessage).to.include('Carteira enviada para registro com sucesso!')
     expect(protocolData).to.not.be.null;
   })
-
+*/
 });

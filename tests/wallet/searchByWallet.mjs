@@ -1,5 +1,7 @@
+import { WALLET_SEARCH_BASE } from '../constant.mjs';
+
 export async function searchWalletByName(page, walletName) {
-  await page.goto('http://localhost:8023/wallet/search');
+  await page.goto(WALLET_SEARCH_BASE);
 
   // Preenche o formulário de busca
   await page.select('select#wallet', 'walletName');
@@ -20,7 +22,7 @@ export async function searchWalletByName(page, walletName) {
 }
 
 export async function searchWalletByNameNotFound(page, walletName) {
-  await page.goto('http://localhost:8023/wallet/search');
+  await page.goto(WALLET_SEARCH_BASE);
 
   await page.select('select#wallet', 'walletName');
   await page.type('input#walletText', walletName);

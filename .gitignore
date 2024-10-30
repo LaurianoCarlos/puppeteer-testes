@@ -3,6 +3,9 @@
 /.pnp
 .pnp.js
 
+#cookies
+auth_cookies.json
+
 # Logs
 npm-debug.log*
 yarn-debug.log*

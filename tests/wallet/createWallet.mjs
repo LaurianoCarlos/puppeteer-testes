@@ -1,7 +1,7 @@
-import { BASE_URL } from '../config.mjs';
+import { WALLET_CREATE_BASE } from '../constant.mjs';
 
 export async function createWallet(page, walletData) {
-  await page.goto(`${BASE_URL}/wallet/create`);
+  await page.goto(WALLET_CREATE_BASE);
 
   // Preencha os campos do formulário
   await page.type('#walletName', walletData.name);
