@@ -56,11 +56,22 @@ describe('Wallet Search Tests', function () {
 
     expect(successMessage).to.include('Carteira enviada para registro com sucesso!')
     expect(protocolData).to.not.be.null;
+  })
 
-    console.log(chalk.yellow(protocolData, protocolData.protocolId));
-  
+
+  it('Deve criar uma nova carteira com sucesso e gerar um protocolo com sucesso', async () => {
+    const walletData = {
+      name: 'carteira de teste front',
+      description: 'descrição da carteira teste',
+      achievementId: '1'
+    };
+
+    const { successMessage, protocolData } = await createWallet(page, walletData);
+
+    expect(successMessage).to.include('Carteira enviada para registro com sucesso!')
+    expect(protocolData).to.not.be.null;
+    
     const fetchedProtocol = await fetchProtocol(protocolData.protocolId, page);
-
     expect(fetchedProtocol.protocol_id).to.equal(protocolData.protocolId);
   })
 });
