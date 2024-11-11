@@ -3,8 +3,8 @@ import { TIME } from '../../config/constant.mjs';
 import { setup, closeBrowser } from '../../service/loginSetup.mjs';
 import { searchProtocolById } from './searchById.mjs';
 import { searchProtocolByStatus } from './searchProtocolByStatus.mjs';
-import { searchAllProtocols } from './searchAllProtocol.mjs';
-import { searchProtocolsByDateRange } from './searchProtocolsByDateRange.mjs';
+import { searchProtocolsByDateRange} from './searchProtocolsByDateRange.mjs';
+import { searchAllProtocols, searchProtocolsByAllFilters } from './searchAllProtocol.mjs';
 
 let page;
 
@@ -54,7 +54,6 @@ describe('Testes busca por Protocolo', function () {
   it('Deve encontrar protocolos dentro do intervalo de datas', async () => {
     const startDate = '2020-10-01';
     const endDate = '2024-11-01';
-    
     const results = await searchProtocolsByDateRange(page, startDate, endDate);
     expect(results.length).to.be.greaterThan(1);
   });
@@ -64,5 +63,12 @@ describe('Testes busca por Protocolo', function () {
     expect(results.length).to.be.greaterThan(10);
   })
 
-
+  it('Deve encontrar protocolos que correspondem a todos os filtros aplicados', async () => {
+    const status = 'cancelled';
+    const startDate = '2020-10-01';
+    const endDate = '2024-11-01';
+    const results = await searchProtocolsByAllFilters(page, status, startDate, endDate);
+    expect(results.length).to.be.greaterThan(0);
+    expect(results.every(result => result.includes('CANCELADO'))).to.be.true;
+  });
 });

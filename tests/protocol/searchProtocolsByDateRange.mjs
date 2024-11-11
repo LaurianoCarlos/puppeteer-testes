@@ -1,7 +1,6 @@
 import { PROTOCOL_SEARCH_BASE } from '../../config/constant.mjs';
 import { waitForLoading, getTableResults } from '../../helpers/helpers.js';
 
-
 export async function searchProtocolsByDateRange(page, startDate, endDate) {
   await page.goto(PROTOCOL_SEARCH_BASE);
   await page.waitForSelector('input#startDate', { visible: true });
