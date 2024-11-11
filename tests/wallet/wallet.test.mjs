@@ -1,15 +1,15 @@
 import { expect } from 'chai';
+import { TIME } from '../../config/constant.mjs';
 import { setup, closeBrowser } from '../../service/loginSetup.mjs';
 import { searchWalletById, searchWalletByIdNotFound } from './searchById.mjs';
 import { searchWalletByName, searchWalletByNameNotFound } from './searchByWallet.mjs';
 import { createWallet } from './createWallet.mjs';
 import { fetchProtocol } from '../../core/api-de-interface-clientes.js';
-import chalk from 'chalk';
 
 let page;
 
 describe('Wallet Search Tests', function () {
-  this.timeout(60000);
+  this.timeout(TIME.TWO_MINUTES);
 
   before(async () => {
     page = await setup();
