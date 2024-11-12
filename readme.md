@@ -36,3 +36,7 @@ export async function setup() {
   }
   return page;
 }
+```
+
+## Executar todos os testes
+ ```npx mocha "tests/**/*.test.mjs"```
