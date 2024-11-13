@@ -1,74 +1,3 @@
-/**
- * Obtém os dados do protocolo a partir da primeira linha visível no DataTable.
- * @param {object} page - A página atual.
- * @returns {object} Objeto contendo os dados do protocolo { protocolId, status, createdAt }.
- * @throws {Error} Se nenhum dado de protocolo estiver disponível.
- */
-export async function getProtocol(page) {
-  const dataAvailable = await page.evaluate(() => {
-    return document.querySelector('.card-datatable tbody tr:not(.c-hidden)') !== null;
-  });
-
-  if (!dataAvailable) {
-    throw new Error('Nenhum dado de protocolo disponível.');
-  }
-
-  const protocolData = await page.evaluate(() => {
-    const protocolRow = document.querySelector('.card-datatable tbody tr:not(.c-hidden)');
-    const cells = protocolRow.querySelectorAll('td');
-    return {
-      protocolId: cells[0] ? cells[0].innerText.trim() : null,
-      status: cells[1] ? cells[1].innerText.trim() : null,
-      createdAt: cells[2] ? cells[2].innerText.trim() : null,
-    };
-  });
-
-  return protocolData;
-}
-
-/**
- * Expande uma seção do formulário caso esteja colapsada.
- * @param {object} page - A página atual.
- * @param {string} selector - Seletor da seção a ser expandida.
- * @param {string} controlButtonSelector - Seletor do botão de controle para expandir a seção.
- */
-export async function expandSectionIfCollapsed(page, selector, controlButtonSelector) {
-  const isCollapsed = await page.$eval(selector, el => el.classList.contains('collapse'));
-  if (isCollapsed) {
-    await page.click(controlButtonSelector);
-  }
-  await page.waitForSelector(`${selector}.show`, { visible: true });
-}
-
-/**
- * Aguarda o carregamento do DataTable ao observar a classe `c-hidden` aplicada durante o carregamento.
- * @param {object} page - A página atual.
- */
-export async function waitForLoading(page) {
-  await page.waitForFunction(() => {
-    const loadingRow = document.querySelector('tr[wire\\:loading\\.class\\.remove="c-hidden"]');
-    return loadingRow && !loadingRow.classList.contains('c-hidden');
-  }, { timeout: 60000 });
-
-  await page.waitForFunction(() => {
-    const loadingRow = document.querySelector('tr[wire\\:loading\\.class\\.remove="c-hidden"]');
-    return loadingRow && loadingRow.classList.contains('c-hidden');
-  }, { timeout: 60000 });
-}
-
-/**
- * Obtém os resultados do DataTable, excluindo linhas de carregamento ou atualização.
- * @param {object} page - A página atual.
- * @returns {array} Array contendo as linhas de resultados visíveis no DataTable.
- */
-export async function getTableResults(page) {
-  return await page.evaluate(() => {
-    return Array.from(document.querySelectorAll('.card-datatable tbody tr'))
-      .map(row => row.innerText.trim())
-      .filter(text => text.length > 0 && !text.includes('Carregando') && !text.includes('Atualizando'));
-  });
-}
-
 export class Utils {
   /**
    * Obtém os dados do protocolo a partir da primeira linha visível no DataTable.
@@ -168,5 +97,17 @@ export class Utils {
         .filter(text => text.length > 0);
     });
   }
+
+  /**
+ * Captura a mensagem do toastr exibida na página.
+ * @param {object} page - A página atual.
+ * @param {number} timeout - O tempo máximo de espera (em milissegundos) para o toastr aparecer.
+ * @returns {Promise<string>} - A mensagem do toastr capturada.
+ */
+static async getToastrMessage(page, timeout = 30000) {
+  const toastrElement = await page.waitForSelector('.toast-message', { visible: true, timeout });
+  return await page.evaluate(element => element.innerText, toastrElement);
+}
+
 }
 
