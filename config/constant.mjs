@@ -9,21 +9,19 @@ export const API_DUPLICATAS_BASE_URL = process.env.API_DUPLICATAS_BASE_URL
 export const AUTH_BASE_URL = process.env.AUTH_BASE_URL
 export const AUTH_LOGIN = process.env.AUTH_LOGIN
 export const AUTH_PASSWORD = process.env.AUTH_PASSWORD
+export const AUTH_REGISTRY_AGENT = process.env.AUTH_REGISTRY_AGENT
 
-
-//wallet
+//ROUTES
 export const WALLET_SEARCH_BASE = BASE_URL + 'wallet/search';
 export const WALLET_CREATE_BASE = BASE_URL + 'wallet/create';
-
 export const PROTOCOL_SEARCH_BASE = BASE_URL + 'protocol/search';
-
 export const DUPLICATE_MERCANTIL_SEARCH_BASE = BASE_URL + 'duplicate-mercantil/search';
 export const DUPLICATE_MERCANTIL_CREATE_BASE = BASE_URL + 'duplicate-mercantil/create';
 
 //Protocol
 export const PROTOCOL_BASE = API_DUPLICATAS_BASE_URL + 'protocols'
+export const DUPLICATE_BASE = API_DUPLICATAS_BASE_URL + 'duplicatas-mercantis'
 
-export const CAPTCHA_API_KEY = '6Ldrx1sqAAAAANlLlEoUpBFedoZs_1zhFH0rgzNs';
 
 export const ROUTE = {
     DUPLICATE_MERCANTIL_SEARCH_BASE: DUPLICATE_MERCANTIL_SEARCH_BASE,

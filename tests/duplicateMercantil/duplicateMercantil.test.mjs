@@ -6,23 +6,21 @@ import { searchDuplicateByWallet } from './searchByWallet.mjs';
 import { searchWalletsParticipant, findWalletsParticipant } from './searchWalletsParticipant.mjs';
 import { createDuplicateMercantil } from './createDuplicateMercantil.mjs';
 import { fetchProtocol } from '../../core/api-de-interface-clientes.js';
+import { getDuplicateMercantil } from '../../core/api-de-interface-clientes.js';
 
 let page;
+let duplicate;
 
-// Base para testes
 const DUPLICATE = {
-    duplicateId: '9d7ab0f1-ab0f-48f0-ae92-25e2578a2821',
-    duplicateIdNotFound:'xx1555xx-70fa-4a1e-bbfe-123456789',
-    wallet: '9be2c324-315d-46f6-83af-56f779f02397',
+    duplicateIdNotFound: 'xx1555xx-70fa-4a1e-bbfe-123456789',
     walletNotFound: '9d5d20df-a39e-4bfb-8b1f-a4c7702bf812',
-    cnpj: '26.685.422/0001-31',
     cnpjNotFound: '10.100.001/0001-00',
 }
 
 const formData = {
     occurrence: "1",
-    mainParticipantCnpj: DUPLICATE.cnpj,
-    wallet: DUPLICATE.wallet,
+    mainParticipantCnpj: "",
+    wallet: "",
     externalReference: "12344",
     contractId: "4354345",
     assetId: "115129012",
@@ -67,11 +65,16 @@ const formData = {
     otrValidationRule: "N/A"
 };
 
+
 describe("Teste de Duplicata Mercantil", function () {
     this.timeout(TIME.ONE_MINUTE);
 
     before(async () => {
         page = await setup();
+        duplicate = (await getDuplicateMercantil())[0];
+
+        formData.mainParticipantCnpj = duplicate.main_participant_cnpj;
+        formData.wallet = duplicate.wallet;
     });
 
     after(async () => {
@@ -79,8 +82,8 @@ describe("Teste de Duplicata Mercantil", function () {
     });
 
     it('Deve encontrar uma Duplicata Mercantil pelo ID', async () => {
-        const results = await searchDuplicateById(page, DUPLICATE.duplicateId);
-        expect(results.some(result => result.includes(DUPLICATE.duplicateId))).to.be.true;
+        const results = await searchDuplicateById(page, duplicate.asset_uuid);
+        expect(results.some(result => result.includes(duplicate.asset_uuid))).to.be.true;
     });
 
     it('Não deve encontrar uma Duplicata Mercantil pelo ID', async () => {
@@ -89,7 +92,7 @@ describe("Teste de Duplicata Mercantil", function () {
     });
 
     it('Deve encontrar uma Duplicata Mercantil pela Carteira', async () => {
-        const { results, message } = await searchDuplicateByWallet(page, DUPLICATE.wallet);
+        const { results, message } = await searchDuplicateByWallet(page, duplicate.wallet);
         expect(results).to.not.be.null;
         expect(message).to.be.oneOf([
             'Duplicata Mercantil encontrada com sucesso.',
@@ -97,7 +100,7 @@ describe("Teste de Duplicata Mercantil", function () {
     });
 
     it('Não deve encontrar uma Duplicata Mercantil pela Carteira', async () => {
-        const { message: message } = await searchDuplicateByWallet(page, DUPLICATE.wallet);
+        const { message: message } = await searchDuplicateByWallet(page, DUPLICATE.walletNotFound);
 
         expect(message).to.be.oneOf([
             'Não foram encontradas duplicatas na carteira informada!',
@@ -113,7 +116,7 @@ describe("Teste de Duplicata Mercantil", function () {
     });
 
     it('Deve buscar e retornar carteiras disponíveis para o participante', async () => {
-        const wallets = await findWalletsParticipant(page, DUPLICATE.cnpj);
+        const wallets = await findWalletsParticipant(page, duplicate.main_participant_cnpj);
         expect(wallets).to.be.an('array').that.is.not.empty;
     });
 
