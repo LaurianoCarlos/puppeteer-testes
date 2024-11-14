@@ -1,12 +1,12 @@
 import { expect } from 'chai';
-import { TIME } from '../../config/constant.mjs';
+import { TIME, SLUG } from '../../config/constant.mjs';
 import { setup, closeBrowser } from "../../service/loginSetup.mjs";
 import { searchDuplicateById } from './searchById.mjs';
 import { searchDuplicateByWallet } from './searchByWallet.mjs';
 import { searchWalletsParticipant, findWalletsParticipant } from './searchWalletsParticipant.mjs';
 import { createDuplicateMercantil } from './createDuplicateMercantil.mjs';
 import { fetchProtocol } from '../../core/api-de-interface-clientes.js';
-import { getDuplicateMercantil } from '../../core/api-de-interface-clientes.js';
+import { findDuplicates } from '../../core/api-de-interface-clientes.js';
 
 let page;
 let duplicate;
@@ -71,7 +71,7 @@ describe("Teste de Duplicata Mercantil", function () {
 
     before(async () => {
         page = await setup();
-        duplicate = (await getDuplicateMercantil())[0];
+        duplicate = (await findDuplicates(SLUG.DUPLICATE_MERCANTIL_SLUG))[0];
 
         formData.mainParticipantCnpj = duplicate.main_participant_cnpj;
         formData.wallet = duplicate.wallet;

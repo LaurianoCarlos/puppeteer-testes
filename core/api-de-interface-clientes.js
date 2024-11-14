@@ -23,9 +23,9 @@ export async function fetchProtocol(protocolId) {
   }
 }
 
-export async function getDuplicateMercantil() {
+export async function findDuplicates(slug) {
  
-  const url = `/registry-agent/${AUTH_REGISTRY_AGENT}`;
+  const url = `${slug}/registry-agent/${AUTH_REGISTRY_AGENT}`;
   
   try {
     const response = await duplicateInstance.get(url, {
