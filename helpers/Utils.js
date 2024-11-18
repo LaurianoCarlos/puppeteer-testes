@@ -73,7 +73,7 @@ export class Utils {
   }
 
   /**
-   * Aguarda até que o DataTable exiba linhas de resultados ou uma mensagem de "Nenhum registro encontrado".
+   * Aguarda até que o DataTable exiba linhas de resultados ou uma mensagem.
    * @param {object} page - A página Puppeteer.
    * @returns {Promise<void>} Promise que se resolve quando a condição é atendida.
    */

@@ -20,7 +20,7 @@ describe('Testes busca por Protocolo', function () {
   });
 
   it('Deve encontrar o protocolo pelo ID', async () => {
-    const protocolId = '9d6d22a3-d4a2-462e-8812-5ac42301f6b1';
+    const protocolId = '9d7d2396-7cc2-4394-bca0-e85c0fe5e82b';
     const results = await searchProtocolById(page, protocolId);
     expect(results.some(result => result.includes(protocolId))).to.be.true;
   });
