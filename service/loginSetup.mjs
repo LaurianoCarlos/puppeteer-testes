@@ -11,7 +11,6 @@ export async function setup() {
     await page.setViewport();
     await login(page); 
   }
-  return page;
 }
 
 export async function closeBrowser() {
@@ -19,4 +18,11 @@ export async function closeBrowser() {
     await browser.close();
     browser = null;
   }
+}
+
+export async function getAppPage(){
+  page && await login(page);
+  !page && await setup();
+
+  return page;
 }
