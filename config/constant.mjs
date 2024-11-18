@@ -39,6 +39,17 @@ export const SLUG = {
     DUPLICATE_SERVICE_SLUG:     'duplicatas-servicos',
 }
 
+export const PROTOCOL_STATUS = {
+    OPENED:   'opened',
+    CANCELLED:   'cancelled',
+    FINISHED:   'finished'
+}
+
+export const SERVICES = {
+    WALLET:   'api-de-carteiras',
+    DUPLICATE_MERCANTIL:   'api-de-registro-de-duplicatas-mercantil',
+}
+
 export const TIME = {
     ONE_MINUTE: 60000,     
     TWO_MINUTES: 120000,   
