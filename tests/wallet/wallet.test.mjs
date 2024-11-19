@@ -13,7 +13,6 @@ import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
 let wallet;
 
 describe('Wallet Search Tests', function () {
-  this.timeout(TIME.TWO_MINUTES);
 
   before(async () => {
     wallet = (await ApiInterfaceService.getWallets())[0];

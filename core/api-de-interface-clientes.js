@@ -72,7 +72,7 @@ class ApiInterfaceService {
         }
 
         const url = `${slug}/registry-agent/${AUTH_REGISTRY_AGENT}`;
-
+        
         try {
             const response = await this.baseInstance.get(url, {
                 timeout: 60000,

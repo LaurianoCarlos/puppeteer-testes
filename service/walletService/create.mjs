@@ -1,5 +1,5 @@
 import { WALLET_CREATE_BASE } from '../../config/constant.mjs';
-import { Utils } from '../../helpers/helpers.js';
+import { Utils } from '../../helpers/Utils.js';
 
 /**
  * Creates a new wallet with the provided data.
