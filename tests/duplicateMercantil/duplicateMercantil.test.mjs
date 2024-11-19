@@ -3,7 +3,7 @@ import { closeBrowser, getAppPage } from "../../service/loginSetup.mjs";
 import { generateDuplicateMercantilForm, cnpj, uuid } from '../../helpers/mock.js';
 import { TIME, SLUG, PROTOCOL_STATUS, SERVICES } from '../../config/constant.mjs';
 import { searchById } from '../../service/duplicateMercantilService/searchById.mjs'
-import { createDuplicateMercantil } from '../../service/duplicateMercantilService/create.mjs'
+import { create } from '../../service/duplicateMercantilService/create.mjs'
 import { searchByWallet, searchByWalletNotFound } from '../../service/duplicateMercantilService/searchByWallet.mjs'
 import { findWalletsParticipant, searchWalletsParticipant } from '../../service/duplicateMercantilService/searchByWalletParticipant.mjs'
 
@@ -25,6 +25,7 @@ describe("Test Duplicate Mercantil", function () {
 
     it('Should find a Mercantile Duplicate by ID', async () => {
         const page = await getAppPage();
+        console.log("ID: " + duplicate.asset_uuid);
         const results = await searchById(page, duplicate.asset_uuid);
         expect(results.some(result => result.includes(duplicate.asset_uuid))).to.be.true;
     });
@@ -70,13 +71,13 @@ describe("Test Duplicate Mercantil", function () {
         expect(wallets).to.be.an('array').that.is.not.empty;
     });
 
-    it('Should fill out all form fields and submit for registration', async () => {
+    it.only('Should fill out all form fields and submit for registration', async () => {
         const page = await getAppPage();
         const formData = generateDuplicateMercantilForm();
         formData.mainParticipantCnpj = duplicate.main_participant_cnpj;
         formData.wallet = duplicate.wallet;
 
-        const { successMessage, protocolData } = await createDuplicateMercantil(page, formData);
+        const { successMessage, protocolData } = await create(page, formData);
         expect(successMessage).to.include('Duplicata Mercantil enviada para registro com sucesso!');
         expect(protocolData).to.not.be.null;
 

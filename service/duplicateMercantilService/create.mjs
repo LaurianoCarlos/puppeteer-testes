@@ -1,5 +1,5 @@
 import { DUPLICATE_MERCANTIL_CREATE_BASE, TIME } from '../../config/constant.mjs';
-import { getProtocol, expandSectionIfCollapsed } from '../../helpers/helpers.js';
+import { Utils } from '../../helpers/Utils.js';
 
 async function setDateField(page, selector, dateValue) {
     const elementHandle = await page.$(selector);
@@ -14,7 +14,7 @@ async function setDateField(page, selector, dateValue) {
     }
 }
 
-export async function createDuplicateMercantil(page, formData) {
+export async function create(page, formData) {
     await page.goto(DUPLICATE_MERCANTIL_CREATE_BASE);
 
     /* DADOS DA AÇÃO */
@@ -39,13 +39,13 @@ export async function createDuplicateMercantil(page, formData) {
     await page.type('#external_reference', formData.externalReference);
 
     /* IDENTIFICADORES */
-    await expandSectionIfCollapsed(page, '#collapseIdentifiers', 'button[aria-controls="collapseIdentifiers"]');
+    await Utils.expandSectionIfCollapsed(page, '#collapseIdentifiers', 'button[aria-controls="collapseIdentifiers"]');
     await page.waitForSelector('#contract_id', { visible: true });
     await page.type('#contract_id', formData.contractId);
     await page.type('#asset_id', formData.assetId);
 
     /* TITULAR */
-    await expandSectionIfCollapsed(page, '#collapseHolder', 'button[aria-controls="collapseHolder"]');
+    await Utils.expandSectionIfCollapsed(page, '#collapseHolder', 'button[aria-controls="collapseHolder"]');
     await page.waitForSelector('#holder_document_type', { visible: true });
     await page.select('#holder_document_type', formData.holderDocumentType);
     await page.type('#holder_document', formData.holderDocument);
@@ -53,7 +53,7 @@ export async function createDuplicateMercantil(page, formData) {
     await page.type('#holder_domicile', formData.holderDomicile);
 
     /* NOVO TITULAR */
-    await expandSectionIfCollapsed(page, '#collapseNewHolder', 'button[aria-controls="collapseNewHolder"]');
+    await Utils.expandSectionIfCollapsed(page, '#collapseNewHolder', 'button[aria-controls="collapseNewHolder"]');
     await page.waitForSelector('#new_holder_document_type', { visible: true });
     await page.select('#new_holder_document_type', formData.newHolderDocumentType);
     await page.type('#new_holder_document', formData.newHolderDocument);
@@ -63,7 +63,7 @@ export async function createDuplicateMercantil(page, formData) {
     await setDateField(page, '#issuance_date', formData.issuanceDate);
 
     /* FIDUCIÁRIO */
-    await expandSectionIfCollapsed(page, '#collapseFiduciary', 'button[aria-controls="collapseFiduciary"]');
+    await Utils.expandSectionIfCollapsed(page, '#collapseFiduciary', 'button[aria-controls="collapseFiduciary"]');
     await page.waitForSelector('#fiduciary_document_type', { visible: true });
     await page.select('#fiduciary_document_type', formData.fiduciaryDocumentType);
     await page.type('#fiduciary_document', formData.fiduciaryDocument);
@@ -71,7 +71,7 @@ export async function createDuplicateMercantil(page, formData) {
     await page.type('#fiduciary_domicile', formData.fiduciaryDomicile);
 
     /* PAGADOR/DEVEDOR */
-    await expandSectionIfCollapsed(page, '#collapsePayerDebtor', 'button[aria-controls="collapsePayerDebtor"]');
+    await Utils.expandSectionIfCollapsed(page, '#collapsePayerDebtor', 'button[aria-controls="collapsePayerDebtor"]');
     await page.waitForSelector('#payer_or_debtor_document_type', { visible: true });
     await page.select('#payer_or_debtor_document_type', formData.payerDebtorDocumentType);
     await page.type('#payer_or_debtor_document', formData.payerDebtorDocument);
@@ -79,7 +79,7 @@ export async function createDuplicateMercantil(page, formData) {
     await page.type('#payer_or_debtor_domicile', formData.payerDebtorDomicile);
 
     /* DADOS DOS ATIVOS */
-    await expandSectionIfCollapsed(page, '#collapseAssetData', 'button[aria-controls="collapseAssetData"]');
+    await Utils.expandSectionIfCollapsed(page, '#collapseAssetData', 'button[aria-controls="collapseAssetData"]');
     await page.waitForSelector('#issuance_date', { visible: true });
     await setDateField(page, '#asset_due_date', formData.assetDueDate);
     await page.type('#asset_value', formData.assetValue);
@@ -91,7 +91,7 @@ export async function createDuplicateMercantil(page, formData) {
     await page.type('#invoice', formData.invoice);
 
     /* OUTRAS INFORMAÇÔES */
-    await expandSectionIfCollapsed(page, '#collapseOtherInformation', 'button[aria-controls="collapseOtherInformation"]');
+    await Utils.expandSectionIfCollapsed(page, '#collapseOtherInformation', 'button[aria-controls="collapseOtherInformation"]');
     await page.waitForSelector('#alternative_information', { visible: true });
     await page.type('#alternative_information', formData.alternativeInformation);
     await page.type('#asset_interest_rate', formData.assetInterestRate);
@@ -106,12 +106,8 @@ export async function createDuplicateMercantil(page, formData) {
 
     await page.waitForSelector('.toast-success', { visible: true, timeout: TIME.TWO_MINUTES });
 
-    const successMessage = await page.evaluate(() => {
-        const toast = document.querySelector('.toast-success');
-        return toast ? toast.innerText : null;
-    });
-
-    const protocolData = await getProtocol(page);
+    const successMessage = await Utils.getToastrMessage(page);
+    const protocolData = await Utils.getProtocol(page);;
 
     return { successMessage, protocolData };
 }
