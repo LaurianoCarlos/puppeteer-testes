@@ -7,7 +7,7 @@ import { Utils } from '../../helpers/Utils.js';
  * @param {string} duplicateId - The ID of the service duplicate.
  * @returns {Array} An array of results found during the search.
  */
-export async function searchDuplicateById(page, duplicateId) {
+export async function searchById(page, duplicateId) {
   await page.goto(ROUTE.DUPLICATE_SERVICE_SEARCH_BASE);
   await page.select('select#searchType', '1');
   await page.type('input#serviceDuplicateId', duplicateId);
