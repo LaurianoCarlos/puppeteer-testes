@@ -37,7 +37,7 @@ export async function searchAll(page) {
  * @param {string} [endDate] - The end date for the search range in "YYYY-MM-DD" format (optional).
  * @returns {Array} An array containing the search results.
  */
-export async function searchAllByFilters(page, status, startDate, endDate) {
+export async function searchByAllFilters(page, status, startDate, endDate) {
   await page.goto(ROUTE.PROTOCOL_SEARCH_BASE);
 
   if (status) {
