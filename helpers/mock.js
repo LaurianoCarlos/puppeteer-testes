@@ -150,16 +150,16 @@ export function generateDuplicateMercantilForm() {
 }
 
 /**
- * Generates NotFound data.
- * @returns {object} NotFound object.
+ * Generate data.
+ * @returns  {string} string cnpj.
  */
 export function cnpj() {
     return faker.string.numeric(14);
 }
 
 /**
- * Generates NotFound data.
- * @returns {object} NotFound object.
+ * Generate data.
+ * @returns {string} string uuid.
  */
 export function uuid() {
     return faker.string.uuid();

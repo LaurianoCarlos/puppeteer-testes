@@ -2,9 +2,10 @@ import { ROUTE } from '../../config/constant.mjs';
 import { Utils } from '../../helpers/Utils.js';
 
 /**
- * Realiza a busca por uma duplicata de Serviço com base no ID.
- * @param {object} page - A página atual.
- * @param {string} duplicateId - O ID da duplicata mercantil.
+ * Searches for a Service Duplicate based on its ID.
+ * @param {object} page - The current page.
+ * @param {string} duplicateId - The ID of the service duplicate.
+ * @returns {Array} An array of results found during the search.
  */
 export async function searchDuplicateById(page, duplicateId) {
   await page.goto(ROUTE.DUPLICATE_SERVICE_SEARCH_BASE);

@@ -1,49 +1,47 @@
 import { expect } from 'chai';
-import { TIME, SLUG } from '../../config/constant.mjs';
-import { setup, closeBrowser } from "../../service/loginSetup.mjs";
-import { findDuplicates } from "../../core/api-de-interface-clientes.js";
-import { searchDuplicateById } from "./searchById.mjs";
+import { uuid } from '../../helpers/mock.js';
+import { SLUG } from '../../config/constant.mjs';
+import { getAppPage, closeBrowser } from "../../service/loginSetup.mjs";
+import { searchById } from "../../service/serviceDuplicateService/searchById.mjs";
+import { searchByWallet, searchByWalletNotFound } from "../../service/serviceDuplicateService/searchByWallet.mjs";
 
-let page;
+import ApiInterfaceService  from '../../core/api-de-interface-clientes.js';
+
 let duplicate;
 
-const DUPLICATE = {
-    duplicateIdNotFound: 'xx1555xx-70fa-4a1e-bbfe-123456789',
-}
-
-describe("Teste de Duplicata de Serviço", function () {
-    this.timeout(TIME.ONE_MINUTE);
-
+describe("Service Duplicate Test", function () {
     before(async () => {
-        page = await setup();
-        duplicate = (await findDuplicates(SLUG.DUPLICATE_SERVICE_SLUG))[0];
+        duplicate = (await ApiInterfaceService.findDuplicates(SLUG.DUPLICATE_SERVICE_SLUG))[0];
     });
 
     after(async () => {
         await closeBrowser();
     });
-/*
-    it('Deve encontrar uma Duplicata de Serviço pelo ID', async () => {
-        const results = await searchDuplicateById(page, duplicate.asset_uuid);
+
+    it('Should find a Service Duplicate by ID', async () => {
+        const page = await getAppPage();
+        const results = await searchById(page, duplicate.asset_uuid);
         expect(results.some(result => result.includes(duplicate.asset_uuid))).to.be.true;
     });
 
-    it('Não deve encontrar uma Duplicata de Serviço pelo ID', async () => {
-        const results = await searchDuplicateById(page, DUPLICATE.duplicateIdNotFound);
-        expect(results.some(result => result.includes(DUPLICATE.duplicateId))).to.be.false;
-    });*/
+    it('Should not find a Service Duplicate by ID', async () => {
+        const page = await getAppPage();
+        const duplicateId = uuid();
+        const results = await searchById(page, duplicateId);
+        expect(results.some(result => result.includes(duplicateId))).to.be.false;
+    });
 
-    it('Deve encontrar uma Duplicata de Serviço pela Carteira', async () => {
-        const results = await searchDuplicateById(page, duplicate.wallet);
+    it('Should find a Service Duplicate by Wallet', async () => {
+        const page = await getAppPage();
+        const results = await searchByWallet(page, duplicate.wallet);
         expect(results.some(result => result.includes(duplicate.asset_uuid))).to.be.true;
     });
 
-    it('Não deve encontrar uma Duplicata de Serviço pela Carteira', async () => {
-        const results = await searchDuplicateById(page, DUPLICATE.duplicateIdNotFound);
-        expect(results.some(result => result.includes(DUPLICATE.duplicateId))).to.be.false;
+    it('Should not find a Service Duplicate by Wallet', async () => {
+        const page = await getAppPage();
+        const duplicateId = uuid();
+        const results = await searchByWalletNotFound(page, duplicateId);
+        expect(results.some(result => result.includes(duplicateId))).to.be.false;
     });
 
-})
-
-
-
+});
