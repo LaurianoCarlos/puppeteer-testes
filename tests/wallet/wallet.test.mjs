@@ -1,76 +1,71 @@
 import { expect } from 'chai';
-import { TIME, PROTOCOL_STATUS, SERVICES } from '../../config/constant.mjs';
-import { setup, closeBrowser } from '../../service/loginSetup.mjs';
-import { searchWalletById, searchWalletByIdNotFound } from './searchById.mjs';
-import { searchWalletByName, searchWalletByNameNotFound } from './searchByWallet.mjs';
-import { createWallet } from './createWallet.mjs';
+import { TIME } from '../../config/constant.mjs';
+import { uuid, genericName } from '../../helpers/mock.js'
+import { PROTOCOL_STATUS, SERVICES } from '../../config/constant.mjs';
+import { getAppPage, closeBrowser } from '../../service/loginSetup.mjs';
+import { searchById } from '../../service/walletService/searchById.mjs';
+import { searchByName } from '../../service/walletService/searchByWallet.mjs';
+import { create } from '../../service/walletService/create.mjs';
 import protocolLogger from '../../service/ProtocolCSVLogger.js';
 
-let page;
+import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
+
+let wallet;
 
 describe('Wallet Search Tests', function () {
   this.timeout(TIME.TWO_MINUTES);
 
   before(async () => {
-    page = await setup();
+    wallet = (await ApiInterfaceService.getWallets())[0];
   });
-
 
   after(async () => {
     await closeBrowser();
   });
-/*
-  it('Deve encontrar a carteira pelo ID', async () => {
-    const walletId = '9d5c7c1d-70fa-4a1e-bbfe-fb1f6e68361e';
-    const results = await searchWalletById(page, walletId);
-    expect(results.some(result => result.includes(walletId))).to.be.true;
+
+  it('Should find a Wallet by ID', async () => {
+    const page = await getAppPage();
+    const results = await searchById(page, wallet.wallet_id);
+
+    expect(results.some(result => result.includes(wallet.wallet_id))).to.be.true;
   });
 
-  it('Não deve encontrar uma carteira com ID inexistente', async () => {
-    const walletId = 'xx1555xx-70fa-4a1e-bbfe-123456789';
-    const results = await searchWalletByIdNotFound(page, walletId);
+  it('Should find a wallet by ID', async () => {
+    const page = await getAppPage();
+    const walletId = uuid();
+    const results = await searchById(page, walletId);
+
     expect(results.some(result => result.includes(walletId))).to.be.false;
   });
 
+  it('Should find a Wallet by Name', async () => {
+    const page = await getAppPage();
+    const results = await searchByName(page, wallet.name);
 
-  it('Deve encontrar a carteira pelo Nome', async () => {
-    const walletName = 'carteira de teste de contrato';
-    const results = await searchWalletByName(page, walletName);
-    expect(results.some(result => result.includes(walletName))).to.be.true;
+    expect(results.some(result => result.includes(wallet.name))).to.be.true;
   });
 
-  it('Não deve encontrar uma carteira com o Nome inexistente', async () => {
-    const walletName = 'xx-xxx-xxxxx';
-    const results = await searchWalletByNameNotFound(page, walletName);
+  it('Should not find a Wallet by Name', async () => {
+    const page = await getAppPage();
+    const walletName = genericName();
+    const results = await searchByName(page, walletName);
+
     expect(results.some(result => result.includes(walletName))).to.be.false;
   });
 
-  it('Deve criar uma nova carteira com sucesso', async () => {
+  it('Must create a new wallet successfully and generate a protocol successfully', async () => {
+    const page = await getAppPage();
     const walletData = {
-      name: 'carteira de teste front',
-      description: 'descrição da carteira teste',
+      name: genericName(),
+      description: genericName(),
       achievementId: '1'
     };
-
-    const { successMessage, protocolData } = await createWallet(page, walletData);
+    const { successMessage, protocolData } = await create(page, walletData);
 
     expect(successMessage).to.include('Carteira enviada para registro com sucesso!')
     expect(protocolData).to.not.be.null;
-  })
-*/
 
-  it('Deve criar uma nova carteira com sucesso e gerar um protocolo com sucesso', async () => {
-    const walletData = {
-      name: 'carteira de teste front',
-      description: 'descrição da carteira teste',
-      achievementId: '1'
-    };
-
-    const { successMessage, protocolData } = await createWallet(page, walletData);
-
-    expect(successMessage).to.include('Carteira enviada para registro com sucesso!')
-    expect(protocolData).to.not.be.null;
-    
     protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.OPENED, SERVICES.WALLET);
   })
+
 });
