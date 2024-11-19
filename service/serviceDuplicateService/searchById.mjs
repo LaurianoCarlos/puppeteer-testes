@@ -15,7 +15,7 @@ export async function searchById(page, duplicateId) {
   await page.evaluate(() => document.querySelector('button[type="submit"]').click());
 
   await Utils.waitForTableResults(page);
-  const results = Utils.getTableResults(page);
+  const results = await Utils.getTableResults(page);
 
   return results;
 }

@@ -17,8 +17,8 @@ export async function searchByWallet(page, wallet) {
   await Utils.waitForTableResults(page);
 
   const message = await Utils.getToastrMessage(page);
-  const results = Utils.getTableResults(page);
-
+  const results = await Utils.getTableResults(page);
+  
   return { results, message };
 }
 
@@ -55,7 +55,6 @@ export async function searchByWalletNotFound(page, wallet) {
   await page.waitForSelector('button[type="submit"]', { visible: true });
   await page.evaluate(() => document.querySelector('button[type="submit"]').click());
   await Utils.waitForTableResults(page);
-
 
   const message = await Utils.getToastrMessage(page);
   const results = await Utils.getTableResults(page);

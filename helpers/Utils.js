@@ -86,28 +86,15 @@ export class Utils {
   }
 
   /**
-   * Coleta os resultados exibidos no DataTable e retorna como uma lista de strings, excluindo linhas vazias.
-   * @param {object} page - A página Puppeteer.
-   * @returns {Promise<string[]>} Array de strings contendo os textos de cada linha de resultado.
-   */
-  static async getTableResults(page) {
-    return await page.evaluate(() => {
-      return Array.from(document.querySelectorAll('.card-datatable tbody tr'))
-        .map(row => row.innerText.trim())
-        .filter(text => text.length > 0);
-    });
-  }
-
-  /**
  * Captura a mensagem do toastr exibida na página.
  * @param {object} page - A página atual.
  * @param {number} timeout - O tempo máximo de espera (em milissegundos) para o toastr aparecer.
  * @returns {Promise<string>} - A mensagem do toastr capturada.
  */
-  static async getToastrMessage(page, timeout = 30000) {
-    const toastrElement = await page.waitForSelector('.toast-message', { visible: true, timeout });
-    return await page.evaluate(element => element.innerText, toastrElement);
-  }
+static async getToastrMessage(page, timeout = 30000) {
+  const toastrElement = await page.waitForSelector('.toast-message', { visible: true, timeout });
+  return await page.evaluate(element => element.innerText, toastrElement);
+}
 
 }
 

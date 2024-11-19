@@ -13,7 +13,6 @@ import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
 let protocol;
 
 describe('Protocol search tests', function () {
-  this.timeout(TIME.TWO_MINUTES);
   before(async () => {
     protocol = (await ApiInterfaceService.getProtocols())[0];
   });
