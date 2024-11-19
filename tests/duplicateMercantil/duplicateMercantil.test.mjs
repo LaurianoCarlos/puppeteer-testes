@@ -2,8 +2,10 @@ import { expect } from 'chai';
 import { closeBrowser, getAppPage } from "../../service/loginSetup.mjs";
 import { generateDuplicateMercantilForm, cnpj, uuid } from '../../helpers/mock.js';
 import { TIME, SLUG, PROTOCOL_STATUS, SERVICES } from '../../config/constant.mjs';
+import { searchById } from '../../service/duplicateMercantilService/searchById.mjs'
 import { createDuplicateMercantil } from '../../service/duplicateMercantilService/create.mjs'
-import { searchById, searchByWallet, findWalletsParticipant, searchWalletsParticipant, searchByWalletNotFound  } from '../../service/duplicateMercantilService/search.mjs'
+import { searchByWallet, searchByWalletNotFound } from '../../service/duplicateMercantilService/searchByWallet.mjs'
+import { findWalletsParticipant, searchWalletsParticipant } from '../../service/duplicateMercantilService/searchByWalletParticipant.mjs'
 
 import protocolLogger from'../../service/ProtocolCSVLogger.js';
 import ApiInterfaceService  from '../../core/api-de-interface-clientes.js';
@@ -21,20 +23,20 @@ describe("Test Duplicate Mercantil", function () {
         await closeBrowser();
     });
 
-    it.only('Deve encontrar uma Duplicata Mercantil pelo ID', async () => {
+    it('Should find a Mercantile Duplicate by ID', async () => {
         const page = await getAppPage();
         const results = await searchById(page, duplicate.asset_uuid);
         expect(results.some(result => result.includes(duplicate.asset_uuid))).to.be.true;
     });
 
-    it('Não deve encontrar uma Duplicata Mercantil pelo ID', async () => {
+    it('Should not find a Mercantile Duplicate by ID', async () => {
         const page = await getAppPage();
         const duplicateUuid = uuid();
         const results = await searchById(page, duplicateUuid);
         expect(results.some(result => result.includes(duplicateUuid))).to.be.false;
     });
 
-    it('Deve encontrar uma Duplicata Mercantil pela Carteira', async () => {
+    it('Should find a Mercantile Duplicate by Wallet', async () => {
         const page = await getAppPage();
         const { results, message } = await searchByWallet(page, duplicate.wallet);
         expect(results).to.not.be.null;
@@ -43,10 +45,9 @@ describe("Test Duplicate Mercantil", function () {
         ]);
     });
 
-    it('Não deve encontrar uma Duplicata Mercantil pela Carteira', async () => {
+    it('Should not find a Mercantile Duplicate by Wallet', async () => {
         const page = await getAppPage();
         const walletUuid = uuid();
-        console.log("carteira", walletUuid);
         const { message: message } = await searchByWalletNotFound(page, walletUuid);
 
         expect(message).to.be.oneOf([
@@ -54,7 +55,7 @@ describe("Test Duplicate Mercantil", function () {
         ]);
     });
 
-    it('Deve buscar e não retornar carteiras para o participante', async () => {
+    it('Should search and return no wallets for the participant', async () => {
         const page = await getAppPage();
         const { message } = await searchWalletsParticipant(page,  cnpj());
         expect(message).to.be.oneOf([
@@ -63,13 +64,13 @@ describe("Test Duplicate Mercantil", function () {
         ]);
     });
 
-    it('Deve buscar e retornar carteiras disponíveis para o participante', async () => {
+    it('Should search and return available wallets for the participant', async () => {
         const page = await getAppPage();
         const wallets = await findWalletsParticipant(page, duplicate.main_participant_cnpj);
         expect(wallets).to.be.an('array').that.is.not.empty;
     });
 
-    it('Deve preencher todos os campos do formulario e enviar para registro', async () => {
+    it('Should fill out all form fields and submit for registration', async () => {
         const page = await getAppPage();
         const formData = generateDuplicateMercantilForm();
         formData.mainParticipantCnpj = duplicate.main_participant_cnpj;
