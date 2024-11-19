@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import protocolLogger from '../service/ProtocolCSVLogger.js';
-import { fetchProtocol } from '../core/api-de-interface-clientes.js';
+
+import ApiInterfaceService from '../core/api-de-interface-clientes.js';
 
 class ProtocolTestRunner {
     async runTests() {
@@ -15,7 +16,7 @@ class ProtocolTestRunner {
             describe(`Testing service: ${serviceName}`, function () {
                 for (const protocol of protocols) {
                     it(`Protocol ID ${protocol.id} should have the same status as expected: ${protocol.expected_status}`, async () => {
-                        const fetchedProtocol = await fetchProtocol(protocol.id.trim());
+                        const fetchedProtocol = await ApiInterfaceService.fetchProtocol(protocol.id.trim());
                         const statusAtualServidor = fetchedProtocol.status;
                         const statusEsperadoCSV = protocol.expected_status.trim();
 
