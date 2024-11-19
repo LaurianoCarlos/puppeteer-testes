@@ -1,74 +1,88 @@
 import { expect } from 'chai';
-import { TIME } from '../../config/constant.mjs';
-import { setup, closeBrowser } from '../../service/loginSetup.mjs';
-import { searchProtocolById } from './searchById.mjs';
+import { uuid } from '../../helpers/mock';
+import { PROTOCOL_STATUS } from '../../config/constant.mjs';
+import { getAppPage, closeBrowser } from '../../service/loginSetup.mjs';
+import { searchProtocolById } from '../../service/protocolService/searchById.mjs';
 import { searchProtocolByStatus } from './searchProtocolByStatus.mjs';
-import { searchProtocolsByDateRange} from './searchProtocolsByDateRange.mjs';
+import { searchProtocolsByDateRange } from './searchProtocolsByDateRange.mjs';
 import { searchAllProtocols, searchProtocolsByAllFilters } from './searchAllProtocol.mjs';
 
-let page;
+import ApiInterfaceService from '../../core/api-de-interface-clientes';
 
-describe('Testes busca por Protocolo', function () {
-  this.timeout(TIME.TWO_MINUTES);
+let protocol;
+
+describe('Protocol search tests', function () {
 
   before(async () => {
-    page = await setup();
+    protocol = (await ApiInterfaceService.getProtocols())[0];
   });
 
   after(async () => {
     await closeBrowser();
   });
 
-  it('Deve encontrar o protocolo pelo ID', async () => {
-    const protocolId = '9d7d2396-7cc2-4394-bca0-e85c0fe5e82b';
-    const results = await searchProtocolById(page, protocolId);
-    expect(results.some(result => result.includes(protocolId))).to.be.true;
+  it('should find the protocol by ID', async () => {
+    const page = getAppPage();
+    const results = await searchProtocolById(page, protocol.asset_uuid);
+    
+    expect(results.some(result => result.includes(protocol.asset_uuid))).to.be.true;
   });
 
-  it('Não deve encontrar um protocolo com ID inexistente', async () => {
-    const protocolId = 'xx1555xx-70fa-4a1e-bbfe-123456789';
+  it('Shold not find a protocol with a not-existent ID', async () => {
+    const page = getAppPage();
+    const protocolId = uuid();
     const results = await searchProtocolById(page, protocolId);
+
     expect(results.some(result => result.includes(protocolId))).to.be.false;
   });
 
+  it('Should not find the protocol with status "Em Aberto"', async () => {
+    const page = getAppPage();
+    const results = await searchProtocolByStatus(page, PROTOCOL_STATUS.OPENED);
 
-   it('Não deve encontrar o protocolo pelo status "Em Aberto"', async () => {
-    const status = 'opened';
-    const results = await searchProtocolByStatus(page, status);
     expect(results.some(result => result.includes('Em Aberto'))).to.be.not;
   });
 
- 
-  it('Deve encontrar o protocolo pelo status "Finalizado"', async () => {
-    const status = 'finished';
-    const results = await searchProtocolByStatus(page, status);
+
+  it('Should find the protocol with status "Finalizado"', async () => {
+    const page = getAppPage();
+    const results = await searchProtocolByStatus(page, PROTOCOL_STATUS.FINISHED);
+
     expect(results.some(result => result.includes('FINALIZADO'))).to.be.true;
   });
 
-  it('Deve encontrar o protocolo pelo status "Cancelado"', async () => {
-    const status = 'cancelled';
-    const results = await searchProtocolByStatus(page, status);
+  it('Should find the protocol with status "Cancelado"', async () => {
+    const page = getAppPage();
+    const results = await searchProtocolByStatus(page, PROTOCOL_STATUS.CANCELLED);
+
     expect(results.some(result => result.includes('CANCELADO'))).to.be.true;
   });
 
-  it('Deve encontrar protocolos dentro do intervalo de datas', async () => {
-    const startDate = '2020-10-01';
-    const endDate = '2024-11-01';
+  it('Should find protocols within the date range', async () => {
+    const page = getAppPage();
+    const startDate = '2020-01-01';
+    const endDate = '2030-01-01';
     const results = await searchProtocolsByDateRange(page, startDate, endDate);
+
     expect(results.length).to.be.greaterThan(1);
   });
 
-  it('Deve encontrar todos os protocolos', async () => {
+  it('Should find all protocols', async () => {
+    const page = getAppPage();
     const results = await searchAllProtocols(page);
+
+    expect(results).to.be.not.null;
     expect(results.length).to.be.greaterThan(10);
   })
 
-  it('Deve encontrar protocolos que correspondem a todos os filtros aplicados', async () => {
-    const status = 'cancelled';
-    const startDate = '2020-10-01';
-    const endDate = '2024-11-01';
-    const results = await searchProtocolsByAllFilters(page, status, startDate, endDate);
+  it('Should find protocols matching all applied filters', async () => {
+    const page = getAppPage();
+    const startDate = '2020-01-01';
+    const endDate = '2030-01-01';
+    const results = await searchProtocolsByAllFilters(page, PROTOCOL_STATUS.CANCELLED, startDate, endDate);
+
     expect(results.length).to.be.greaterThan(0);
     expect(results.every(result => result.includes('CANCELADO'))).to.be.true;
   });
+
 });

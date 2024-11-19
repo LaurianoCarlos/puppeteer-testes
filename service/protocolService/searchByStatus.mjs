@@ -1,8 +1,14 @@
-import { PROTOCOL_SEARCH_BASE } from '../../config/constant.mjs';
-import { waitForLoading, getTableResults } from '../../helpers/helpers.js'
+import { ROUTE } from '../../config/constant.mjs';
+import { Utils } from '../../helpers/Utils.js';
 
-export async function searchProtocolByStatus(page, status) {
-  await page.goto(PROTOCOL_SEARCH_BASE);
+/**
+ * Searches for protocols based on their status.
+ * @param {object} page - The current page.
+ * @param {string} status - The status to filter protocols by.
+ * @returns {Array} An array containing the search results.
+ */
+export async function searchByStatus(page, status) {
+  await page.goto(ROUTE.PROTOCOL_SEARCH_BASE);
   await page.waitForSelector('select#statusValue', { visible: true });
   
   await page.select('select#statusValue', status);
@@ -20,8 +26,8 @@ export async function searchProtocolByStatus(page, status) {
     document.querySelector('button#buttonSearch').click();
   });
 
-  await waitForLoading(page);
-  const results = getTableResults(page);
+  await Utils.waitForLoading(page);
+  const results = await Utils.getTableResults(page);
 
   return results;
 }

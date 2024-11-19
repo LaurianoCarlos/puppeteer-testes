@@ -2,7 +2,7 @@ import { createAxiosInstance } from './axiosInstance.js';
 import { PROTOCOL_BASE, DUPLICATE_BASE, AUTH_REGISTRY_AGENT } from '../config/constant.mjs';
 
 class ApiInterfaceService {
-    static axiosInstance = createAxiosInstance(PROTOCOL_BASE);
+    static protocolInstance = createAxiosInstance(PROTOCOL_BASE);
     static duplicateInstance = createAxiosInstance(DUPLICATE_BASE);
 
     /**
@@ -19,14 +19,29 @@ class ApiInterfaceService {
         const protocolBase = `/${protocolId}?allData=true`;
 
         try {
-            const response = await this.axiosInstance.get(protocolBase, {
-                timeout: 20000,
+            const response = await this.protocolInstance.get(protocolBase, {
+                timeout: 30000,
             });
 
             return response.data;
         } catch (error) {
             console.error('Erro ao buscar protocolo:', error.response ? error.response.data : error.message);
             throw new Error('Erro ao buscar protocolo');
+        }
+    }
+
+    /**
+     * Fetch protocols
+     * @returns {object} Protocol data.
+     */
+    static async getProtocols() {
+        try {
+            const response = await this.protocolInstance.get({ timeout: 30000 });
+
+            return response.data.data;
+        } catch (error) {
+            console.error('Erro ao buscar protocolos:', error.response ? error.response.data : error.message);
+            throw new Error('Erro ao buscar protocolos');
         }
     }
 
