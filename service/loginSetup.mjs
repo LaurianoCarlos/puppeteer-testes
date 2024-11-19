@@ -8,7 +8,7 @@ export async function setup() {
   if (!browser) {
     browser = await puppeteer.launch({ headless: false });
     page = await browser.newPage();
-    page.setDefaultTimeout(TIME.ONE_MINUTE);
+    page.setDefaultTimeout(TIME.TWO_MINUTES);
     await page.setViewport();
     await login(page); 
   }

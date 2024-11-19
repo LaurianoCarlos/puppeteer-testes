@@ -104,10 +104,10 @@ export class Utils {
  * @param {number} timeout - O tempo máximo de espera (em milissegundos) para o toastr aparecer.
  * @returns {Promise<string>} - A mensagem do toastr capturada.
  */
-static async getToastrMessage(page, timeout = 30000) {
-  const toastrElement = await page.waitForSelector('.toast-message', { visible: true, timeout });
-  return await page.evaluate(element => element.innerText, toastrElement);
-}
+  static async getToastrMessage(page, timeout = 30000) {
+    const toastrElement = await page.waitForSelector('.toast-message', { visible: true, timeout });
+    return await page.evaluate(element => element.innerText, toastrElement);
+  }
 
 }
 

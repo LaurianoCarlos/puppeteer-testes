@@ -1,9 +1,8 @@
 import { createAxiosInstance } from './axiosInstance.js';
-import { PROTOCOL_BASE, DUPLICATE_BASE, AUTH_REGISTRY_AGENT } from '../config/constant.mjs';
+import { AUTH_REGISTRY_AGENT, API_DUPLICATAS_BASE_URL } from '../config/constant.mjs';
 
 class ApiInterfaceService {
-    static protocolInstance = createAxiosInstance(PROTOCOL_BASE);
-    static duplicateInstance = createAxiosInstance(DUPLICATE_BASE);
+    static baseInstance = createAxiosInstance(API_DUPLICATAS_BASE_URL);
 
     /**
      * Fetch protocol data by ID.
@@ -16,11 +15,11 @@ class ApiInterfaceService {
             throw new Error('O ID do protocolo deve ser fornecido.');
         }
 
-        const protocolBase = `/${protocolId}?allData=true`;
+        const url = `protocols/${protocolId}?allData=true`;
 
         try {
-            const response = await this.protocolInstance.get(protocolBase, {
-                timeout: 30000,
+            const response = await this.baseInstance.get(url, {
+                timeout: 60000,
             });
 
             return response.data;
@@ -36,12 +35,28 @@ class ApiInterfaceService {
      */
     static async getProtocols() {
         try {
-            const response = await this.protocolInstance.get({ timeout: 30000 });
-
+            const response = await this.baseInstance.get(`protocols?participantId=${AUTH_REGISTRY_AGENT}`,{ timeout: 60000 });
+           
             return response.data.data;
         } catch (error) {
             console.error('Erro ao buscar protocolos:', error.response ? error.response.data : error.message);
             throw new Error('Erro ao buscar protocolos');
+        }
+    }
+
+
+    /**
+     * Fetch protocols
+     * @returns {object} Protocol data.
+     */
+    static async getWallets() {
+        try {
+            const response = await this.baseInstance.get('wallets', { timeout: 60000 });
+    
+            return response.data.data;
+        } catch (error) {
+            console.error('Erro ao buscar Carteiras:', error.response ? error.response.data : error.message);
+            throw new Error('Erro ao buscar Carteiras');
         }
     }
 
@@ -59,8 +74,8 @@ class ApiInterfaceService {
         const url = `${slug}/registry-agent/${AUTH_REGISTRY_AGENT}`;
 
         try {
-            const response = await this.duplicateInstance.get(url, {
-                timeout: 30000,
+            const response = await this.baseInstance.get(url, {
+                timeout: 60000,
             });
 
             return response.data.data;

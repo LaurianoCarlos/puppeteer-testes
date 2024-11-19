@@ -164,3 +164,11 @@ export function cnpj() {
 export function uuid() {
     return faker.string.uuid();
 }
+
+/**
+ * Generate data.
+ * @returns {string} string uuid.
+ */
+export function genericName() {
+    return `Test ${faker.company.name()}`;
+}

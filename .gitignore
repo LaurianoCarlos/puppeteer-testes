@@ -20,6 +20,7 @@ pnpm-debug.log*
 # Cache e arquivos temporários
 /.cache
 /.temp
+/storage
 
 # Diretórios de build
 /dist
