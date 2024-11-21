@@ -50,6 +50,7 @@ export const PROTOCOL_STATUS = {
 export const SERVICES = {
     WALLET:   'api-de-carteiras',
     DUPLICATE_MERCANTIL:   'api-de-registro-de-duplicatas-mercantil',
+    SERVICE_DUPLICATE:   'api-de-registro-de-duplicatas-servico',
 }
 
 export const TIME = {

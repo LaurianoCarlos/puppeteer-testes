@@ -48,22 +48,11 @@ function generateNewHolderData() {
         newHolderZipcode: faker.location.zipCode('#####-###'),
         newHolderDomicile: generateAddress(),
         assetValueTransfer: faker.finance.amount(1000, 10000, 2),
-        issuanceDate: faker.date.future().toISOString().split('T')[0],
+        issuanceDate: genericDate(),
     };
 }
 
-/**
- * Generates FiduciaryData.
- * @returns {object} FiduciaryData object.
- */
-function generateFiduciaryData() {
-    return {
-        fiduciaryDocumentType: '2',
-        fiduciaryDocument: faker.string.numeric(14),
-        fiduciaryZipcode: faker.location.zipCode('#####-###'),
-        fiduciaryDomicile: generateAddress(),
-    };
-}
+
 
 /**
  * Generates PayerDebtorData.
@@ -84,16 +73,34 @@ function generatePayerDebtorData() {
  */
 function generateAssetData() {
     return {
-        assetDueDate: faker.date.future().toISOString().split('T')[0],
+        assetDueDate: genericDate(),
         assetValue: faker.finance.amount(10000, 50000, 2),
         totalContractValue: faker.finance.amount(50000, 200000, 2),
         installmentNumber: faker.string.numeric(1),
         totalInstallmentNumber: faker.string.numeric(2),
-        assetDateTransfer: faker.date.future().toISOString().split('T')[0],
+        assetDateTransfer: genericDate(),
         ufPayment: generateBrazilianState(),
         invoice: faker.string.numeric(42),
     };
 }
+
+/**
+ * Generates AssetData.
+ * @returns {object} AssetData object.
+ */
+function generateFiduciaryData() {
+    return {
+        fiduciaryDocumentType: faker.helpers.arrayElement(['1', '2']),
+        fiduciaryDocument: faker.helpers.arrayElement([
+            faker.string.numeric(11),
+            faker.string.numeric(14),
+        ]),
+        fiduciaryZipcode: faker.location.zipCode('#####-###'),
+        fiduciaryDomicile: generateAddress(),
+    };
+}
+
+
 
 /**
  * Generates OtherInformation.
@@ -133,23 +140,6 @@ function generateBrazilianState() {
 }
 
 /**
- * Generates the complete DuplicateMercantilForm.
- * @returns {object} DuplicateMercantilForm object.
- */
-export function generateDuplicateMercantilForm() {
-    return {
-        ...generateActionData(),
-        ...generateIdentifiers(),
-        ...generateHolderData(),
-        ...generateNewHolderData(),
-        ...generateFiduciaryData(),
-        ...generatePayerDebtorData(),
-        ...generateAssetData(),
-        ...generateOtherInformation(),
-    };
-}
-
-/**
  * Generate data.
  * @returns  {string} string cnpj.
  */
@@ -171,4 +161,48 @@ export function uuid() {
  */
 export function genericName() {
     return `Test ${faker.company.name()}`;
+}
+
+/**
+ * Generate data.
+ * @returns {string} string uuid.
+ */
+export function genericDate() {
+    const futureDate = faker.date.recent();
+    const formattedDate = `${futureDate.getDate().toString().padStart(2, '0')}-${(futureDate.getMonth() + 1).toString().padStart(2, '0')}-${futureDate.getFullYear()}`;
+    return formattedDate;
+}
+
+/**
+ * Generates the complete DuplicateMercantilForm.
+ * @returns {object} DuplicateMercantilForm object.
+ */
+export function generateDuplicateMercantilForm() {
+    return {
+        ...generateActionData(),
+        ...generateIdentifiers(),
+        ...generateHolderData(),
+        ...generateNewHolderData(),
+        ...generateFiduciaryData(),
+        ...generatePayerDebtorData(),
+        ...generateAssetData(),
+        ...generateOtherInformation(),
+    };
+}
+
+/**
+ * Generates the complete DuplicateMercantilForm.
+ * @returns {object} DuplicateMercantilForm object.
+ */
+export function generateServiceDuplicateForm() {
+    return {
+        ...generateActionData(),
+        ...generateIdentifiers(),
+        ...generateHolderData(),
+        ...generateNewHolderData(),
+        ...generateFiduciaryData(),
+        ...generatePayerDebtorData(),
+        ...generateAssetData(),
+        ...generateOtherInformation(),
+    };
 }
