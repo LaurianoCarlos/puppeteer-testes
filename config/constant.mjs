@@ -21,6 +21,9 @@ export const DUPLICATE_MERCANTIL_CREATE_BASE = BASE_URL + 'duplicate-mercantil/c
 const DUPLICATE_SERVICE_SEARCH_BASE = BASE_URL + 'service-duplicate/search';
 const DUPLICATE_SERVICE_CREATE_BASE = BASE_URL + 'service-duplicate/create';
 
+const CONTRACT_MERCANTIL_SEARCH_BASE = BASE_URL + 'mercantil-contract/search';
+const CONTRACT_MERCANTIL_CREATE_BASE = BASE_URL + 'mercantil-contract/create';
+
 //Protocol
 export const PROTOCOL_BASE = API_DUPLICATAS_BASE_URL + 'protocols';
 export const DUPLICATE_BASE = API_DUPLICATAS_BASE_URL;
@@ -33,12 +36,16 @@ export const ROUTE = {
     DUPLICATE_SERVICE_SEARCH_BASE: DUPLICATE_SERVICE_SEARCH_BASE,
     DUPLICATE_SERVICE_CREATE_BASE: DUPLICATE_SERVICE_CREATE_BASE,
 
+    CONTRACT_MERCANTIL_SEARCH_BASE: CONTRACT_MERCANTIL_SEARCH_BASE,
+    CONTRACT_MERCANTIL_CREATE_BASE: CONTRACT_MERCANTIL_CREATE_BASE,
+
     PROTOCOL_SEARCH_BASE: PROTOCOL_SEARCH_BASE,
 }
 
 export const SLUG = {
     DUPLICATE_MERCANTIL_SLUG:   'duplicatas-mercantis',
     DUPLICATE_SERVICE_SLUG:     'duplicatas-servicos',
+    CONTRACT_MERCANTIL_SLUG:    'mercantile-contracts',
 }
 
 export const PROTOCOL_STATUS = {
@@ -51,6 +58,7 @@ export const SERVICES = {
     WALLET:   'api-de-carteiras',
     DUPLICATE_MERCANTIL:   'api-de-registro-de-duplicatas-mercantil',
     SERVICE_DUPLICATE:   'api-de-registro-de-duplicatas-servico',
+    CONTRACT_MERCANTIL:   'api-de-contrato-mercantil',
 }
 
 export const TIME = {
@@ -59,16 +67,4 @@ export const TIME = {
     THREE_MINUTES: 180000, 
     FOUR_MINUTES: 240000,  
     FIVE_MINUTES: 300000,
-
-
-    ONE_SECOND: 1000,
-    TWO_SECONDS: 2000,
-    THREE_SECONDS: 3000,
-    FOUR_SECONDS: 4000,
-    FIVE_SECONDS: 5000,
-    TEN_SECONDS: 10000,
-    TWENTY_SECONDS: 20000,
-    THIRTY_SECONDS: 30000,
-    FORTY_SECONDS: 40000,
-    FIFTY_SECONDS: 50000
 };

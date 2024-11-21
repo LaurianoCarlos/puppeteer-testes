@@ -206,3 +206,20 @@ export function generateServiceDuplicateForm() {
         ...generateOtherInformation(),
     };
 }
+
+/**
+ * Generates the complete DuplicateMercantilForm.
+ * @returns {object} DuplicateMercantilForm object.
+ */
+export function generateContratoMercantilForm() {
+    return {
+        ...generateActionData(),
+        ...generateIdentifiers(),
+        ...generateHolderData(),
+        ...generateNewHolderData(),
+        ...generateFiduciaryData(),
+        ...generatePayerDebtorData(),
+        ...generateAssetData(),
+        ...generateOtherInformation(),
+    };
+}

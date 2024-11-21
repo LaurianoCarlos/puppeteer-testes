@@ -50,13 +50,13 @@ export class Utils {
     await page.waitForFunction(() => {
       const loadingRow = document.querySelector('tr[wire\\:loading\\.class\\.remove="c-hidden"]');
       return loadingRow && !loadingRow.classList.contains('c-hidden');
-    }, { timeout: 60000 });
+    });
 
     // Aguarda o fim do carregamento
     await page.waitForFunction(() => {
       const loadingRow = document.querySelector('tr[wire\\:loading\\.class\\.remove="c-hidden"]');
       return loadingRow && loadingRow.classList.contains('c-hidden');
-    }, { timeout: 60000 });
+    });
   }
 
   /**
@@ -82,7 +82,7 @@ export class Utils {
       const tableRows = document.querySelectorAll('.card-datatable tbody tr');
       const noResultsMessage = document.querySelector('.card-datatable .no-results');
       return tableRows.length > 0 || noResultsMessage !== null;
-    }, { timeout: 60000 });
+    });
   }
 
   /**
@@ -91,8 +91,8 @@ export class Utils {
  * @param {number} timeout - O tempo máximo de espera (em milissegundos) para o toastr aparecer.
  * @returns {Promise<string>} - A mensagem do toastr capturada.
  */
-static async getToastrMessage(page, timeout = 30000) {
-  const toastrElement = await page.waitForSelector('.toast-message', { visible: true, timeout });
+static async getToastrMessage(page) {
+  const toastrElement = await page.waitForSelector('.toast-message', { visible: true });
   return await page.evaluate(element => element.innerText, toastrElement);
 }
 
