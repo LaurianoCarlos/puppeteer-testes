@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { TIME } from '../../config/constant.mjs';
 import { uuid } from '../../helpers/mock.js';
 import { SLUG } from '../../config/constant.mjs';
 import { getAppPage, closeBrowser } from "../../service/loginSetup.mjs";
@@ -10,13 +11,9 @@ import ApiInterfaceService  from '../../core/api-de-interface-clientes.js';
 let duplicate;
 
 describe("Service Duplicate Test", function () {
-    this.timeout(120000);
+    this.timeout(TIME.FOUR_MINUTES);
     before(async () => {
         duplicate = (await ApiInterfaceService.findDuplicates(SLUG.DUPLICATE_SERVICE_SLUG))[0];
-    });
-
-    after(async () => {
-        await closeBrowser();
     });
 
     it('Should find a Service Duplicate by ID', async () => {

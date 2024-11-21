@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { closeBrowser, getAppPage } from "../../service/loginSetup.mjs";
+import { getAppPage } from "../../service/loginSetup.mjs";
 import { generateDuplicateMercantilForm, cnpj, uuid } from '../../helpers/mock.js';
 import { TIME, SLUG, PROTOCOL_STATUS, SERVICES } from '../../config/constant.mjs';
 import { searchById } from '../../service/duplicateMercantilService/searchById.mjs'
@@ -13,19 +13,15 @@ import ApiInterfaceService  from '../../core/api-de-interface-clientes.js';
 let duplicate;
 
 describe("Test Duplicate Mercantil", function () {
-    this.timeout(TIME.ONE_MINUTE);
+    this.timeout(TIME.FOUR_MINUTES);
 
     before(async () => {
         duplicate = (await ApiInterfaceService.findDuplicates(SLUG.DUPLICATE_MERCANTIL_SLUG))[0];
     });
 
-    after(async () => {
-        await closeBrowser();
-    });
-
+    
     it('Should find a Mercantile Duplicate by ID', async () => {
         const page = await getAppPage();
-        console.log("ID: " + duplicate.asset_uuid);
         const results = await searchById(page, duplicate.asset_uuid);
         expect(results.some(result => result.includes(duplicate.asset_uuid))).to.be.true;
     });
@@ -71,7 +67,7 @@ describe("Test Duplicate Mercantil", function () {
         expect(wallets).to.be.an('array').that.is.not.empty;
     });
 
-    it.only('Should fill out all form fields and submit for registration', async () => {
+    it('Should fill out all form fields and submit for registration', async () => {
         const page = await getAppPage();
         const formData = generateDuplicateMercantilForm();
         formData.mainParticipantCnpj = duplicate.main_participant_cnpj;

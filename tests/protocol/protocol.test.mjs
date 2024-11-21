@@ -17,10 +17,6 @@ describe('Protocol search tests', function () {
     protocol = (await ApiInterfaceService.getProtocols())[0];
   });
 
-  after(async () => {
-    await closeBrowser();
-  });
-
   it('should find the protocol by ID', async () => {
     const page = await getAppPage();
     const results = await searchById(page, protocol.protocol_id);
@@ -60,10 +56,10 @@ describe('Protocol search tests', function () {
 
   it('Should find protocols within the date range', async () => {
     const page = await getAppPage();
-    const startDate = '2020-01-01';
-    const endDate = '2030-01-01';
+    const startDate = '01-01-2020';
+    const endDate = '01-01-2030';
     const results = await searchByDateRange(page, startDate, endDate);
-
+  
     expect(results.length).to.be.greaterThan(1);
   });
 
@@ -77,11 +73,11 @@ describe('Protocol search tests', function () {
 
   it('Should find protocols matching all applied filters', async () => {
     const page = await getAppPage();
-    const startDate = '2020-01-01';
-    const endDate = '2030-01-01';
+    const startDate = '01-01-2020';
+    const endDate = '01-01-2030';
     const results = await searchByAllFilters(page, PROTOCOL_STATUS.CANCELLED, startDate, endDate);
-
-    expect(results.length).to.be.greaterThan(0);
+   
+    expect(results.length).to.be.greaterThan(1);
     expect(results.every(result => result.includes('CANCELADO'))).to.be.true;
   });
 
