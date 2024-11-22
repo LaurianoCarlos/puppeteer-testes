@@ -61,7 +61,7 @@ describe("Contract Mercantil Test", function () {
     it('Should search and return no wallets for the participant', async () => {
         const page = await getAppPage();
         const { message } = await searchWalletsParticipant(page, cnpj());
-        console.log(message);
+       
         expect(message).to.be.oneOf([
             'Participante não encontrado ou sem permissão para esse usuário',
             'Não existe carteiras para esse participante',
