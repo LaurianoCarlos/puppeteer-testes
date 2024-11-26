@@ -84,6 +84,31 @@ class ApiInterfaceService {
             throw new Error('Erro ao buscar duplicatas');
         }
     }
+
+    /**
+     * Fetch participant and data based on a slug.
+     * @param {string} slug - The slug identifier.
+     * @returns {Array} List.
+     * @throws {Error} If the slug is not provided or the request fails.
+     */
+    static async findListByParticipant(slug) {
+        if (!slug) {
+            throw new Error('O slug deve ser fornecido.');
+        }
+
+        const url = `${slug}/participant/${AUTH_REGISTRY_AGENT}`;
+        
+        try {
+            const response = await this.baseInstance.get(url, {
+                timeout: 60000,
+            });
+
+            return response.data.data;
+        } catch (error) {
+            console.error('Erro ao buscar dados:', error.response ? error.response.data : error.message);
+            throw new Error('Erro ao buscar dados');
+        }
+    }
 }
 
 export default ApiInterfaceService;

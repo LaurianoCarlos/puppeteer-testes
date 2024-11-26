@@ -24,12 +24,19 @@ const DUPLICATE_SERVICE_CREATE_BASE = BASE_URL + 'service-duplicate/create';
 const CONTRACT_MERCANTIL_SEARCH_BASE = BASE_URL + 'mercantil-contract/search';
 const CONTRACT_MERCANTIL_CREATE_BASE = BASE_URL + 'mercantil-contract/create';
 
+const CPR_SEARCH_BASE = BASE_URL + 'cpr/search';
+const CPR_CREATE_BASE = BASE_URL + 'cpr';
+
 //Protocol
 export const PROTOCOL_BASE = API_DUPLICATAS_BASE_URL + 'protocols';
 export const DUPLICATE_BASE = API_DUPLICATAS_BASE_URL;
 
 
 export const ROUTE = {
+
+    CPR_SEARCH_BASE: CPR_SEARCH_BASE,
+    CPR_CREATE_BASE: CPR_CREATE_BASE,
+
     DUPLICATE_MERCANTIL_SEARCH_BASE: DUPLICATE_MERCANTIL_SEARCH_BASE,
     DUPLICATE_MERCANTIL_CREATE_BASE: DUPLICATE_MERCANTIL_CREATE_BASE,
 
@@ -39,26 +46,30 @@ export const ROUTE = {
     CONTRACT_MERCANTIL_SEARCH_BASE: CONTRACT_MERCANTIL_SEARCH_BASE,
     CONTRACT_MERCANTIL_CREATE_BASE: CONTRACT_MERCANTIL_CREATE_BASE,
 
+
+
     PROTOCOL_SEARCH_BASE: PROTOCOL_SEARCH_BASE,
 }
 
 export const SLUG = {
+    CPR_SLUG:                   'cpr',
     DUPLICATE_MERCANTIL_SLUG:   'duplicatas-mercantis',
     DUPLICATE_SERVICE_SLUG:     'duplicatas-servicos',
     CONTRACT_MERCANTIL_SLUG:    'mercantile-contracts',
 }
 
 export const PROTOCOL_STATUS = {
-    OPENED:   'opened',
-    CANCELLED:   'cancelled',
+    OPENED:     'opened',
+    CANCELLED:  'cancelled',
     FINISHED:   'finished'
 }
 
 export const SERVICES = {
-    WALLET:   'api-de-carteiras',
-    DUPLICATE_MERCANTIL:   'api-de-registro-de-duplicatas-mercantil',
-    SERVICE_DUPLICATE:   'api-de-registro-de-duplicatas-servico',
-    CONTRACT_MERCANTIL:   'api-de-contrato-mercantil',
+    WALLET:                 'api-de-carteiras',
+    CPR:                    'api-de-registro-cpr',
+    DUPLICATE_MERCANTIL:    'api-de-registro-de-duplicatas-mercantil',
+    SERVICE_DUPLICATE:      'api-de-registro-de-duplicatas-servico',
+    CONTRACT_MERCANTIL:     'api-de-contrato-mercantil',
 }
 
 export const TIME = {

@@ -33,13 +33,48 @@ export class Utils {
    * @param {string} selector - Seletor da seção a ser expandida.
    * @param {string} controlButtonSelector - Seletor do botão de controle para expandir a seção.
    */
-  static async expandSectionIfCollapsed(page, selector, controlButtonSelector) {
+  static async expandSectionIfCollapsed(page, selector, controlButtonSelector, active = null) {
     const isCollapsed = await page.$eval(selector, el => el.classList.contains('collapse'));
     if (isCollapsed) {
       await page.click(controlButtonSelector);
     }
-    await page.waitForSelector(`${selector}.show`, { visible: true });
+
+    if (active) {
+      await page.waitForSelector(`${selector} active`, { visible: true });
+    } else {
+      await page.waitForSelector(`${selector}.show`, { visible: true });
+    }
+
   }
+
+  /**
+ * Expande uma seção do formulário caso esteja colapsada.
+ * @param {object} page - A página Puppeteer.
+ * @param {string} selector - Seletor da seção a ser expandida.
+ * @param {string} controlButtonSelector - Seletor do botão de controle para expandir a seção.
+ * @param {boolean} [active=false] - Indica se a classe `active` deve ser aguardada ao invés de `show`.
+ */
+  static async expandSectionIfCollapsed2(page, selector, controlButtonSelector, active = false) {
+    await page.waitForSelector(selector);
+
+    const isCollapsed = await page.$eval(selector, el => el.classList.contains('collapse'));
+
+    if (isCollapsed) {
+      // Clica no botão de controle para expandir
+      await page.click(controlButtonSelector);
+    }
+
+    // Aguarda a classe correspondente com base no parâmetro 'active'
+    const targetClass = active ? 'active' : 'show';
+    await page.waitForFunction(
+      (selector, targetClass) => document.querySelector(selector)?.classList.contains(targetClass),
+      {},
+      selector,
+      targetClass
+    );
+  }
+
+
 
   /**
    * Aguarda o carregamento do DataTable ao observar a classe `c-hidden` aplicada durante o carregamento.
@@ -91,10 +126,10 @@ export class Utils {
  * @param {number} timeout - O tempo máximo de espera (em milissegundos) para o toastr aparecer.
  * @returns {Promise<string>} - A mensagem do toastr capturada.
  */
-static async getToastrMessage(page) {
-  const toastrElement = await page.waitForSelector('.toast-message', { visible: true });
-  return await page.evaluate(element => element.innerText, toastrElement);
-}
+  static async getToastrMessage(page) {
+    const toastrElement = await page.waitForSelector('.toast-message', { visible: true });
+    return await page.evaluate(element => element.innerText, toastrElement);
+  }
 
 }
 

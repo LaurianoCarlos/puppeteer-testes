@@ -223,3 +223,157 @@ export function generateContratoMercantilForm() {
         ...generateOtherInformation(),
     };
 }
+
+export function mockFormData() {
+    return {
+        cpr_type: '1',
+        wallet: faker.string.uuid(),
+        cpr_value: faker.finance.amount(10000, 100000, 2),
+        date: genericDate(),
+        amendment_ratification_reratification: faker.lorem.words(5),
+
+        //InFormações do Ativo
+        participant_cnpj: faker.string.numeric(14),
+        asset_id: faker.string.uuid(),
+        ipoc: faker.string.uuid(),
+        issue_date: genericDate(),
+        due_date: genericDate(),
+        value: faker.finance.amount(1000, 5000, 2),
+        category_subcategory: faker.string.numeric(1),
+
+        //CPR VERDE
+        isCprGreen: faker.datatype.boolean(),
+        corporate_name_certifier: faker.company.name(),
+        cnpj_certifier: faker.string.numeric(14),
+        declaration: faker.lorem.paragraph(),
+        georeferencing: faker.lorem.sentence(),
+
+        //credor
+        creditor_name: faker.person.fullName(),
+        creditor_cpf_cnpj: faker.string.numeric(14),
+        creditor_address: faker.location.streetAddress(),
+        creditor_state: generateBrazilianState(),
+        creditor_city: faker.location.city(),
+
+
+        debtor_name: faker.person.fullName(),
+        identity: faker.string.numeric(9),
+        debtor_document_type: '1',
+        debtor_cpf_cnpj: faker.string.numeric(14),
+        state_registration: faker.string.uuid(),
+        municipal_registration: faker.string.uuid(),
+        issuing_authority: faker.lorem.word(),
+        nationality: faker.helpers.arrayElement(['Brasileiro', 'Estrangeiro']),
+        gender: faker.helpers.arrayElement(['M', 'F']),
+        profession: faker.person.jobTitle(),
+        debtor_marital_status: faker.helpers.arrayElement([ '1', '2', '3', '4', '5' ]),
+        email: faker.internet.email(),
+        home_phone: faker.phone.number('## ####-####'),
+        mobile_phone: faker.phone.number('## #####-####'),
+        address: faker.location.streetAddress(),
+        debtor_state:generateBrazilianState(),
+        debtor_city: faker.location.city(),
+
+        //outras informações
+        spouse_name: faker.person.fullName(),
+        spouse_cpf_cnpj: faker.string.numeric(14),
+        spouse_issuing_authority: faker.lorem.word(),
+        spouse_email: faker.internet.email(),
+        issuer_name: faker.person.fullName(),
+        issuer_cpf_cnpj: faker.string.numeric(14),
+        issuer_identity: faker.string.numeric(9),
+        issuer_authority: faker.lorem.word(),
+        issuer_nationality: faker.helpers.arrayElement(['Brasileiro', 'Estrangeiro']),
+        issuer_gender: faker.helpers.arrayElement(['M', 'F']),
+        issuer_profession: faker.person.jobTitle(),
+        issuer_state:generateBrazilianState(),
+        issuer_email: faker.internet.email(),
+
+        //produto
+        product_query: faker.helpers.arrayElement(['ARROZ', 'FEIJAO']),
+        product_code: faker.string.uuid(),
+        product_description: faker.commerce.productDescription(),
+        product_unit: faker.helpers.arrayElement(['UNID', 'CX']),
+        
+        harvest: {
+            harvest_description: faker.lorem.words(3),
+            status: '1',
+            product_quantity: faker.string.numeric(1),
+            product_unit: faker.helpers.arrayElement(['AMPOLA', 'BALDE', 'BANDEJA', 'BARRA', 'BISNAG', 'BOBINA', 'SACO']),
+            packing_standard: faker.lorem.words(2),
+            quotation_source: faker.company.name(),
+            quotation_market: faker.lorem.word(),
+            quotation_index: faker.string.numeric(2), 
+            quotation_date: genericDate(),
+            unit_value: faker.finance.amount(10, 100, 2),
+            planting_date: genericDate(),
+        },
+
+        harvest_delivery: {
+            description: faker.lorem.words(3),
+            address: faker.location.streetAddress(),
+            city: faker.location.city(),
+            state:generateBrazilianState(),
+            delivery_due_date: genericDate(),
+            payment_method: faker.lorem.words(2),
+            settlement_schedule: faker.lorem.words(2),
+            delivery_conditions: faker.lorem.words(2),
+            delivered_quantity: faker.string.numeric(2),
+            early_maturity_date: genericDate(),
+        },
+
+       
+        negotiation: {
+            currency: faker.finance.currencyCode(), 
+            exchange_rate_variation: faker.finance.amount(0.01, 10, 2), 
+            interest_rate_percentage: faker.finance.amount(0.1, 20, 2), 
+            trading_term: faker.lorem.words(2), 
+            correction_factor: faker.finance.amount(0.1, 5, 2),
+            observation: faker.lorem.sentence(),
+            settlement_method: faker.lorem.word(),
+            settlement_condition: faker.lorem.words(3),
+            first_installment_date: genericDate(),
+            settlement_date: genericDate(),
+            early_maturity_date: genericDate(),
+        },
+        
+
+        production_area: faker.string.numeric(1),
+        production_area_unit: 'hectares',
+        total_area: faker.string.numeric(1),
+        total_area_unit: 'hectares',
+        property_identification: faker.string.uuid(),
+        property_type: faker.lorem.word(),
+        state:generateBrazilianState(),
+        city: faker.location.city(),
+        registry_office: faker.lorem.words(2),
+        registration_number: faker.string.uuid(),
+        //coodernadas do imovel
+        tract: faker.lorem.word(),
+        latitude: faker.string.numeric(2),
+        longitude:  faker.string.numeric(2),
+
+        
+        guarantees: [
+            {
+                guarantee_type: '1',
+                value: faker.finance.amount(1000, 10000, 2),
+                essentiality_of_guarantee: faker.lorem.sentence(),
+                name: faker.person.fullName(),
+                cpf_cnpj: faker.string.numeric(14),
+                state: generateBrazilianState(),
+                city: faker.location.city(),
+                profession: faker.person.jobTitle(),
+                email: faker.internet.email(),
+                guarantor_type: faker.lorem.word(),
+                guarantor_cpf_cnpj: faker.string.numeric(14),
+                vehicle_owner_cpf_cnpj: faker.string.numeric(14),
+                rural_property_owner_cpf_cnpj: faker.string.numeric(14),
+                rural_real_estate_certificate: faker.string.alphanumeric(10),
+                rural_real_estate_certificate_registration: faker.string.alphanumeric(10),
+                rural_real_estate_certificate_value: faker.finance.amount(10, 100, 2),
+                rural_real_estate_certificate_due_date: genericDate(),
+            },
+        ],
+    };
+}
