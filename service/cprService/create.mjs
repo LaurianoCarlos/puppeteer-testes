@@ -1,10 +1,6 @@
 import { ROUTE } from '../../config/constant.mjs';
 import { Utils } from '../../helpers/Utils.js';
 
-
-/**
- * Preenche a seção de informações básicas do CPR.
- */
 async function fillCpr(page, formData) { 
 
     await page.evaluate(() => {
@@ -36,9 +32,7 @@ async function fillCpr(page, formData) {
     await page.type('#amendment_ratification_reratification', formData.amendment_ratification_reratification);
 }
 
-/**
- * Preenche a seção de informações do ativo.
- */
+
 async function fillAsset(page, formData) {
     await Utils.expandSectionIfCollapsed(page, '#collapseMain', 'button[aria-controls="collapseMain"]');
     await page.waitForSelector('#participant_cnpj', { visible: true });
@@ -63,17 +57,11 @@ async function fillAsset(page, formData) {
     await page.type('#category_subcategory', formData.category_subcategory);
 }
 
-/**
- * Preenche a seção de informações do CPR Verde.
- */
+
 async function fillGreenCpr(page, formData) {
-    // Expande a seção se estiver colapsada
     await Utils.expandSectionIfCollapsed(page, '#collapseGreen', 'button[aria-controls="collapseGreen"]');
 
-    // Aguarda o checkbox estar visível
     await page.waitForSelector('#flexSwitchCheckDefault', { visible: true });
-
-    // Marca o checkbox, se não estiver marcado
     await page.evaluate(() => {
         const checkbox = document.querySelector('#flexSwitchCheckDefault');
         if (checkbox && !checkbox.checked) {
@@ -81,8 +69,6 @@ async function fillGreenCpr(page, formData) {
         }
     });
 
-
-    // Aguarda até que os inputs estejam habilitados
     await Promise.all([
         waitForEnabled(page, '#corporate_name_certifier'),
         waitForEnabled(page, '#cnpj_certifier'),
@@ -90,7 +76,6 @@ async function fillGreenCpr(page, formData) {
         waitForEnabled(page, '#georeferencing')
     ]);
 
-    // Preenche os campos da seção
     const fields = [
         { selector: '#corporate_name_certifier', value: formData.corporate_name_certifier },
         { selector: '#cnpj_certifier', value: formData.cnpj_certifier },
@@ -104,9 +89,7 @@ async function fillGreenCpr(page, formData) {
     }
 }
 
-/**
- * Preenche a seção de informações do Creditor.
- */
+
 async function fillCreditor(page, formData) {
     await Utils.expandSectionIfCollapsed(page, '#collapseIdentifiers', 'button[aria-controls="collapseIdentifiers"]');
     await page.waitForSelector('#creditor_name', { visible: true });
@@ -121,9 +104,7 @@ async function fillCreditor(page, formData) {
     await page.type('#creditor_city', formData.creditor_city);
 }
 
-/**
- * Preenche a seção de informações do Debtor.
- */
+
 async function fillDebtor(page, formData) {
     await Utils.expandSectionIfCollapsed(page, '#collapseDebtorInfo', 'button[aria-controls="collapseDebtorInfo"]');
 
@@ -174,9 +155,7 @@ async function fillDebtor(page, formData) {
 }
 
 
-/**
- * Preenche a seção de informações do OtherIssuers.
- */
+
 async function fillOtherIssuers(page, formData) {
     await Utils.expandSectionIfCollapsed(page, '#collapseOtherIssuersInfo', 'button[aria-controls="collapseOtherIssuersInfo"]');
 
@@ -200,12 +179,9 @@ async function fillOtherIssuers(page, formData) {
     await page.type('#issuer_email', formData.issuer_email);
 }
 
-/**
- * Preenche a seção de informações do Product.
- */
+
 async function fillProduct(page, formData) {
     await Utils.expandSectionIfCollapsed(page, '#collapseProduct', 'button[aria-controls="collapseProduct"]');
-
 
     await page.waitForSelector('#product_query', { visible: true });
     await page.type('#product_query', formData.product_query);
@@ -281,7 +257,7 @@ async function fillProduct(page, formData) {
 
     }
 
-    // Expande e preenche "Entrega da Safra"
+    //Entrega da Safra
     await Utils.expandSectionIfCollapsed(page, '#collapseHarvestDelivery', 'button[aria-controls="collapseHarvestDelivery"]');
 
     if (formData.harvest_delivery) {
@@ -324,7 +300,7 @@ async function fillProduct(page, formData) {
 
     }
 
-    // Expande e preenche "Informações da Negociação"
+    //Informações da Negociação
     await Utils.expandSectionIfCollapsed(page, '#collapseNegotiation', 'button[aria-controls="collapseNegotiation"]');
 
     if (formData.negotiation) {
@@ -364,15 +340,13 @@ async function fillProduct(page, formData) {
     }
 }
 
-/**
- * Preenche a seção de informações do Property.
- */
+
 async function fillProperty(page, formData) {
     await Utils.expandSectionIfCollapsed(page, '#collapseProperty', 'button[aria-controls="collapseProperty"]');
 
 
     await page.waitForSelector('#property_production_area', { visible: true });
-    await page.type('#property_production_area', formData.production_area.toString());
+    await page.type('#property_production_area', formData.production_area);
 
 
     await page.waitForSelector('#property_production_area_unit', { visible: true });
@@ -380,36 +354,38 @@ async function fillProperty(page, formData) {
 
 
     await page.waitForSelector('#property_total_area', { visible: true });
-    await page.type('#property_total_area', formData.total_area.toString());
+    await page.type('#property_total_area', formData.total_area);
 
 
     await page.waitForSelector('#property_total_area_unit', { visible: true });
     await page.type('#property_total_area_unit', formData.total_area_unit);
 }
 
-/**
- * Preenche a seção de informações do PropertyImmobile.
- */
+
 async function fillPropertyImmobile(page, formData) {
 
     await Utils.expandSectionIfCollapsed(page, '#collapsePropertyImmobile', 'button[aria-controls="collapsePropertyImmobile"]');
+
     await page.waitForSelector('#property_immobile\\.0\\.property_identification', { visible: true });
     await page.type('#property_immobile\\.0\\.property_identification', formData.property_identification);
+
     await page.waitForSelector('#property_immobile\\.0\\.property_type', { visible: true });
     await page.type('#property_immobile\\.0\\.property_type', formData.property_type);
+
     await page.waitForSelector('#property_immobile\\.0\\.state', { visible: true });
     await page.type('#property_immobile\\.0\\.state', formData.state);
+
     await page.waitForSelector('#property_immobile\\.0\\.city', { visible: true });
     await page.type('#property_immobile\\.0\\.city', formData.city);
+
     await page.waitForSelector('#property_immobile\\.0\\.registry_office', { visible: true });
     await page.type('#property_immobile\\.0\\.registry_office', formData.registry_office);
+
     await page.waitForSelector('#property_immobile\\.0\\.registration_number', { visible: true });
     await page.type('#property_immobile\\.0\\.registration_number', formData.registration_number);
 }
 
-/**
- * Preenche a seção de informações do ImmobileCoordinates.
- */
+
 async function fillImmobileCoordinates(page, formData) {
     await Utils.expandSectionIfCollapsed(page, '#collapseImmobileCoordinates', 'button[aria-controls="collapseImmobileCoordinates"]');
     await page.waitForSelector('#immobile_coordinates\\.0\\.tract', { visible: true });
@@ -420,9 +396,7 @@ async function fillImmobileCoordinates(page, formData) {
     await page.type('#immobile_coordinates\\.0\\.longitude', formData.longitude);
 }
 
-/**
- * Preenche a seção de informações do Garantias.
- */
+
 async function fillGarantias(page, formData) {
     await Utils.expandSectionIfCollapsed(page, '#collapseGuarantees', 'button[aria-controls="collapseGuarantees"]');
 
@@ -457,6 +431,19 @@ async function fillGarantias(page, formData) {
     }
 }
 
+/**
+ * Wait until the element is enabled.
+ */
+async function waitForEnabled(page, selector) {
+    await page.waitForFunction(
+        (sel) => {
+            const element = document.querySelector(sel);
+            return element && !element.disabled;
+        },
+        {},
+        selector
+    );
+}
 
 /**
  * Automates the process of filling out and submitting the Duplicate Service form.
@@ -486,20 +473,4 @@ export async function create(page, formData) {
     const protocolData = await Utils.getProtocol(page);
 
     return { successMessage, protocolData };
-}
-
-
-
-/**
- * Aguarda até que o elemento esteja habilitado.
- */
-async function waitForEnabled(page, selector) {
-    await page.waitForFunction(
-        (sel) => {
-            const element = document.querySelector(sel);
-            return element && !element.disabled;
-        },
-        {},
-        selector
-    );
 }

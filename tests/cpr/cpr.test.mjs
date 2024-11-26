@@ -51,14 +51,13 @@ describe("CPR Test", function () {
         ]);
     });
 
-    it.only('Should fill out all form fields and submit for registration', async () => {
+    it('Should fill out all form fields and submit for registration', async () => {
         const page = await getAppPage();
         const formData = mockFormData();
-    
-        formData.mainParticipantCnpj = cpr.main_participant_cnpj;
         formData.wallet = cpr.wallet;
-    
+
         const { successMessage, protocolData } = await create(page, formData);
+       
         expect(successMessage).to.include('Cpr enviado para registro com sucesso!');
         expect(protocolData).to.not.be.null;
 
