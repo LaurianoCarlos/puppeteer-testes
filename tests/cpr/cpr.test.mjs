@@ -14,6 +14,7 @@ let cpr;
 
 describe("CPR Test", function () {
     this.timeout(TIME.FOUR_MINUTES);
+
     before(async () => {
         cpr = (await ApiInterfaceService.findListByParticipant(SLUG.CPR_SLUG))[0];
     });
@@ -21,7 +22,6 @@ describe("CPR Test", function () {
     it('Should find a CPR by ID', async () => {
         const page = await getAppPage();
         const results = await searchById(page, cpr.achievement_id);
-
         expect(results.some(result => result.includes(cpr.achievement_id))).to.be.true;
     });
 
@@ -44,10 +44,9 @@ describe("CPR Test", function () {
     it('Should not find a CPR by Wallet', async () => {
         const page = await getAppPage();
         const walletUuid = uuid();
-        const { message: message } = await searchByWalletNotFound(page, walletUuid);
-
+        const { message } = await searchByWalletNotFound(page, walletUuid);
         expect(message).to.be.oneOf([
-           'Não foram encontradas cpr na carteira informada!'
+            'Não foram encontradas cpr na carteira informada!'
         ]);
     });
 
@@ -57,24 +56,23 @@ describe("CPR Test", function () {
         formData.wallet = cpr.wallet;
 
         const { successMessage, protocolData } = await create(page, formData);
-       
-        expect(successMessage).to.include('Cpr enviado para registro com sucesso!');
+
+        expect(successMessage).to.include('CPR enviada para registro com sucesso!');
         expect(protocolData).to.not.be.null;
 
         protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.OPENED, SERVICES.CPR);
-    })
+    });
 
-    it('You must fill in the fields, except green CPR, and send it for registration', async () => {
+    it.only('You must fill in the fields, except green CPR, and send it for registration', async () => {
         const page = await getAppPage();
         const formData = mockFormData();
         formData.wallet = cpr.wallet;
 
         const { successMessage, protocolData } = await create(page, formData, false);
-       
-        expect(successMessage).to.include('Cpr enviado para registro com sucesso!');
+
+        expect(successMessage).to.include('CPR enviada para registro com sucesso!');
         expect(protocolData).to.not.be.null;
 
         protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.OPENED, SERVICES.CPR);
-    })
- 
+    });
 });

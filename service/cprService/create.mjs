@@ -1,6 +1,18 @@
 import { ROUTE } from '../../config/constant.mjs';
 import { Utils } from '../../helpers/Utils.js';
 
+async function fillInFields(page, fields) {
+    for (const field of fields) {
+        await page.waitForSelector(field.selector, { visible: true });
+
+        if(field.type === 'select'){
+            await page.select(field.selector, field.value);
+        } else {
+            await page.type(field.selector, field.value);
+        }
+    }
+}
+
 async function fillCpr(page, formData) { 
 
     await page.evaluate(() => {
@@ -16,47 +28,32 @@ async function fillCpr(page, formData) {
     });
 
     await page.waitForSelector('#collapseCprInfo.show', { visible: true });
-    await page.waitForSelector('#cpr_type', { visible: true });
-    await page.select('#cpr_type', formData.cpr_type);
 
-    await page.waitForSelector('#wallet', { visible: true });
-    await page.select('#wallet', formData.wallet);
-
-    await page.waitForSelector('#cpr_value', { visible: true });
-    await page.type('#cpr_value', formData.cpr_value);
-
-    await page.waitForSelector('#date', { visible: true });
-    await page.type('#date', formData.date);
-
-    await page.waitForSelector('#amendment_ratification_reratification', { visible: true });
-    await page.type('#amendment_ratification_reratification', formData.amendment_ratification_reratification);
+    const fields = [
+        { selector: '#cpr_type', value: formData.cpr_type, type: 'select' },
+        { selector: '#wallet', value: formData.wallet, type: 'select' },
+        { selector: '#cpr_value', value: formData.cpr_value },
+        { selector: '#date', value: formData.date },
+        { selector: '#amendment_ratification_reratification', value: formData.amendment_ratification_reratification }
+    ];
+    await fillInFields(page, fields);
 }
-
 
 async function fillAsset(page, formData) {
     await Utils.expandSectionIfCollapsed(page, '#collapseMain', 'button[aria-controls="collapseMain"]');
-    await page.waitForSelector('#participant_cnpj', { visible: true });
-    await page.type('#participant_cnpj', formData.participant_cnpj);
+    
+    const fields = [
+        { selector: '#participant_cnpj', value: formData.participant_cnpj },
+        { selector: '#asset_id', value: formData.asset_id },
+        { selector: '#ipoc', value: formData.ipoc },
+        { selector: '#issue_date', value: formData.issue_date },
+        { selector: '#due_date', value: formData.due_date },
+        { selector: '#value', value: formData.value },
+        { selector: '#category_subcategory', value: formData.category_subcategory }
+    ];
 
-    await page.waitForSelector('#asset_id', { visible: true });
-    await page.type('#asset_id', formData.asset_id);
-
-    await page.waitForSelector('#ipoc', { visible: true });
-    await page.type('#ipoc', formData.ipoc);
-
-    await page.waitForSelector('#issue_date', { visible: true });
-    await page.type('#issue_date', formData.issue_date);
-
-    await page.waitForSelector('#due_date', { visible: true });
-    await page.type('#due_date', formData.due_date);
-
-    await page.waitForSelector('#value', { visible: true });
-    await page.type('#value', formData.value);
-
-    await page.waitForSelector('#category_subcategory', { visible: true });
-    await page.type('#category_subcategory', formData.category_subcategory);
+    await fillInFields(page, fields);
 }
-
 
 async function fillGreenCpr(page, formData) {
     await Utils.expandSectionIfCollapsed(page, '#collapseGreen', 'button[aria-controls="collapseGreen"]');
@@ -83,27 +80,22 @@ async function fillGreenCpr(page, formData) {
         { selector: '#georeferencing', value: formData.georeferencing }
     ];
 
-    for (const field of fields) {
-        await page.waitForSelector(field.selector, { visible: true });
-        await page.type(field.selector, field.value);
-    }
+    await fillInFields(page, fields);
 }
-
 
 async function fillCreditor(page, formData) {
     await Utils.expandSectionIfCollapsed(page, '#collapseIdentifiers', 'button[aria-controls="collapseIdentifiers"]');
-    await page.waitForSelector('#creditor_name', { visible: true });
-    await page.type('#creditor_name', formData.creditor_name);
-    await page.waitForSelector('#creditor_cpf_cnpj', { visible: true });
-    await page.type('#creditor_cpf_cnpj', formData.creditor_cpf_cnpj);
-    await page.waitForSelector('#creditor_address', { visible: true });
-    await page.type('#creditor_address', formData.creditor_address);
-    await page.waitForSelector('#creditor_state', { visible: true });
-    await page.type('#creditor_state', formData.creditor_state);
-    await page.waitForSelector('#creditor_city', { visible: true });
-    await page.type('#creditor_city', formData.creditor_city);
-}
 
+    const fields = [
+        { selector: '#creditor_name', value: formData.creditor_name },
+        { selector: '#creditor_cpf_cnpj', value: formData.creditor_cpf_cnpj },
+        { selector: '#creditor_address', value: formData.creditor_address },
+        { selector: '#creditor_state', value: formData.creditor_state },
+        { selector: '#creditor_city', value: formData.creditor_city }
+    ];
+
+    await fillInFields(page, fields);
+}
 
 async function fillDebtor(page, formData) {
     await Utils.expandSectionIfCollapsed(page, '#collapseDebtorInfo', 'button[aria-controls="collapseDebtorInfo"]');
@@ -122,22 +114,13 @@ async function fillDebtor(page, formData) {
         { selector: '#mobile_phone', value: formData.mobile_phone },
         { selector: '#address', value: formData.address },
         { selector: '#debtor_state', value: formData.debtor_state },
-        { selector: '#debtor_city', value: formData.debtor_city }
+        { selector: '#debtor_city', value: formData.debtor_city },
+        { selector: '#debtor_document_type', value: formData.debtor_document_type , type: 'select'},
+        { selector: '#gender', value: formData.gender },
+        { selector: '#debtor_marital_status', value: formData.debtor_marital_status, type: 'select' }
     ];
 
-    for (const field of fields) {
-        await page.waitForSelector(field.selector, { visible: true });
-        await page.type(field.selector, field.value);
-    }
-
-    await page.waitForSelector('#debtor_document_type', { visible: true });
-    await page.select('#debtor_document_type', formData.debtor_document_type);
-
-    await page.waitForSelector('#gender', { visible: true });
-    await page.select('#gender', formData.gender);
-
-    await page.waitForSelector('#debtor_marital_status', { visible: true });
-    await page.select('#debtor_marital_status', formData.debtor_marital_status);
+    await fillInFields(page, fields);
 
     if (formData.debtor_marital_status === '2') {
         const spouseFields = [
@@ -147,38 +130,27 @@ async function fillDebtor(page, formData) {
             { selector: '#debtor_spouse_email', value: formData.spouse_email }
         ];
 
-        for (const field of spouseFields) {
-            await page.waitForSelector(field.selector, { visible: true });
-            await page.type(field.selector, field.value);
-        }
+        await fillInFields(page, spouseFields);
     }
 }
-
-
 
 async function fillOtherIssuers(page, formData) {
     await Utils.expandSectionIfCollapsed(page, '#collapseOtherIssuersInfo', 'button[aria-controls="collapseOtherIssuersInfo"]');
 
-    await page.waitForSelector('#issuer_name', { visible: true });
-    await page.type('#issuer_name', formData.issuer_name);
-    await page.waitForSelector('#issuer_cpf_cnpj', { visible: true });
-    await page.type('#issuer_cpf_cnpj', formData.issuer_cpf_cnpj);
-    await page.waitForSelector('#issuer_identity', { visible: true });
-    await page.type('#issuer_identity', formData.issuer_identity);
-    await page.waitForSelector('#issuer_authority', { visible: true });
-    await page.type('#issuer_authority', formData.issuer_authority);
-    await page.waitForSelector('#issuer_nationality', { visible: true });
-    await page.type('#issuer_nationality', formData.issuer_nationality);
-    await page.waitForSelector('#issuer_gender', { visible: true });
-    await page.select('#issuer_gender', formData.issuer_gender);
-    await page.waitForSelector('#issuer_profession', { visible: true });
-    await page.type('#issuer_profession', formData.issuer_profession);
-    await page.waitForSelector('#issuer_state', { visible: true });
-    await page.type('#issuer_state', formData.issuer_state);
-    await page.waitForSelector('#issuer_email', { visible: true });
-    await page.type('#issuer_email', formData.issuer_email);
-}
+    const fields = [
+        { selector: '#issuer_name', value: formData.issuer_name },
+        { selector: '#issuer_cpf_cnpj', value: formData.issuer_cpf_cnpj },
+        { selector: '#issuer_identity', value: formData.issuer_identity },
+        { selector: '#issuer_authority', value: formData.issuer_authority },
+        { selector: '#issuer_nationality', value: formData.issuer_nationality },
+        { selector: '#issuer_gender', value: formData.issuer_gender, type: 'select' },
+        { selector: '#issuer_profession', value: formData.issuer_profession },
+        { selector: '#issuer_state', value: formData.issuer_state },
+        { selector: '#issuer_email', value: formData.issuer_email }
+    ];
 
+    await fillInFields(page, fields);
+}
 
 async function fillProduct(page, formData) {
     await Utils.expandSectionIfCollapsed(page, '#collapseProduct', 'button[aria-controls="collapseProduct"]');
@@ -222,39 +194,21 @@ async function fillProduct(page, formData) {
     if (formData.harvest) {
         const harvest = formData.harvest;
 
-        await page.waitForSelector('#harvest_description', { visible: true });
-        await page.type('#harvest_description', harvest.harvest_description);
+        const fields = [
+            { selector: '#harvest_description', value: harvest.harvest_description },
+            { selector: '#harvest_status', value: harvest.status, type: 'select' },
+            { selector: '#product_quantity', value: harvest.product_quantity },
+            { selector: '#product_unit_select', value: harvest.product_unit, type: 'select' },
+            { selector: '#packing_standard', value: harvest.packing_standard },
+            { selector: '#quotation_source', value: harvest.quotation_source },
+            { selector: '#quotation_market', value: harvest.quotation_market },
+            { selector: '#quotation_index', value: harvest.quotation_index },
+            { selector: '#quotation_date', value: harvest.quotation_date },
+            { selector: '#unit_value', value: harvest.unit_value },
+            { selector: '#planting_date', value: harvest.planting_date }
+        ];
 
-        await page.waitForSelector('#harvest_status', { visible: true });
-        await page.select('#harvest_status', harvest.status);
-
-        await page.waitForSelector('#product_quantity', { visible: true });
-        await page.type('#product_quantity', harvest.product_quantity);
-
-        await page.waitForSelector('#product_unit_select', { visible: true });
-        await page.select('#product_unit_select', harvest.product_unit);
-
-        await page.waitForSelector('#packing_standard', { visible: true });
-        await page.type('#packing_standard', harvest.packing_standard);
-
-        await page.waitForSelector('#quotation_source', { visible: true });
-        await page.type('#quotation_source', harvest.quotation_source);
-
-        await page.waitForSelector('#quotation_market', { visible: true });
-        await page.type('#quotation_market', harvest.quotation_market)
-
-        await page.waitForSelector('#quotation_index', { visible: true });
-        await page.type('#quotation_index', harvest.quotation_index)
-
-        await page.waitForSelector('#quotation_date', { visible: true });
-        await page.type('#quotation_date', harvest.quotation_date);
-
-        await page.waitForSelector('#unit_value', { visible: true });
-        await page.type('#unit_value', harvest.unit_value);
-
-        await page.waitForSelector('#planting_date', { visible: true });
-        await page.type('#planting_date', harvest.planting_date);
-
+        await fillInFields(page, fields);
     }
 
     //Entrega da Safra
@@ -263,41 +217,20 @@ async function fillProduct(page, formData) {
     if (formData.harvest_delivery) {
         const delivery = formData.harvest_delivery;
 
-        await page.waitForSelector('#harvest_description_delivery', { visible: true });
-        await page.type('#harvest_description_delivery', delivery.address);
+        const fields = [
+            { selector: '#harvest_description_delivery', value: delivery.address },
+            { selector: '#delivery_address', value: delivery.address },
+            { selector: '#city', value: delivery.city },
+            { selector: '#state', value: delivery.state },
+            { selector: '#delivery_due_date', value: delivery.delivery_due_date },
+            { selector: '#payment_method', value: delivery.payment_method },
+            { selector: '#settlement_schedule', value: delivery.settlement_schedule },
+            { selector: '#delivery_conditions', value: delivery.delivery_conditions },
+            { selector: '#delivered_quantity', value: delivery.delivered_quantity },
+            { selector: '#early_maturity_date', value: delivery.early_maturity_date }
+        ];
 
-        await page.waitForSelector('#delivery_address', { visible: true });
-        await page.type('#delivery_address', delivery.address);
-
-        await page.waitForSelector('#city', { visible: true });
-        await page.type('#city', delivery.city);
-
-
-        await page.waitForSelector('#state', { visible: true });
-        await page.type('#state', delivery.state);
-
-
-        await page.waitForSelector('#delivery_due_date', { visible: true });
-        await page.type('#delivery_due_date', delivery.delivery_due_date);
-
-
-        await page.waitForSelector('#payment_method', { visible: true });
-        await page.type('#payment_method', delivery.payment_method);
-
-
-        await page.waitForSelector('#settlement_schedule', { visible: true });
-        await page.type('#settlement_schedule', delivery.settlement_schedule);
-
-
-        await page.waitForSelector('#delivery_conditions', { visible: true });
-        await page.type('#delivery_conditions', delivery.delivery_conditions);
-
-        await page.waitForSelector('#delivered_quantity', { visible: true });
-        await page.type('#delivered_quantity', delivery.delivered_quantity);
-
-        await page.waitForSelector('#early_maturity_date', { visible: true });
-        await page.type('#early_maturity_date', delivery.early_maturity_date);
-
+        await fillInFields(page, fields);
     }
 
     //Informações da Negociação
@@ -305,97 +238,65 @@ async function fillProduct(page, formData) {
 
     if (formData.negotiation) {
         const negotiation = formData.negotiation;
-        await page.waitForSelector('#product_negotiation_currency', { visible: true });
-        await page.type('#product_negotiation_currency', negotiation.currency);
 
-        await page.waitForSelector('#exchange_rate_variation', { visible: true });
-        await page.type('#exchange_rate_variation', negotiation.exchange_rate_variation);
+        const fields = [
+            { selector: '#product_negotiation_currency', value: negotiation.currency },
+            { selector: '#exchange_rate_variation', value: negotiation.exchange_rate_variation },
+            { selector: '#interest_rate_percentage', value: negotiation.interest_rate_percentage },
+            { selector: '#product_negotiation_trading_term', value: negotiation.trading_term },
+            { selector: '#correction_factor', value: negotiation.correction_factor.toString() },
+            { selector: '#observation', value: negotiation.observation },
+            { selector: '#product_negotiation_settlement_method', value: negotiation.settlement_method },
+            { selector: '#product_negotiation_settlement_condition', value: negotiation.settlement_condition },
+            { selector: '#product_negotiation_first_installment_date', value: negotiation.first_installment_date },
+            { selector: '#product_negotiation_settlement_date', value: negotiation.settlement_date },
+            { selector: '#product_negotiation_early_maturity_date', value: negotiation.early_maturity_date }
+        ];
 
-        await page.waitForSelector('#interest_rate_percentage', { visible: true });
-        await page.type('#interest_rate_percentage', negotiation.interest_rate_percentage);
-
-        await page.waitForSelector('#product_negotiation_trading_term', { visible: true });
-        await page.type('#product_negotiation_trading_term', negotiation.trading_term);
-    
-        await page.waitForSelector('#correction_factor', { visible: true });
-        await page.type('#correction_factor', negotiation.correction_factor.toString());
-
-        await page.waitForSelector('#observation', { visible: true });
-        await page.type('#observation', negotiation.observation);
-
-        await page.waitForSelector('#product_negotiation_settlement_method', { visible: true });
-        await page.type('#product_negotiation_settlement_method', negotiation.settlement_method);
-
-        await page.waitForSelector('#product_negotiation_settlement_condition', { visible: true });
-        await page.type('#product_negotiation_settlement_condition', negotiation.settlement_condition);
-
-        await page.waitForSelector('#product_negotiation_first_installment_date', { visible: true });
-        await page.type('#product_negotiation_first_installment_date', negotiation.first_installment_date);
-
-        await page.waitForSelector('#product_negotiation_settlement_date', { visible: true });
-        await page.type('#product_negotiation_settlement_date', negotiation.settlement_date);
-
-        await page.waitForSelector('#product_negotiation_early_maturity_date', { visible: true });
-        await page.type('#product_negotiation_early_maturity_date', negotiation.early_maturity_date);
+        await fillInFields(page, fields);
     }
 }
-
 
 async function fillProperty(page, formData) {
     await Utils.expandSectionIfCollapsed(page, '#collapseProperty', 'button[aria-controls="collapseProperty"]');
 
+    const fields = [
+        { selector: '#property_production_area', value: formData.production_area },
+        { selector: '#property_production_area_unit', value: formData.production_area_unit },
+        { selector: '#property_total_area', value: formData.total_area },
+        { selector: '#property_total_area_unit', value: formData.total_area_unit }
+    ];
 
-    await page.waitForSelector('#property_production_area', { visible: true });
-    await page.type('#property_production_area', formData.production_area);
-
-
-    await page.waitForSelector('#property_production_area_unit', { visible: true });
-    await page.type('#property_production_area_unit', formData.production_area_unit);
-
-
-    await page.waitForSelector('#property_total_area', { visible: true });
-    await page.type('#property_total_area', formData.total_area);
-
-
-    await page.waitForSelector('#property_total_area_unit', { visible: true });
-    await page.type('#property_total_area_unit', formData.total_area_unit);
+    await fillInFields(page, fields);
 }
-
 
 async function fillPropertyImmobile(page, formData) {
 
     await Utils.expandSectionIfCollapsed(page, '#collapsePropertyImmobile', 'button[aria-controls="collapsePropertyImmobile"]');
 
-    await page.waitForSelector('#property_immobile\\.0\\.property_identification', { visible: true });
-    await page.type('#property_immobile\\.0\\.property_identification', formData.property_identification);
+    const fields = [
+        { selector: '#property_immobile\\.0\\.property_identification', value: formData.property_identification },
+        { selector: '#property_immobile\\.0\\.property_type', value: formData.property_type },
+        { selector: '#property_immobile\\.0\\.state', value: formData.state },
+        { selector: '#property_immobile\\.0\\.city', value: formData.city },
+        { selector: '#property_immobile\\.0\\.registry_office', value: formData.registry_office },
+        { selector: '#property_immobile\\.0\\.registration_number', value: formData.registration_number }
+    ];
 
-    await page.waitForSelector('#property_immobile\\.0\\.property_type', { visible: true });
-    await page.type('#property_immobile\\.0\\.property_type', formData.property_type);
-
-    await page.waitForSelector('#property_immobile\\.0\\.state', { visible: true });
-    await page.type('#property_immobile\\.0\\.state', formData.state);
-
-    await page.waitForSelector('#property_immobile\\.0\\.city', { visible: true });
-    await page.type('#property_immobile\\.0\\.city', formData.city);
-
-    await page.waitForSelector('#property_immobile\\.0\\.registry_office', { visible: true });
-    await page.type('#property_immobile\\.0\\.registry_office', formData.registry_office);
-
-    await page.waitForSelector('#property_immobile\\.0\\.registration_number', { visible: true });
-    await page.type('#property_immobile\\.0\\.registration_number', formData.registration_number);
+    await fillInFields(page, fields);
 }
-
 
 async function fillImmobileCoordinates(page, formData) {
     await Utils.expandSectionIfCollapsed(page, '#collapseImmobileCoordinates', 'button[aria-controls="collapseImmobileCoordinates"]');
-    await page.waitForSelector('#immobile_coordinates\\.0\\.tract', { visible: true });
-    await page.type('#immobile_coordinates\\.0\\.tract', formData.tract);
-    await page.waitForSelector('#immobile_coordinates\\.0\\.latitude', { visible: true });
-    await page.type('#immobile_coordinates\\.0\\.latitude', formData.latitude);
-    await page.waitForSelector('#immobile_coordinates\\.0\\.longitude', { visible: true });
-    await page.type('#immobile_coordinates\\.0\\.longitude', formData.longitude);
-}
 
+    const fields = [
+        { selector: '#immobile_coordinates\\.0\\.tract', value: formData.tract },
+        { selector: '#immobile_coordinates\\.0\\.latitude', value: formData.latitude },
+        { selector: '#immobile_coordinates\\.0\\.longitude', value: formData.longitude }
+    ];
+
+    await fillInFields(page, fields);
+}
 
 async function fillGarantias(page, formData) {
     await Utils.expandSectionIfCollapsed(page, '#collapseGuarantees', 'button[aria-controls="collapseGuarantees"]');
@@ -405,44 +306,32 @@ async function fillGarantias(page, formData) {
     for (let index = 0; index < guaranteesData.length; index++) {
         const guarantee = guaranteesData[index];
 
-        await page.select(`#guarantee_type_${index}`, guarantee.guarantee_type.toString());
-        await page.waitForSelector(`#guarantee_value_${index}`, { visible: true });
-        await page.type(`#guarantee_value_${index}`, guarantee.value.toString());
-        await page.type(`#essentiality_of_guarantee_${index}`, guarantee.essentiality_of_guarantee);
-        await page.type(`#guarantee_name_${index}`, guarantee.name);
-        await page.type(`#guarantee_cpf_cnpj_${index}`, guarantee.cpf_cnpj);
-        await page.type(`#guarantee_state_${index}`, guarantee.state);
-        await page.type(`#guarantee_city_${index}`, guarantee.city);
-        await page.type(`#guarantee_profession_${index}`, guarantee.profession);
-        await page.type(`#guarantee_email_${index}`, guarantee.email);
-        await page.type(`#guarantee_guarantor_type_${index}`, guarantee.guarantor_type);
-        await page.type(`#guarantee_guarantor_cpf_cnpj_${index}`, guarantee.guarantor_cpf_cnpj);
-        await page.type(`#guarantee_vehicle_owner_cpf_cnpj_${index}`, guarantee.vehicle_owner_cpf_cnpj);
-        await page.type(`#guarantee_rural_property_owner_cpf_cnpj_${index}`, guarantee.rural_property_owner_cpf_cnpj);
-        await page.type(`#guarantee_rural_real_estate_certificate_${index}`, guarantee.rural_real_estate_certificate);
-        await page.type(`#guarantee_rural_real_estate_certificate_registration_${index}`, guarantee.rural_real_estate_certificate_registration);
-        await page.type(`#guarantee_rural_real_estate_certificate_value_${index}`, guarantee.rural_real_estate_certificate_value);
-        await page.type(`#guarantee_rural_real_estate_certificate_due_date_${index}`, guarantee.rural_real_estate_certificate_due_date);
+        const fields = [
+            { selector: `#guarantee_type_${index}`, value: guarantee.guarantee_type.toString(), type: 'select' },
+            { selector: `#guarantee_value_${index}`, value: guarantee.value.toString() },
+            { selector: `#essentiality_of_guarantee_${index}`, value: guarantee.essentiality_of_guarantee },
+            { selector: `#guarantee_name_${index}`, value: guarantee.name },
+            { selector: `#guarantee_cpf_cnpj_${index}`, value: guarantee.cpf_cnpj },
+            { selector: `#guarantee_state_${index}`, value: guarantee.state },
+            { selector: `#guarantee_city_${index}`, value: guarantee.city },
+            { selector: `#guarantee_profession_${index}`, value: guarantee.profession },
+            { selector: `#guarantee_email_${index}`, value: guarantee.email },
+            { selector: `#guarantee_guarantor_type_${index}`, value: guarantee.guarantor_type },
+            { selector: `#guarantee_guarantor_cpf_cnpj_${index}`, value: guarantee.guarantor_cpf_cnpj },
+            { selector: `#guarantee_vehicle_owner_cpf_cnpj_${index}`, value: guarantee.vehicle_owner_cpf_cnpj },
+            { selector: `#guarantee_rural_property_owner_cpf_cnpj_${index}`, value: guarantee.rural_property_owner_cpf_cnpj },
+            { selector: `#guarantee_rural_real_estate_certificate_${index}`, value: guarantee.rural_real_estate_certificate },
+            { selector: `#guarantee_rural_real_estate_certificate_registration_${index}`, value: guarantee.rural_real_estate_certificate_registration },
+            { selector: `#guarantee_rural_real_estate_certificate_value_${index}`, value: guarantee.rural_real_estate_certificate_value },
+            { selector: `#guarantee_rural_real_estate_certificate_due_date_${index}`, value: guarantee.rural_real_estate_certificate_due_date }
+        ];
 
+        await fillInFields(page, fields);
 
         if (index < guaranteesData.length - 1) {
             await page.click('span[wire\\:click="addGuarantee"]');
         }
     }
-}
-
-/**
- * Wait until the element is enabled.
- */
-async function waitForEnabled(page, selector) {
-    await page.waitForFunction(
-        (sel) => {
-            const element = document.querySelector(sel);
-            return element && !element.disabled;
-        },
-        {},
-        selector
-    );
 }
 
 /**

@@ -74,7 +74,6 @@ export async function create(page, formData) {
     await page.type('#total_contract_value', formData.totalContractValue);
     await page.type('#installment_number', formData.installmentNumber);
     await page.type('#total_installment_number', formData.totalInstallmentNumber);
-    //await page.type('#asset_date_transfer', formData.assetDateTransfer);
     await page.type('#asset_due_date', formData.assetDueDate);
     await page.type('#uf_payment', formData.ufPayment);
     await page.type('#invoice', formData.invoice);
