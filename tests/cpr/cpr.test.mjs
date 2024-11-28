@@ -63,5 +63,18 @@ describe("CPR Test", function () {
 
         protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.OPENED, SERVICES.CPR);
     })
+
+    it('You must fill in the fields, except green CPR, and send it for registration', async () => {
+        const page = await getAppPage();
+        const formData = mockFormData();
+        formData.wallet = cpr.wallet;
+
+        const { successMessage, protocolData } = await create(page, formData, false);
+       
+        expect(successMessage).to.include('Cpr enviado para registro com sucesso!');
+        expect(protocolData).to.not.be.null;
+
+        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.OPENED, SERVICES.CPR);
+    })
  
 });

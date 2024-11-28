@@ -451,12 +451,16 @@ async function waitForEnabled(page, selector) {
  * @param {object} formData - The form data to be filled.
  * @returns {object} An object containing the success message and protocol data.
  */
-export async function create(page, formData) {
+export async function create(page, formData, $greenCpr = true) {
     await page.goto(ROUTE.CPR_CREATE_BASE);
 
     await fillCpr(page, formData);
     await fillAsset(page, formData);
-    await fillGreenCpr(page, formData);
+
+    if($greenCpr){
+        await fillGreenCpr(page, formData);
+    }
+
     await fillCreditor(page, formData);
     await fillDebtor(page, formData);
     await fillOtherIssuers(page, formData);
