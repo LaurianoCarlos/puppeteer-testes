@@ -109,6 +109,22 @@ class ApiInterfaceService {
             throw new Error('Erro ao buscar dados');
         }
     }
+
+   
+    static async getAccreditors() {
+        const url = `accreditors`;
+        
+        try {
+            const response = await this.baseInstance.get(url, {
+                timeout: 60000,
+            });
+
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao buscar dados:', error.response ? error.response.data : error.message);
+            throw new Error('Erro ao buscar dados');
+        }
+    }
 }
 
 export default ApiInterfaceService;

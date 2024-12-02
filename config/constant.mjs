@@ -27,6 +27,9 @@ const CONTRACT_MERCANTIL_CREATE_BASE = BASE_URL + 'mercantil-contract/create';
 const CPR_SEARCH_BASE = BASE_URL + 'cpr/search';
 const CPR_CREATE_BASE = BASE_URL + 'cpr';
 
+const UR_SEARCH_BASE = BASE_URL + 'receivable/search';
+const UR_CREATE_BASE = BASE_URL + 'receivable';
+
 //Protocol
 export const PROTOCOL_BASE = API_DUPLICATAS_BASE_URL + 'protocols';
 export const DUPLICATE_BASE = API_DUPLICATAS_BASE_URL;
@@ -36,6 +39,9 @@ export const ROUTE = {
 
     CPR_SEARCH_BASE: CPR_SEARCH_BASE,
     CPR_CREATE_BASE: CPR_CREATE_BASE,
+
+    UR_SEARCH_BASE: UR_SEARCH_BASE,
+    UR_CREATE_BASE: UR_CREATE_BASE,
 
     DUPLICATE_MERCANTIL_SEARCH_BASE: DUPLICATE_MERCANTIL_SEARCH_BASE,
     DUPLICATE_MERCANTIL_CREATE_BASE: DUPLICATE_MERCANTIL_CREATE_BASE,
@@ -53,6 +59,7 @@ export const ROUTE = {
 
 export const SLUG = {
     CPR_SLUG:                   'cpr',
+    UR_SLUG:                    'receivables',
     DUPLICATE_MERCANTIL_SLUG:   'duplicatas-mercantis',
     DUPLICATE_SERVICE_SLUG:     'duplicatas-servicos',
     CONTRACT_MERCANTIL_SLUG:    'mercantile-contracts',
@@ -67,6 +74,7 @@ export const PROTOCOL_STATUS = {
 export const SERVICES = {
     WALLET:                 'api-de-carteiras',
     CPR:                    'api-de-registro-cpr',
+    UR:                     'api-de-registro-ur',
     DUPLICATE_MERCANTIL:    'api-de-registro-de-duplicatas-mercantil',
     SERVICE_DUPLICATE:      'api-de-registro-de-duplicatas-servico',
     CONTRACT_MERCANTIL:     'api-de-contrato-mercantil',
