@@ -4,6 +4,7 @@ import { uuid, mockFormData } from '../../helpers/mock.js';
 import { SLUG } from '../../config/constant.mjs';
 import { getAppPage } from "../../service/loginSetup.mjs";
 import { searchById } from "../../service/cprService/searchById.mjs";
+import { searchByProduct } from "../../service/cprService/searchByProduct.mjs";
 import { searchByWallet, searchByWalletNotFound } from "../../service/cprService/searchByWallet.mjs";
 import { create } from "../../service/cprService/create.mjs";
 
@@ -50,6 +51,16 @@ describe("CPR Test", function () {
         ]);
     });
 
+    it('Should not find a CPR by Product', async () => {
+        const page = await getAppPage(); 
+        const productQuery = 'arroz';
+        const { modalContent } = await searchByProduct(page, productQuery);
+    
+        const noResultsMessage = 'ARROZ';
+        expect(modalContent).to.include(noResultsMessage);
+    });
+    
+
     it('Should fill out all form fields and submit for registration', async () => {
         const page = await getAppPage();
         const formData = mockFormData();
@@ -63,7 +74,7 @@ describe("CPR Test", function () {
         protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.OPENED, SERVICES.CPR);
     });
 
-    it.only('You must fill in the fields, except green CPR, and send it for registration', async () => {
+    it('You must fill in the fields, except green CPR, and send it for registration', async () => {
         const page = await getAppPage();
         const formData = mockFormData();
         formData.wallet = cpr.wallet;
