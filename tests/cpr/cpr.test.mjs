@@ -61,7 +61,7 @@ describe("CPR Test", function () {
     });
     
 
-    it('Should fill out all form fields and submit for registration', async () => {
+    it.only('Should fill out all form fields and submit for registration', async () => {
         const page = await getAppPage();
         const formData = mockFormData();
         formData.wallet = cpr.wallet;

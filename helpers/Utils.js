@@ -1,4 +1,17 @@
 export class Utils {
+
+  static async fillInFields(page, fields) {
+      for (const field of fields) {
+          await page.waitForSelector(field.selector, { visible: true });
+
+          if(field.type === 'select'){
+              await page.select(field.selector, field.value);
+          } else {
+              await page.type(field.selector, field.value);
+          }
+      }
+  }
+
   /**
    * Obtém os dados do protocolo a partir da primeira linha visível no DataTable.
    * @param {object} page - A página Puppeteer.

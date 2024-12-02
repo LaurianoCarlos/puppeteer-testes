@@ -1,18 +1,17 @@
 import { ROUTE } from '../../config/constant.mjs';
 import { Utils } from '../../helpers/Utils.js';
 
-async function fillInFields(page, fields) {
-    for (const field of fields) {
-        await page.waitForSelector(field.selector, { visible: true });
-
-        if(field.type === 'select'){
-            await page.select(field.selector, field.value);
-        } else {
-            await page.type(field.selector, field.value);
-        }
-    }
+async function waitForEnabled(page, selector, timeout = 30000) {
+    await page.waitForFunction(
+        (selector) => {
+            const element = document.querySelector(selector);
+            return element && !element.disabled;
+        },
+        { timeout },
+        selector
+    );
 }
-
+ 
 async function fillCpr(page, formData) { 
 
     await page.evaluate(() => {
@@ -36,7 +35,7 @@ async function fillCpr(page, formData) {
         { selector: '#date', value: formData.date },
         { selector: '#amendment_ratification_reratification', value: formData.amendment_ratification_reratification }
     ];
-    await fillInFields(page, fields);
+    await Utils.fillInFields(page, fields);
 }
 
 async function fillAsset(page, formData) {
@@ -52,7 +51,7 @@ async function fillAsset(page, formData) {
         { selector: '#category_subcategory', value: formData.category_subcategory }
     ];
 
-    await fillInFields(page, fields);
+    await Utils.fillInFields(page, fields);
 }
 
 async function fillGreenCpr(page, formData) {
@@ -80,7 +79,7 @@ async function fillGreenCpr(page, formData) {
         { selector: '#georeferencing', value: formData.georeferencing }
     ];
 
-    await fillInFields(page, fields);
+    await Utils.fillInFields(page, fields);
 }
 
 async function fillCreditor(page, formData) {
@@ -94,7 +93,7 @@ async function fillCreditor(page, formData) {
         { selector: '#creditor_city', value: formData.creditor_city }
     ];
 
-    await fillInFields(page, fields);
+    await Utils.fillInFields(page, fields);
 }
 
 async function fillDebtor(page, formData) {
@@ -120,7 +119,7 @@ async function fillDebtor(page, formData) {
         { selector: '#debtor_marital_status', value: formData.debtor_marital_status, type: 'select' }
     ];
 
-    await fillInFields(page, fields);
+    await Utils.fillInFields(page, fields);
 
     if (formData.debtor_marital_status === '2') {
         const spouseFields = [
@@ -130,7 +129,7 @@ async function fillDebtor(page, formData) {
             { selector: '#debtor_spouse_email', value: formData.spouse_email }
         ];
 
-        await fillInFields(page, spouseFields);
+        await Utils.fillInFields(page, spouseFields);
     }
 }
 
@@ -149,7 +148,7 @@ async function fillOtherIssuers(page, formData) {
         { selector: '#issuer_email', value: formData.issuer_email }
     ];
 
-    await fillInFields(page, fields);
+    await Utils.fillInFields(page, fields);
 }
 
 async function fillProduct(page, formData) {
@@ -208,7 +207,7 @@ async function fillProduct(page, formData) {
             { selector: '#planting_date', value: harvest.planting_date }
         ];
 
-        await fillInFields(page, fields);
+        await Utils.fillInFields(page, fields);
     }
 
     //Entrega da Safra
@@ -230,7 +229,7 @@ async function fillProduct(page, formData) {
             { selector: '#early_maturity_date', value: delivery.early_maturity_date }
         ];
 
-        await fillInFields(page, fields);
+        await Utils.fillInFields(page, fields);
     }
 
     //Informações da Negociação
@@ -253,7 +252,7 @@ async function fillProduct(page, formData) {
             { selector: '#product_negotiation_early_maturity_date', value: negotiation.early_maturity_date }
         ];
 
-        await fillInFields(page, fields);
+        await Utils.fillInFields(page, fields);
     }
 }
 
@@ -267,7 +266,7 @@ async function fillProperty(page, formData) {
         { selector: '#property_total_area_unit', value: formData.total_area_unit }
     ];
 
-    await fillInFields(page, fields);
+    await Utils.fillInFields(page, fields);
 }
 
 async function fillPropertyImmobile(page, formData) {
@@ -283,7 +282,7 @@ async function fillPropertyImmobile(page, formData) {
         { selector: '#property_immobile\\.0\\.registration_number', value: formData.registration_number }
     ];
 
-    await fillInFields(page, fields);
+    await Utils.fillInFields(page, fields);
 }
 
 async function fillImmobileCoordinates(page, formData) {
@@ -295,7 +294,7 @@ async function fillImmobileCoordinates(page, formData) {
         { selector: '#immobile_coordinates\\.0\\.longitude', value: formData.longitude }
     ];
 
-    await fillInFields(page, fields);
+    await Utils.fillInFields(page, fields);
 }
 
 async function fillGarantias(page, formData) {
@@ -326,7 +325,7 @@ async function fillGarantias(page, formData) {
             { selector: `#guarantee_rural_real_estate_certificate_due_date_${index}`, value: guarantee.rural_real_estate_certificate_due_date }
         ];
 
-        await fillInFields(page, fields);
+        await Utils.fillInFields(page, fields);
 
         if (index < guaranteesData.length - 1) {
             await page.click('span[wire\\:click="addGuarantee"]');
