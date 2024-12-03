@@ -400,6 +400,24 @@ function generatePropertyData() {
     };
 }
 
+/**
+ * Generates Receiving Data.
+ * @returns {object} Receiving Data object.
+ */
+export function generateReceivingAndUser() {
+    return {
+        document_type: 'CNPJ', 
+        document_number: cnpj(), 
+        accreditor_document_number: cnpj(),
+        arrangements: faker.helpers.arrayElement(['VCC', 'MCC', 'MCD']), 
+        type: faker.helpers.arrayElement(['CC', 'CD', 'CG', 'CI', 'PG', 'PP']), 
+        number: faker.string.numeric(5), 
+        digit: faker.string.numeric(1), 
+        agency: faker.string.numeric(4), 
+        ispb: faker.string.numeric(8),
+    };
+}
+
 
 /**
  * Generates the complete DuplicateMercantilForm.
@@ -467,5 +485,27 @@ export function mockFormData() {
         negotiation: generateNegotiationData(),
         guarantees: generateGuaranteesData(),
     };
+}
+
+/**
+ * Generates formData with reused data from existing generators.
+ * @returns {object} Generated formData.
+ */
+export function mockReceivingEndUsers() {
+    const creditorData = generateCreditorData();
+    const debtorData = generateDebtorData();
+
+    return {
+        document_type: 'CNPJ',
+        document_number: debtorData.debtor_cpf_cnpj,
+        accreditor_document_number: creditorData.creditor_cpf_cnpj,
+        arrangements: faker.helpers.arrayElement(['VCC', 'MCC', 'MCD']),
+        type: faker.helpers.arrayElement(['CC', 'CD', 'CG', 'CI', 'PG', 'PP']),
+        number: faker.string.numeric(5),
+        digit: faker.string.numeric(1),
+        agency: faker.string.numeric(4),
+        ispb: faker.string.numeric(8),
+    };
+    
 }
 
