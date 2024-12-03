@@ -23,11 +23,6 @@ export async function create(page, formData) {
         { selector: '#account_document_type', value: formData.account.document_type },
         { selector: '#account_document_number', value: formData.account.document_number },
 
-
-
-
-
-
         { selector: '#occurrence', value: formData.occurrence, type: 'select' },
         { selector: '#external_reference', value: formData.external_reference },
         { selector: '#holder_document_number', value: formData.holder_document_number },

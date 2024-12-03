@@ -12,7 +12,6 @@ describe("UR Test", function () {
     it('You must fill in the fields and send it for registration', async () => {
         const page = await getAppPage();
         const accreditor = (await ApiInterfaceService.getAccreditors())[0];
-        console.log("Accreditors: ", accreditor);
 
         const formData = {
             accreditor_document_number: accreditor.cnpj,
