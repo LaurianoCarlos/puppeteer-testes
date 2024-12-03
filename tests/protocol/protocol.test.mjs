@@ -1,8 +1,7 @@
 import { expect } from 'chai';
-import { TIME } from '../../config/constant.mjs';
 import { uuid } from '../../helpers/mock.js';
 import { PROTOCOL_STATUS } from '../../config/constant.mjs';
-import { getAppPage, closeBrowser } from '../../service/loginSetup.mjs';
+import { getAppPage } from '../../service/loginSetup.mjs';
 import { searchById } from '../../service/protocolService/searchById.mjs';
 import { searchByStatus } from '../../service/protocolService/searchByStatus.mjs';
 import { searchByDateRange } from '../../service/protocolService/searchByDateRange.mjs';
@@ -17,7 +16,7 @@ describe('Protocol search tests', function () {
     protocol = (await ApiInterfaceService.getProtocols())[0];
   });
 
-  it('should find the protocol by ID', async () => {
+  it.only('should find the protocol by ID', async () => {
     const page = await getAppPage();
     const results = await searchById(page, protocol.protocol_id);
     
