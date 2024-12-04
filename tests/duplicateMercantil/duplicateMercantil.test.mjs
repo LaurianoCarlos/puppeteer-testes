@@ -10,16 +10,16 @@ import { findWalletsParticipant, searchWalletsParticipant } from '../../service/
 import protocolLogger from'../../service/ProtocolCSVLogger.js';
 import ApiInterfaceService  from '../../core/api-de-interface-clientes.js';
 
+
 let duplicate;
 
 describe("Test Duplicate Mercantil", function () {
-    this.timeout(TIME.FOUR_MINUTES);
-
+  
     before(async () => {
-        duplicate = (await ApiInterfaceService.findDuplicates(SLUG.DUPLICATE_MERCANTIL_SLUG))[0];
+        duplicate =  (await ApiInterfaceService.findDuplicates(SLUG.DUPLICATE_MERCANTIL_SLUG))[0];
     });
 
-    
+
     it('Should find a Mercantile Duplicate by ID', async () => {
         const page = await getAppPage();
         const results = await searchById(page, duplicate.asset_uuid);
@@ -70,6 +70,7 @@ describe("Test Duplicate Mercantil", function () {
     it('Should fill out all form fields and submit for registration', async () => {
         const page = await getAppPage();
         const formData = generateDuplicateMercantilForm();
+
         formData.mainParticipantCnpj = duplicate.main_participant_cnpj;
         formData.wallet = duplicate.wallet;
 
@@ -80,6 +81,7 @@ describe("Test Duplicate Mercantil", function () {
         protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.OPENED, SERVICES.DUPLICATE_MERCANTIL);
     })
 })
+
 
 
 

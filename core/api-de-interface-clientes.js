@@ -77,7 +77,7 @@ class ApiInterfaceService {
             const response = await this.baseInstance.get(url, {
                 timeout: 60000,
             });
-
+    
             return response.data.data;
         } catch (error) {
             console.error('Erro ao buscar duplicatas:', error.response ? error.response.data : error.message);

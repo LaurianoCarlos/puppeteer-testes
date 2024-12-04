@@ -16,7 +16,7 @@ describe('Protocol search tests', function () {
     protocol = (await ApiInterfaceService.getProtocols())[0];
   });
 
-  it.only('should find the protocol by ID', async () => {
+  it('should find the protocol by ID', async () => {
     const page = await getAppPage();
     const results = await searchById(page, protocol.protocol_id);
     
