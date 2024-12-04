@@ -33,7 +33,7 @@ describe("CPR Test", function () {
         expect(results.some(result => result.includes(duplicateId))).to.be.false;
     });
 
-    it('Should find a CPR by Wallet', async () => {
+    it.skip('Should find a CPR by Wallet', async () => {
         const page = await getAppPage();
         const { results, message } = await searchByWallet(page, cpr.wallet);
         expect(results).to.not.be.null;

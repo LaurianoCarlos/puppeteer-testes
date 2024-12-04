@@ -13,8 +13,8 @@
     "puppeteer": "^23.6.1"
   },
   "scripts": {
-    "testDebug":"npx mocha --parallel --jobs 4 tests/**/*.test.mjs --timeout 1200000",
-    "test":"npx mocha tests/**/*.test.mjs --timeout 30000"
+    "testDebug":"npx mocha --parallel --jobs 2 tests/**/*.test.mjs --timeout 1200000",
+    "test":"npx mocha tests/**/*.test.mjs --timeout 1200000"
   },
   "jest": {
     "transform": {

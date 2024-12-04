@@ -16,6 +16,7 @@ let contract;
 describe("Contract Mercantil Test", function () {
     this.timeout(TIME.FOUR_MINUTES);
     before(async () => {
+        protocolLogger.reset();
         contract = (await ApiInterfaceService.findDuplicates(SLUG.CONTRACT_MERCANTIL_SLUG))[0];
     });
 

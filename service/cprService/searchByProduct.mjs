@@ -22,7 +22,16 @@ export async function searchByProduct(page, product) {
 
   await page.waitForSelector('#product_query', { visible: true });
   await page.type('#product_query', product);
-  await page.click('.btn-search-query');
+
+  await page.evaluate(() => {
+    const button = document.querySelector('.btn-search-query');
+    if (button) {
+        button.click();
+    } else {
+        throw new Error('.btn-search-query not found.');
+    }
+});
+
 
   await page.waitForSelector('.modal-content', { visible: true });
 

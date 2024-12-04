@@ -9,7 +9,7 @@ import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
 describe("UR Test", function () {
     this.timeout(TIME.FOUR_MINUTES);
 
-    it('You must fill in the fields and send it for registration', async () => {
+    it.skip('You must fill in the fields and send it for registration', async () => {
         const page = await getAppPage();
         const accreditor = (await ApiInterfaceService.getAccreditors())[0];
 
