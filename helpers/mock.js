@@ -531,3 +531,27 @@ export function mockConciliation() {
     
 }
 
+
+/**
+ * Generates formData with reused data from existing generators.
+ * @returns {object} Generated formData.
+ */
+export function mockContestation() {
+    const creditorData = generateCreditorData();
+    const debtorData = generateDebtorData();
+
+    return {
+        identifier: uuid(),
+        external_reference:uuid(),
+        receiver_document: creditorData.creditor_cpf_cnpj,
+        receiving_end_user_document: debtorData.debtor_cpf_cnpj,
+        recipient_document:faker.string.numeric(14),
+        reason: faker.helpers.arrayElement(['1', '2', '3', '4', '5', '6']),
+        description: faker.commerce.productDescription(),
+        type: faker.helpers.arrayElement(['1', '2']),
+        operation_id: uuid(),
+        date: genericDate(),
+        type_contestant: faker.helpers.arrayElement(['1', '2', '3', '4', '5', '6'])
+    };
+}
+

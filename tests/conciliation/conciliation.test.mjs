@@ -10,7 +10,7 @@ import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
 describe("Conciliation", function () {
     this.timeout(TIME.FOUR_MINUTES);
 
-    it.only('You must fill in the fields and send it for registration', async () => {
+    it('You must fill in the fields and send it for registration', async () => {
         const page = await getAppPage();
         const conciliation = (await ApiInterfaceService.getConciliation())[0];
 
