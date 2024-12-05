@@ -509,3 +509,25 @@ export function mockReceivingEndUsers() {
     
 }
 
+/**
+ * Generates formData with reused data from existing generators.
+ * @returns {object} Generated formData.
+ */
+export function mockConciliation() {
+    const creditorData = generateCreditorData();
+    const debtorData = generateDebtorData();
+
+    return {
+        reference_date: genericDate(),
+        participant_cnpj: creditorData.creditor_cpf_cnpj,
+        holder_cnpj: debtorData.debtor_cpf_cnpj,
+        effect_type: faker.helpers.arrayElement(['1', '2', '3', '4']),
+        operation_modality:  faker.helpers.arrayElement(['1', '2', '3']),
+        quantity_contracts: faker.string.numeric(1),
+        quantity_contractors: faker.string.numeric(1),
+        total_debt_balance:  faker.finance.amount(10, 100, 2),
+        wallet: ' ',
+    };
+    
+}
+

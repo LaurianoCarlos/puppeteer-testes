@@ -33,6 +33,9 @@ const UR_CREATE_BASE = BASE_URL + 'receivable';
 const RECEIVING_END_USER_SEARCH_BASE = BASE_URL + 'receiving-end-users/search';
 const RECEIVING_END_USER_CREATE_BASE = BASE_URL + 'receiving-end-users';
 
+const CONCILIATION_SEARCH_BASE = BASE_URL + 'conciliation/search';
+const CONCILIATION_CREATE_BASE = BASE_URL + 'conciliation';
+
 //Protocol
 export const PROTOCOL_BASE = API_DUPLICATAS_BASE_URL + 'protocols';
 export const DUPLICATE_BASE = API_DUPLICATAS_BASE_URL;
@@ -42,6 +45,9 @@ export const ROUTE = {
 
     CPR_SEARCH_BASE: CPR_SEARCH_BASE,
     CPR_CREATE_BASE: CPR_CREATE_BASE,
+
+    CONCILIATION_SEARCH_BASE:CONCILIATION_SEARCH_BASE,
+    CONCILIATION_CREATE_BASE: CONCILIATION_CREATE_BASE,
 
     UR_SEARCH_BASE: UR_SEARCH_BASE,
     UR_CREATE_BASE: UR_CREATE_BASE,
@@ -79,6 +85,7 @@ export const PROTOCOL_STATUS = {
 
 export const SERVICES = {
     WALLET:                 'api-de-carteiras',
+    CONCILIATION:           'api-de-conciliacao-de-urs',
     CPR:                    'api-de-registro-cpr',
     UR:                     'api-de-registro-ur',
     RECEIVING_END_USERS:    'api-de-usuario-final-recebedor',

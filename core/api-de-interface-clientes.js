@@ -125,6 +125,21 @@ class ApiInterfaceService {
             throw new Error('Erro ao buscar dados');
         }
     }
+
+    static async getConciliation() {
+        const url = `conciliationUr?participant_id=${AUTH_REGISTRY_AGENT}`;
+       
+        try {
+            const response = await this.baseInstance.get(url, {
+                timeout: 60000,
+            });
+    
+            return response.data.data;
+        } catch (error) {
+            console.log('Erro ao buscar dados:', error.response ? error.response.data : error.message);
+            throw new Error('Erro ao buscar dados',  error.response);
+        }
+    }
 }
 
 export default ApiInterfaceService;
