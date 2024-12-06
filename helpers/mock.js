@@ -555,3 +555,60 @@ export function mockContestation() {
     };
 }
 
+
+
+/**
+ * Generates formData with reused data from existing generators.
+ * @returns {object} Generated formData.
+ */
+export function mockContractEffects() {
+    const creditorData = generateCreditorData();
+    const warranties = generateReceivingAndUser();
+
+    return {
+        external_reference: uuid(),
+        contract_reference: uuid(),
+        receiving_end_user_document_number: creditorData.creditor_cpf_cnpj,
+        is_renegotiation: faker.helpers.arrayElement(['1','0']),
+        previous_contract_reference: faker.person.jobTitle(),
+        participant_document_number: faker.string.numeric(14),
+        holder_document_number: faker.string.numeric(14),
+        effect_type: faker.helpers.arrayElement(['1','2','3','4']),
+        outstanding_balance: faker.finance.amount(1000, 10000, 2),
+        warranty_operation_limit: faker.string.numeric(1),
+        minimum_value_maintained: faker.finance.amount(1000, 10000, 2),
+        due_date:  genericDate(),
+        signature_date:  genericDate(),
+        manager_reference: faker.person.jobTitle(),
+        operation_modality: faker.helpers.arrayElement(['1','2','3']),
+        wallet: " ",
+        interest_rate: faker.string.numeric(1),
+        installments: {
+            installment_date: genericDate(),
+            installment_value: faker.finance.amount(1000, 10000, 2),
+        },
+        warranties: {
+            external_reference: uuid(),
+            division_rule: faker.string.numeric(2),
+            charged_value: faker.finance.amount(1000, 10000, 2),
+            payment_account: {
+                document_number: warranties.document_number,
+                holder_name:faker.company.name(),
+                account_type: faker.helpers.arrayElement(['1','2']),
+                ispb: warranties.ispb,
+                agency: warranties.agency,
+                account_number:warranties.number,
+                comp: faker.string.numeric(2, 10, 20),
+            },
+            receivables: {
+                accreditor_document_number: cnpj(),
+                receiving_end_user_document_number: cnpj(),
+                holder_document_number: cnpj(),
+                arrangements: faker.helpers.arrayElement(['VCC', 'MCC', 'MCD']),
+                start_date: genericDate(),
+                end_date: genericDate(),
+            },
+        },
+    };
+}
+

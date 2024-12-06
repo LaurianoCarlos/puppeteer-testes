@@ -39,6 +39,9 @@ const CONCILIATION_CREATE_BASE = BASE_URL + 'conciliation';
 const CONTESTATION_SEARCH_BASE = BASE_URL + 'contestation/search';
 const CONTESTATION_CREATE_BASE = BASE_URL + 'contestation';
 
+const CONTRACT_EFFECTS_SEARCH_BASE = BASE_URL + 'contract-effects/search';
+const CONTRACT_EFFECTS_CREATE_BASE = BASE_URL + 'contract-effects';
+
 //Protocol
 export const PROTOCOL_BASE = API_DUPLICATAS_BASE_URL + 'protocols';
 export const DUPLICATE_BASE = API_DUPLICATAS_BASE_URL;
@@ -54,6 +57,9 @@ export const ROUTE = {
 
     CONTESTATION_SEARCH_BASE: CONTESTATION_SEARCH_BASE,
     CONTESTATION_CREATE_BASE: CONTESTATION_CREATE_BASE,
+
+    CONTRACT_EFFECTS_SEARCH_BASE: CONTRACT_EFFECTS_SEARCH_BASE,
+    CONTRACT_EFFECTS_CREATE_BASE: CONTRACT_EFFECTS_CREATE_BASE,
 
     UR_SEARCH_BASE: UR_SEARCH_BASE,
     UR_CREATE_BASE: UR_CREATE_BASE,
@@ -93,6 +99,7 @@ export const SERVICES = {
     WALLET:                 'api-de-carteiras',
     CONCILIATION:           'api-de-conciliacao-de-urs',
     CONTESTATION:           'api-do-servico-de-contestacao-de-urs',
+    CONTRACT_EFFECTS:       'api-de-contratos-de-urs',
     CPR:                    'api-de-registro-cpr',
     UR:                     'api-de-registro-ur',
     RECEIVING_END_USERS:    'api-de-usuario-final-recebedor',

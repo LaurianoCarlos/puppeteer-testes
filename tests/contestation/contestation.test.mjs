@@ -5,10 +5,10 @@ import { create } from "../../service/contestation/create.mjs";
 import protocolLogger from '../../service/ProtocolCSVLogger.js';
 import { mockContestation } from '../../helpers/mock.js';
 
-describe("Conciliation", function () {
+describe("Contestation", function () {
     this.timeout(TIME.FOUR_MINUTES);
 
-    it.only('You must fill in the fields and send it for registration', async () => {
+    it('You must fill in the fields and send it for registration', async () => {
         const page = await getAppPage();
         const formData = mockContestation();
         

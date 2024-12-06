@@ -140,6 +140,21 @@ class ApiInterfaceService {
             throw new Error('Erro ao buscar dados',  error.response);
         }
     }
+
+    static async getWallets(code) {
+        const url = `wallets?paginate=false&other_participant_id=${AUTH_REGISTRY_AGENT}&active_type_code=${code}`;
+       
+        try {
+            const response = await this.baseInstance.get(url, {
+                timeout: 60000,
+            });
+    
+            return response.data;
+        } catch (error) {
+            console.log('Erro ao buscar dados:', error.response ? error.response.data : error.message);
+            throw new Error('Erro ao buscar dados',  error.response);
+        }
+    }
 }
 
 export default ApiInterfaceService;
