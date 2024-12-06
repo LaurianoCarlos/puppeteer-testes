@@ -64,7 +64,7 @@ describe('Wallet Search Tests', function () {
     expect(successMessage).to.include('Carteira enviada para registro com sucesso!')
     expect(protocolData).to.not.be.null;
 
-    protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.OPENED, SERVICES.WALLET);
+    protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.WALLET);
   })
 
 });

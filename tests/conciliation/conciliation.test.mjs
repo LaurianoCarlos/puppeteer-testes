@@ -22,6 +22,6 @@ describe("Conciliation", function () {
         expect(successMessage).to.include('Conciliação enviada para registro com sucesso!');
         expect(protocolData).to.not.be.null;
 
-        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.OPENED, SERVICES.CONCILIATION);
+        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.CONCILIATION);
     });
 });

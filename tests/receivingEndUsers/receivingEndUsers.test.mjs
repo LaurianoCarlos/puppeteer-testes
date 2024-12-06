@@ -22,6 +22,6 @@ describe("Receivable", function () {
         expect(successMessage).to.include('Usuário Final Recebedor enviado para registro com sucesso!');
         expect(protocolData).to.not.be.null;
 
-        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.OPENED, SERVICES.RECEIVING_END_USERS);
+        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.RECEIVING_END_USERS);
     });
 });

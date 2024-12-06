@@ -78,7 +78,7 @@ describe("Test Duplicate Mercantil", function () {
         expect(successMessage).to.include('Duplicata Mercantil enviada para registro com sucesso!');
         expect(protocolData).to.not.be.null;
 
-        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.OPENED, SERVICES.DUPLICATE_MERCANTIL);
+        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.DUPLICATE_MERCANTIL);
     })
 })
 

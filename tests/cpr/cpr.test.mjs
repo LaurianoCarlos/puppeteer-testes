@@ -84,6 +84,6 @@ describe("CPR Test", function () {
         expect(successMessage).to.include('CPR enviada para registro com sucesso!');
         expect(protocolData).to.not.be.null;
 
-        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.OPENED, SERVICES.CPR);
+        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.CPR);
     });
 });

@@ -80,7 +80,7 @@ describe("Contract Mercantil Test", function () {
         expect(successMessage).to.include('Contrato Mercantil enviado para registro com sucesso!');
         expect(protocolData).to.not.be.null;
 
-        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.OPENED, SERVICES.CONTRACT_MERCANTIL);
+        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.CONTRACT_MERCANTIL);
     })
 
 });

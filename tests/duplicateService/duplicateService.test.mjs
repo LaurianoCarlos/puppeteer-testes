@@ -79,7 +79,7 @@ describe("Service Duplicate Test", function () {
         expect(successMessage).to.include('Duplicata de Serviço enviada para registro com sucesso!');
         expect(protocolData).to.not.be.null;
 
-        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.OPENED, SERVICES.SERVICE_DUPLICATE);
+        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.SERVICE_DUPLICATE);
     })
 
 });
