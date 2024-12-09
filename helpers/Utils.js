@@ -1,15 +1,15 @@
 export class Utils {
 
   static async fillInFields(page, fields) {
-      for (const field of fields) {
-          await page.waitForSelector(field.selector, { visible: true });
+    for (const field of fields) {
+      await page.waitForSelector(field.selector, { visible: true });
 
-          if(field.type === 'select'){
-              await page.select(field.selector, field.value);
-          } else {
-              await page.type(field.selector, field.value);
-          }
+      if (field.type === 'select') {
+        await page.select(field.selector, field.value);
+      } else {
+        await page.type(field.selector, field.value);
       }
+    }
   }
 
   /**
@@ -60,47 +60,17 @@ export class Utils {
 
   }
 
-  /**
- * Expande uma seção do formulário caso esteja colapsada.
- * @param {object} page - A página Puppeteer.
- * @param {string} selector - Seletor da seção a ser expandida.
- * @param {string} controlButtonSelector - Seletor do botão de controle para expandir a seção.
- * @param {boolean} [active=false] - Indica se a classe `active` deve ser aguardada ao invés de `show`.
- */
-  static async expandSectionIfCollapsed2(page, selector, controlButtonSelector, active = false) {
-    await page.waitForSelector(selector);
-
-    const isCollapsed = await page.$eval(selector, el => el.classList.contains('collapse'));
-
-    if (isCollapsed) {
-      // Clica no botão de controle para expandir
-      await page.click(controlButtonSelector);
-    }
-
-    // Aguarda a classe correspondente com base no parâmetro 'active'
-    const targetClass = active ? 'active' : 'show';
-    await page.waitForFunction(
-      (selector, targetClass) => document.querySelector(selector)?.classList.contains(targetClass),
-      {},
-      selector,
-      targetClass
-    );
-  }
-
-
 
   /**
    * Aguarda o carregamento do DataTable ao observar a classe `c-hidden` aplicada durante o carregamento.
    * @param {object} page - A página Puppeteer.
    */
   static async waitForLoading(page) {
-    // Aguarda o início do carregamento
     await page.waitForFunction(() => {
       const loadingRow = document.querySelector('tr[wire\\:loading\\.class\\.remove="c-hidden"]');
       return loadingRow && !loadingRow.classList.contains('c-hidden');
     });
 
-    // Aguarda o fim do carregamento
     await page.waitForFunction(() => {
       const loadingRow = document.querySelector('tr[wire\\:loading\\.class\\.remove="c-hidden"]');
       return loadingRow && loadingRow.classList.contains('c-hidden');
@@ -143,6 +113,22 @@ export class Utils {
     const toastrElement = await page.waitForSelector('.toast-message', { visible: true });
     return await page.evaluate(element => element.innerText, toastrElement);
   }
+
+/**
+ * Força um clique com base no seletor
+ * @param {object} page - A página atual.
+ * @param {string} select - Item a ser clicado.
+ */
+static async forcedClick(page, select) {
+  return await page.evaluate((selector) => {
+      const button = document.querySelector(selector);
+      if (button) {
+          button.click();
+      } else {
+          throw new Error('Elemento não encontrado!');
+      }
+  }, select);
+}
 
 }
 

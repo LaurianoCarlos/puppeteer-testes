@@ -23,7 +23,7 @@ describe('Wallet Search Tests', function () {
     await closeBrowser();
   });
 
-  it.only('Should find a Wallet by ID', async () => {
+  it('Should find a Wallet by ID', async () => {
     const page = await getAppPage();
     const results = await searchById(page, wallet.wallet_id);
 

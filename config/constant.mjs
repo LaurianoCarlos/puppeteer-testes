@@ -36,6 +36,8 @@ export const ROUTE = {
     CONTRACT_EFFECTS_CREATE_BASE: `${BASE_URL}contract-effects`,
     OPTIN_SEARCH_BASE: `${BASE_URL}optin/search`,
     OPTIN_CREATE_BASE: `${BASE_URL}optin`,
+    CCB_SEARCH_BASE: `${BASE_URL}ccb/search`,
+    CCB_CREATE_BASE: `${BASE_URL}ccb`,
 };
 
 export const SLUG = {
@@ -59,6 +61,7 @@ export const SERVICES = {
     CONTRACT_EFFECTS: process.env.SERVICE_CONTRACT_EFFECTS,
     CPR: process.env.SERVICE_CPR,
     UR: process.env.SERVICE_UR,
+    CCB: process.env.SERVICE_CCB,
     OPTIN_OPTOUT: process.env.SERVICE_OPTIN_OPTOUT,
     RECEIVING_END_USERS: process.env.SERVICE_RECEIVING_END_USERS,
     DUPLICATE_MERCANTIL: process.env.SERVICE_DUPLICATE_MERCANTIL,

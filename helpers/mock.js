@@ -639,3 +639,85 @@ export function mockOptin() {
     };
 }
 
+
+/**
+ * Generates formData with reused data from existing generators.
+ * @returns {object} Generated formData.
+ */
+export function mockCcb() {
+    return {
+        holder_document_number: faker.string.numeric(11),
+        wallet: uuid(),
+        external_reference: uuid(),
+        registry_agent: uuid(),
+        contact_uuid: uuid(),
+        sub_code: faker.string.numeric(5),
+        credit_operation_modality_code: faker.helpers.arrayElement(['1', '2', '3']),
+        transaction_date: genericDate(),
+        total_credit_amount: faker.finance.amount(10000, 500000, 2),
+        net_credit_value: faker.finance.amount(9000, 490000, 2),
+        indexing: faker.helpers.arrayElement(['1', '2', '3', '4' ,'5']),
+        interest_rate: faker.finance.amount(0.01, 10, 2),
+        number_contracted_installments: faker.string.numeric(1),
+        protocol: uuid(),
+
+        creditors: {
+            document_number: faker.string.numeric(14),
+        },
+
+        debtors: {
+            document_number: faker.string.numeric(11),
+            email: faker.internet.email(),
+            social_name: faker.person.fullName(),
+            zipcode: faker.location.zipCode('#####-###'),
+            phone: faker.phone.number('## #####-####'),
+        },
+
+        recipient: {
+            document_number: faker.string.numeric(11),
+            type: faker.helpers.arrayElement(['1', '2']),
+            agency: faker.string.numeric(4),
+            account: faker.string.numeric(10),
+        },
+
+        guarantors: {
+            document_number: faker.string.numeric(11),
+            description: faker.commerce.productDescription(),
+        },
+
+        installments: {
+            status: faker.helpers.arrayElement(['1', '2', '3', '4' ,'5', '6', '7']),
+            control_code: faker.string.alphanumeric(10),
+            due_date: genericDate(),
+            number: faker.string.numeric(1),
+            value: faker.string.numeric(2),
+            main_value: faker.finance.amount(1000, 50000, 2),
+        },
+
+        issuer: {
+            document_number: faker.string.numeric(14),
+            company_name: faker.company.name(),
+        },
+
+        warranties: {
+            type: faker.helpers.arrayElement(['1', '2', '3']),
+            description: faker.commerce.productDescription(),
+            value: faker.string.numeric(2),
+            identifier: uuid(),
+            license_plate: faker.vehicle.vrm(),
+            chassis: faker.string.alphanumeric(17),
+            model_year:  faker.helpers.arrayElement(['2021', '2022', '2023','2024']),
+            state: generateBrazilianState(),
+            document_reference: faker.string.alphanumeric(10),
+            registration_number: uuid(),
+            registry_office_identification: faker.string.alphanumeric(10),
+            address: generateAddress(),
+            number: faker.string.numeric(4),
+            city: faker.location.city(),
+            country: 'Brasil',
+            building_type: faker.lorem.word(),
+        },
+    };
+}
+
+
