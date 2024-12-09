@@ -720,4 +720,66 @@ export function mockCcb() {
     };
 }
 
+/**
+ * Generates formData with reused data from existing generators.
+ * @returns {object} Generated formData.
+ */
+export function mockCdca() {
+    return {
+            holder_document_number: faker.string.numeric(14),
+            wallet: uuid(),
+            external_reference: uuid(),
+            registry_agent: uuid(),
+            contact_uuid: uuid(),
+            code_contract_operation_credit: faker.string.alphanumeric(6),
+            transaction_date: genericDate(),
+            total_credit_amount: faker.finance.amount(10000, 50000, 2),
+            net_credit_value: faker.finance.amount(5000, 30000, 2),
+            indexing: faker.helpers.arrayElement(['1', '2', '3']),
+            interest_rate: faker.finance.amount(0, 10, 2),
+            number_contracted_installments: faker.string.numeric(1),
+            protocol: uuid(),
+            delivery_date: genericDate(),
+            conciliation_id: uuid(),
+
+        agents: {
+            document_number: faker.string.numeric(14),
+            type: faker.helpers.arrayElement(['0', '1']),
+            email: faker.internet.email(),
+        },
+        creditors: {
+            document_number: faker.string.numeric(14),
+            liquidation_document_number: faker.string.numeric(14),
+            email: faker.internet.email(),
+            liquidation_holder_name: faker.person.fullName(),
+            liquidation_type: faker.helpers.arrayElement(['CD', 'CG', 'CI', 'PG', 'PP']),
+            liquidation_bank: faker.finance.bic(),
+            liquidation_agency: faker.string.numeric(4),
+            liquidation_number: faker.string.numeric(10),
+        },
+        debtors: {
+            document_number: faker.string.numeric(14), 
+            email: "devedor@exemplo.com", 
+            company_name: faker.company.name(), 
+            zipcode: faker.location.zipCode('#####-###'),
+            phone: faker.phone.number('## #####-####'), 
+        },
+        installments: {
+            status: faker.helpers.arrayElement(['1', '2', '3']),
+            control_code: faker.string.uuid(),
+            due_date: genericDate(),
+            number: faker.string.numeric(2),
+            value: faker.finance.amount(100, 1000, 2),
+        },
+        issuer: {
+            document_number: faker.string.numeric(14),
+            company_name: faker.company.name(),
+        },
+        original_creditor: {
+            document_number: faker.string.numeric(14),
+            company_name: faker.company.name(),
+        },
+    };
+}
+
 
