@@ -13,7 +13,7 @@ describe("Optin", function () {
     it('You must fill in the fields and send it for registration', async () => {
         const page = await getAppPage();
         const formData = mockOptin();
-        const wallet = await ApiInterfaceService.getWallets(11);
+        const wallet = await ApiInterfaceService.getWalletsByCode(11);
 
         formData.wallet = wallet[0].wallet_id;
         const { successMessage, protocolData } = await create(page, formData);

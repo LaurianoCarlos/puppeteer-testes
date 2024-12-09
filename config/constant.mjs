@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const BASE_URL = process.env.BASE_URL;
-export const USER_PORTAL = process.env.USER;
+export const USER_PORTAL = process.env.USER_PORTAL;
 export const PASSWORD = process.env.PASSWORD;
 export const API_DUPLICATAS_BASE_URL = process.env.API_DUPLICATAS_BASE_URL
 export const AUTH_BASE_URL = process.env.AUTH_BASE_URL
