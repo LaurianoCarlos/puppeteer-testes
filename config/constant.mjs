@@ -42,6 +42,9 @@ const CONTESTATION_CREATE_BASE = BASE_URL + 'contestation';
 const CONTRACT_EFFECTS_SEARCH_BASE = BASE_URL + 'contract-effects/search';
 const CONTRACT_EFFECTS_CREATE_BASE = BASE_URL + 'contract-effects';
 
+const OPTIN_SEARCH_BASE = BASE_URL + 'optin/search';
+const OPTIN_CREATE_BASE = BASE_URL + 'optin';
+
 //Protocol
 export const PROTOCOL_BASE = API_DUPLICATAS_BASE_URL + 'protocols';
 export const DUPLICATE_BASE = API_DUPLICATAS_BASE_URL;
@@ -51,6 +54,9 @@ export const ROUTE = {
 
     CPR_SEARCH_BASE: CPR_SEARCH_BASE,
     CPR_CREATE_BASE: CPR_CREATE_BASE,
+    
+    OPTIN_SEARCH_BASE:OPTIN_SEARCH_BASE,
+    OPTIN_CREATE_BASE:OPTIN_CREATE_BASE,
 
     CONCILIATION_SEARCH_BASE:CONCILIATION_SEARCH_BASE,
     CONCILIATION_CREATE_BASE: CONCILIATION_CREATE_BASE,
@@ -76,8 +82,6 @@ export const ROUTE = {
     CONTRACT_MERCANTIL_SEARCH_BASE: CONTRACT_MERCANTIL_SEARCH_BASE,
     CONTRACT_MERCANTIL_CREATE_BASE: CONTRACT_MERCANTIL_CREATE_BASE,
 
-
-
     PROTOCOL_SEARCH_BASE: PROTOCOL_SEARCH_BASE,
 }
 
@@ -102,6 +106,7 @@ export const SERVICES = {
     CONTRACT_EFFECTS:       'api-de-contratos-de-urs',
     CPR:                    'api-de-registro-cpr',
     UR:                     'api-de-registro-ur',
+    OPTIN_OPTOUT:           'api-de-optin-e-optout',
     RECEIVING_END_USERS:    'api-de-usuario-final-recebedor',
     DUPLICATE_MERCANTIL:    'api-de-registro-de-duplicatas-mercantil',
     SERVICE_DUPLICATE:      'api-de-registro-de-duplicatas-servico',

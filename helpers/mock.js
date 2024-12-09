@@ -164,14 +164,20 @@ export function genericName() {
 }
 
 /**
- * Generate data.
- * @returns {string} string uuid.
+ * Generate a random date from up to one year ago to the current date.
+ * @returns {string} Formatted date in DD-MM-YYYY format.
  */
 export function genericDate() {
-    const futureDate = faker.date.recent();
-    const formattedDate = `${futureDate.getDate().toString().padStart(2, '0')}-${(futureDate.getMonth() + 1).toString().padStart(2, '0')}-${futureDate.getFullYear()}`;
+    const startDate = new Date();
+    startDate.setFullYear(startDate.getFullYear() - 1);
+
+    const endDate = new Date();
+
+    const randomDate = faker.date.between({ from: startDate, to: endDate });
+    const formattedDate = `${randomDate.getDate().toString().padStart(2, '0')}-${(randomDate.getMonth() + 1).toString().padStart(2, '0')}-${randomDate.getFullYear()}`;
     return formattedDate;
 }
+
 
 /**
  * Generates CPR Data.
@@ -555,8 +561,6 @@ export function mockContestation() {
     };
 }
 
-
-
 /**
  * Generates formData with reused data from existing generators.
  * @returns {object} Generated formData.
@@ -608,6 +612,29 @@ export function mockContractEffects() {
                 start_date: genericDate(),
                 end_date: genericDate(),
             },
+        },
+    };
+}
+
+
+/**
+ * Generates formData with reused data from existing generators.
+ * @returns {object} Generated formData.
+ */
+export function mockOptin() {
+    return {
+        external_reference: uuid(),
+        wallet: 'wallet', 
+        receiver_document: faker.string.numeric(11),
+        start_date_optin: genericDate(),
+        final_date_optin: genericDate(),
+        receivable: {
+            receiving_end_users: faker.string.numeric(11),
+            holder_document: faker.string.numeric(11),
+            arrangements: faker.helpers.arrayElement(['VCC', 'MCC', 'MCD']),
+            accreditors: faker.string.numeric(14), 
+            start_due_date: genericDate(),
+            final_due_date: genericDate(),
         },
     };
 }
