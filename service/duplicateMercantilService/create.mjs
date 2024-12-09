@@ -1,4 +1,4 @@
-import { DUPLICATE_MERCANTIL_CREATE_BASE, TIME } from '../../config/constant.mjs';
+import { ROUTE, TIME } from '../../config/constant.mjs';
 import { Utils } from '../../helpers/Utils.js';
 
 
@@ -134,7 +134,7 @@ async function fillAssetAndOtherData(page, formData) {
 
 
 export async function create(page, formData) {
-    await page.goto(DUPLICATE_MERCANTIL_CREATE_BASE);
+    await page.goto(ROUTE.DUPLICATE_MERCANTIL_CREATE_BASE);
 
     await fillActionData(page, formData);
     await fillIdentifiers(page, formData);

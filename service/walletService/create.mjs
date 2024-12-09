@@ -1,4 +1,4 @@
-import { WALLET_CREATE_BASE } from '../../config/constant.mjs';
+import { ROUTE } from '../../config/constant.mjs';
 import { Utils } from '../../helpers/Utils.js';
 
 /**
@@ -8,7 +8,7 @@ import { Utils } from '../../helpers/Utils.js';
  * @returns {object} An object containing the success message and protocol data.
  */
 export async function create(page, walletData) {
-  await page.goto(WALLET_CREATE_BASE);
+  await page.goto(ROUTE.WALLET_CREATE_BASE);
 
   await page.type('#walletName', walletData.name);
   await page.type('#walletDescription', walletData.description);

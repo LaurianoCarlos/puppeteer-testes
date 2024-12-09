@@ -1,6 +1,5 @@
-import chalk from 'chalk';
 import fs from 'fs/promises';
-import { BASE_URL, USER, PASSWORD } from '../config/constant.mjs';
+import { BASE_URL, USER_PORTAL, PASSWORD } from '../config/constant.mjs';
 
 const baseUrl = `${BASE_URL}`;
 const cookiesPath = './auth_cookies.json';
@@ -22,7 +21,7 @@ export async function login(page) {
 
   await page.goto(`${baseUrl}login`);
   await page.waitForSelector('#username', { timeout: 30000 });
-  await page.type('#username', USER);
+  await page.type('#username', USER_PORTAL);
 
   await page.waitForSelector('#password', { timeout: 30000 });
   await page.type('#password', PASSWORD);

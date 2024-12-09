@@ -16,13 +16,14 @@ describe('Wallet Search Tests', function () {
 
   before(async () => {
     wallet = (await ApiInterfaceService.getWallets())[0];
+    console.log("wallet: ", wallet);
   });
 
   after(async () => {
     await closeBrowser();
   });
 
-  it('Should find a Wallet by ID', async () => {
+  it.only('Should find a Wallet by ID', async () => {
     const page = await getAppPage();
     const results = await searchById(page, wallet.wallet_id);
 

@@ -1,4 +1,4 @@
-import { WALLET_SEARCH_BASE } from '../../config/constant.mjs';
+import { ROUTE } from '../../config/constant.mjs';
 
 /**
  * Searches for a wallet by its name.
@@ -7,7 +7,7 @@ import { WALLET_SEARCH_BASE } from '../../config/constant.mjs';
  * @returns {Array} An array containing the results of the search.
  */
 export async function searchByName(page, walletName) {
-  await page.goto(WALLET_SEARCH_BASE);
+  await page.goto(ROUTE.WALLET_SEARCH_BASE);
 
   await page.select('select#wallet', 'walletName');
   await page.type('input#walletText', walletName);

@@ -10,7 +10,7 @@ import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
 describe("Optin", function () {
     this.timeout(TIME.FOUR_MINUTES);
 
-    it.only('You must fill in the fields and send it for registration', async () => {
+    it('You must fill in the fields and send it for registration', async () => {
         const page = await getAppPage();
         const formData = mockOptin();
         const wallet = await ApiInterfaceService.getWallets(11);

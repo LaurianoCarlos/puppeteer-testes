@@ -141,7 +141,7 @@ class ApiInterfaceService {
         }
     }
 
-    static async getWallets(code) {
+    static async getWalletsByCode(code) {
         const url = `wallets?paginate=false&other_participant_id=${AUTH_REGISTRY_AGENT}&active_type_code=${code}`;
        
         try {
