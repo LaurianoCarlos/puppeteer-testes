@@ -178,6 +178,24 @@ export function genericDate() {
     return formattedDate;
 }
 
+/**
+ * Generates a date with an offset in days from a given start date.
+ * @param {string} startDate - The base date in 'DD-MM-YYYY' format.
+ * @param {number} offsetDays - The number of days to add to the base date.
+ * @returns {string} The new date in 'DD-MM-YYYY' format.
+ */
+function genericDateWithOffset(startDate, offsetDays) {
+    const [day, month, year] = startDate.split('-').map(Number);
+    const baseDate = new Date(year, month - 1, day);
+    baseDate.setDate(baseDate.getDate() + offsetDays);
+
+    const newDay = baseDate.getDate().toString().padStart(2, '0');
+    const newMonth = (baseDate.getMonth() + 1).toString().padStart(2, '0');
+    const newYear = baseDate.getFullYear();
+
+    return `${newDay}-${newMonth}-${newYear}`;
+}
+
 
 /**
  * Generates CPR Data.
@@ -622,19 +640,26 @@ export function mockContractEffects() {
  * @returns {object} Generated formData.
  */
 export function mockOptin() {
+
+    const start_date_optin = genericDate();
+    const final_date_optin = genericDateWithOffset(start_date_optin, 7);
+
+    const start_due_date = genericDate();
+    const final_due_date = genericDateWithOffset(start_due_date, 10);
+
     return {
         external_reference: uuid(),
         wallet: 'wallet', 
         receiver_document: faker.string.numeric(11),
-        start_date_optin: genericDate(),
-        final_date_optin: genericDate(),
+        start_date_optin,
+        final_date_optin,
         receivable: {
             receiving_end_users: faker.string.numeric(11),
             holder_document: faker.string.numeric(11),
             arrangements: faker.helpers.arrayElement(['VCC', 'MCC', 'MCD']),
             accreditors: faker.string.numeric(14), 
-            start_due_date: genericDate(),
-            final_due_date: genericDate(),
+            start_due_date,
+            final_due_date,
         },
     };
 }
