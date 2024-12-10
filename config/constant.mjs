@@ -28,6 +28,8 @@ export const ROUTE = {
     UR_CREATE_BASE: `${BASE_URL}receivable`,
     CDCA_SEARCH_BASE: `${BASE_URL}cdca/search`,
     CDCA_CREATE_BASE: `${BASE_URL}cdca`,
+    CDCA_PORTFOLIO_SEARCH_BASE: `${BASE_URL}cdca/portfolio/search`,
+    CDCA_PORTFOLIO_CREATE_BASE: `${BASE_URL}cdca/portfolio`,
     RECEIVING_END_USER_SEARCH_BASE: `${BASE_URL}receiving-end-users/search`,
     RECEIVING_END_USER_CREATE_BASE: `${BASE_URL}receiving-end-users`,
     CONCILIATION_SEARCH_BASE: `${BASE_URL}conciliation/search`,

@@ -807,4 +807,23 @@ export function mockCdca() {
     };
 }
 
-
+/**
+ * Generates formData with reused data from existing generators.
+ * @returns {object} Generated formData.
+ */
+export function mockPortfolio() {
+    return {
+        reference:uuid(),
+        description: faker.lorem.sentence(),
+        total_amount: faker.finance.amount(1000, 100000, 2),
+        items: Array.from({ length: 1 }, () => ({
+            document_number: faker.string.numeric(14),
+            asset_uuid:uuid(),
+            description: faker.commerce.productDescription(),
+            value: faker.finance.amount(100, 10000, 2),
+            due_date: genericDate(),
+            original_register_date: genericDate(),
+            company_name: faker.company.name(),
+        })),
+    };
+}
