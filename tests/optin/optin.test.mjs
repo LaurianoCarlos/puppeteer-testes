@@ -7,7 +7,7 @@ import { mockOptin } from '../../helpers/mock.js';
 import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
 
 
-describe("Optin", function () {
+describe("Optin Test", function () {
     this.timeout(TIME.FOUR_MINUTES);
 
     it('You must fill in the fields and send it for registration', async () => {

@@ -11,7 +11,7 @@ import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
 
 let protocol;
 
-describe('Protocol search tests', function () {
+describe('Protocol search Test', function () {
   before(async () => {
     protocol = (await ApiInterfaceService.getProtocols())[0];
   });

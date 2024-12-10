@@ -12,7 +12,7 @@ import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
 
 let wallet;
 
-describe('Wallet Search Tests', function () {
+describe('Wallet Search Test', function () {
 
   before(async () => {
     wallet = (await ApiInterfaceService.getWallets())[0];

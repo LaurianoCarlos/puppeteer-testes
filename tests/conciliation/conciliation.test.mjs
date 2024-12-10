@@ -7,7 +7,7 @@ import { mockConciliation } from '../../helpers/mock.js';
 
 import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
 
-describe("Conciliation", function () {
+describe("Conciliation Test", function () {
     this.timeout(TIME.FOUR_MINUTES);
 
     it('You must fill in the fields and send it for registration', async () => {

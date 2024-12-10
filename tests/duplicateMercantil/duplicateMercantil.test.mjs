@@ -13,7 +13,7 @@ import ApiInterfaceService  from '../../core/api-de-interface-clientes.js';
 
 let duplicate;
 
-describe("Test Duplicate Mercantil", function () {
+describe("Duplicate Mercantil Test", function () {
   
     before(async () => {
         duplicate =  (await ApiInterfaceService.findDuplicates(SLUG.DUPLICATE_MERCANTIL_SLUG))[0];
