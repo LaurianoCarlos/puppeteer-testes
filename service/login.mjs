@@ -5,7 +5,13 @@ const baseUrl = `${BASE_URL}`;
 const cookiesPath = './auth_cookies.json';
 
 export async function login(page) {
- 
+
+  try {
+    await fs.access(cookiesPath);
+  } catch (error) {
+    await fs.writeFile(cookiesPath, JSON.stringify([], null, 2));
+  }
+
   try {
     const cookiesData = await fs.readFile(cookiesPath, 'utf-8');
     const cookies = JSON.parse(cookiesData);
