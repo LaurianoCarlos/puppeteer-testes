@@ -8,15 +8,15 @@ import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
 
 
 
-describe("Contract Effects", function () {
+describe("Contract Effects Test", function () {
     this.timeout(TIME.FOUR_MINUTES);
 
     it('You must fill in the fields and send it for registration', async () => {
         const page = await getAppPage();
-        const wallet = await ApiInterfaceService.getWallets(11);
-       
+        const wallet = (await ApiInterfaceService.getWalletsByCode(11))[0];
+    
         const formData = mockContractEffects();
-        formData.wallet = wallet[0].wallet_id;
+        formData.wallet = wallet.wallet_id;
         
         const { successMessage, protocolData } = await create(page, formData);
 

@@ -16,7 +16,6 @@ describe('Wallet Search Tests', function () {
 
   before(async () => {
     wallet = (await ApiInterfaceService.getWallets())[0];
-    console.log("wallet: ", wallet);
   });
 
   after(async () => {
