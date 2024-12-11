@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { TIME, PROTOCOL_STATUS, SERVICES } from '../../config/constant.mjs';
 import { getAppPage } from "../../service/loginSetup.mjs";
-import { create } from "../../service/conciliation/create.mjs";
+import { create } from "../../service/conciliationService/create.mjs";
 import protocolLogger from '../../service/ProtocolCSVLogger.js';
 import { mockConciliation } from '../../helpers/mock.js';
 

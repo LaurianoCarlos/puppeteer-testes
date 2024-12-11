@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { mockReceivingEndUsers } from '../../helpers/mock.js';
 import { TIME, PROTOCOL_STATUS, SERVICES } from '../../config/constant.mjs';
 import { getAppPage } from "../../service/loginSetup.mjs";
-import { create } from "../../service/receivingEndUsers/create.mjs";
+import { create } from "../../service/receivingEndUsersService/create.mjs";
 import protocolLogger from '../../service/ProtocolCSVLogger.js';
 import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
 
