@@ -669,6 +669,28 @@ export function mockOptin() {
  * Generates formData with reused data from existing generators.
  * @returns {object} Generated formData.
  */
+export function mockUr() {
+
+    return {
+        accreditor_document_number: '',
+        document_type: 'CNPJ',
+        document_number: '',
+
+        occurrence: faker.helpers.arrayElement(['1', '2', '3', '4']),
+        external_reference: uuid(),
+        account_document_number_ur: faker.string.numeric(14),
+        value: faker.finance.amount(10000, 500000, 2),
+        pre_paid_value: faker.finance.amount(1000, 5000, 2),
+        due_date: genericDate(),
+        arrangement: faker.helpers.arrayElement(['VCC'])
+    };
+}
+
+
+/**
+ * Generates formData with reused data from existing generators.
+ * @returns {object} Generated formData.
+ */
 export function mockCcb() {
     return {
         holder_document_number: faker.string.numeric(11),

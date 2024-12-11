@@ -17,7 +17,7 @@ describe("DC Test", function () {
        //wallet = (await ApiInterfaceService.getWalletsByCode(13))[0];
     });
 
-    it.only('You must fill in the fields and send it for registration', async () => {
+    it('You must fill in the fields and send it for registration', async () => {
         const page = await getAppPage();
         const formData = mockDc();
         //formData.wallet = wallet.wallet_id;
