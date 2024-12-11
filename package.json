@@ -14,7 +14,7 @@
   },
   "scripts": {
     "testDebug":"npx mocha --parallel --jobs 2 tests/**/*.test.mjs --timeout 300000",
-    "test":"npx mocha tests/**/*.test.mjs --timeout 1200000"
+    "test":"npx mocha tests/**/*.test.mjs --timeout 300000"
   },
   "jest": {
     "transform": {

@@ -15,6 +15,8 @@ export const AUTH_REGISTRY_AGENT = process.env.AUTH_REGISTRY_AGENT
 export const ROUTE = {
     WALLET_SEARCH_BASE: `${BASE_URL}wallet/search`,
     WALLET_CREATE_BASE: `${BASE_URL}wallet/create`,
+    DC_SEARCH_BASE: `${BASE_URL}dcs/search`,
+    DC_CREATE_BASE: `${BASE_URL}dcs`,
     PROTOCOL_SEARCH_BASE: `${BASE_URL}protocol/search`,
     DUPLICATE_MERCANTIL_SEARCH_BASE: `${BASE_URL}duplicate-mercantil/search`,
     DUPLICATE_MERCANTIL_CREATE_BASE: `${BASE_URL}duplicate-mercantil/create`,

@@ -827,3 +827,141 @@ export function mockPortfolio() {
         })),
     };
 }
+
+/**
+ * Generates formData with reused data from existing generators.
+ * @returns {object} Generated formData.
+ */
+export function mockDc() {
+    return {
+        holder_document_number: faker.string.numeric(11),
+        wallet: faker.string.numeric(1),
+        credit_operation_contract_code: faker.string.numeric(4),
+        transaction_date:  genericDate(),
+        total_credit_amount: faker.finance.amount(1000, 100000, 2),
+        interest_rate: faker.finance.amount(0, 10, 2),
+        number_contracted_installments: faker.string.numeric(2),
+        external_reference: uuid(),
+        conciliation_id: uuid(),
+        protocol: uuid(),
+        financial_asset_type: faker.helpers.arrayElement(['1', '2', '3', '4']),
+        contract_due_date:  genericDate(),
+        contract_object: faker.commerce.productName(),
+        floating: faker.lorem.words(2),
+        initial_consideration: faker.finance.amount(100, 1000, 2),
+        amount_consideration: faker.finance.amount(1000, 5000, 2),
+        periodicity: faker.string.numeric(2),
+        first_payment_due:  genericDate(),
+        expected_guaranteed_residual_value: faker.finance.amount(100, 1000, 2),
+        promissory_note_value: faker.finance.amount(500, 2000, 2),
+        prize_value: faker.finance.amount(50, 500, 2),
+        original_process: faker.lorem.words(3),
+        data_base_correction:  genericDate(),
+        precatory: faker.lorem.words(2),
+        precatory_type: faker.helpers.arrayElement(['1', '2', '3']),
+        registration_number: faker.string.numeric(10),
+        lease_term: faker.string.numeric(2),
+        execution_process: faker.lorem.words(2),
+        cm7_code: faker.string.alpha(6),
+        indexing: faker.helpers.arrayElement(['1', '2', '3', '4', '5']),
+        note: faker.lorem.sentence(3),
+        status: faker.helpers.arrayElement(['active', 'inactive', 'pending', 'completed', 'canceled']),
+        debtor: {
+            document_type: faker.helpers.arrayElement(['1', '2']),
+            document_number: faker.string.numeric(14),
+            company_name: faker.company.name(),
+            phone: faker.phone.number('+55 ## ########'),
+            email: faker.internet.email(),
+            zipcode: faker.location.zipCode('#####-###'),
+            address: faker.location.streetAddress(),
+        },
+        original_creditor: {
+            document_type: faker.helpers.arrayElement(['1', '2']),
+            document_number: faker.string.numeric(14),
+            company_name: faker.company.name(),
+            zipcode: faker.location.zipCode('#####-###'),
+            address: faker.location.streetAddress(),
+        },
+        operation: {
+            type: faker.helpers.arrayElement(['1', '2', '3']),
+            date:  genericDate(),
+            due_date:  genericDate(),
+            code: faker.string.numeric(10),
+            total_amount: faker.finance.amount(1000, 50000, 2),
+        },
+        creditors: Array.from({ length: 1 }, () => ({
+            document_type: faker.helpers.arrayElement(['1', '2']),
+            document_number: faker.string.numeric(14),
+            phone: faker.phone.number('+55 ## ########'),
+            email: faker.internet.email(),
+            zipcode: faker.location.zipCode('#####-###'),
+            address: faker.location.streetAddress(),
+            is_active: faker.datatype.boolean(),
+        })),
+        installments: [
+            {
+                status: faker.helpers.arrayElement(['1', '2', '3']),
+                control_code: faker.string.numeric(5),
+                due_date:  genericDate(),
+                value: faker.finance.amount(500, 2000, 2),
+                main_value: faker.finance.amount(400, 1500, 2),
+                number: faker.string.numeric(2),
+            },
+        ],
+        guarantors: [
+            {
+                document_type: faker.helpers.arrayElement(['1', '2']),
+                document_number: faker.string.numeric(14),
+                name: faker.company.name(),
+            },
+        ],
+        payments: [
+            {
+                type: faker.helpers.arrayElement(['Pagamento Único', 'Parcelado']),
+                value: faker.finance.amount(500, 20000, 2),
+            },
+        ],
+        account: {
+            bank: faker.company.name(),
+            agency: faker.string.numeric(4),
+            number: faker.finance.accountNumber(6),
+            type: faker.helpers.arrayElement(['CC', 'CP']),
+        },
+        property: {
+            state: faker.location.country(),
+            city: faker.location.city(),
+            zipcode: faker.location.zipCode('#####-###'),
+            address: faker.location.streetAddress(),
+        },
+        recipient: {
+            document_type: faker.helpers.arrayElement(['1', '2']),
+            document_number: faker.string.numeric(14),
+            name: faker.company.name(),
+        },
+        original_debtor: {
+            document_type: faker.helpers.arrayElement(['1', '2']),
+            document_number: faker.string.numeric(14),
+            company_name: faker.company.name(),
+        },
+        fines: [
+            {
+                value: faker.finance.amount(100, 500, 2),
+                description: faker.lorem.words(3),
+            },
+        ],
+        additives: [
+            {
+                document_type: faker.helpers.arrayElement(['1', '2']),
+                document_number: faker.string.numeric(14),
+                company_name: faker.company.name(),
+                date: genericDate(),
+                contract: faker.lorem.words(2),
+            },
+        ],
+        assignor: {
+            document_type: faker.helpers.arrayElement(['1', '2']),
+            document_number: faker.string.numeric(14),
+            name: faker.company.name(),
+        },
+    };
+}
