@@ -1,5 +1,10 @@
 export class Utils {
 
+  /**
+   * Fills in fields on a page based on provided field data.
+   * @param {object} page - The Puppeteer page object.
+   * @param {Array} fields - An array of field objects containing selector, type, and value.
+   */
   static async fillInFields(page, fields) {
     for (const field of fields) {
       await page.waitForSelector(field.selector, { visible: true });
@@ -13,10 +18,10 @@ export class Utils {
   }
 
   /**
-   * Obtém os dados do protocolo a partir da primeira linha visível no DataTable.
-   * @param {object} page - A página Puppeteer.
-   * @returns {object} Objeto contendo os dados do protocolo { protocolId, status, createdAt }.
-   * @throws {Error} Se nenhum dado de protocolo estiver disponível.
+   * Retrieves protocol data from the first visible row in the DataTable.
+   * @param {object} page - The Puppeteer page object.
+   * @returns {object} An object containing protocol data { protocolId, status, createdAt }.
+   * @throws {Error} If no protocol data is available.
    */
   static async getProtocol(page) {
     const dataAvailable = await page.evaluate(() => {
@@ -41,10 +46,11 @@ export class Utils {
   }
 
   /**
-   * Expande uma seção do formulário caso esteja colapsada.
-   * @param {object} page - A página Puppeteer.
-   * @param {string} selector - Seletor da seção a ser expandida.
-   * @param {string} controlButtonSelector - Seletor do botão de controle para expandir a seção.
+   * Expands a section of the form if it is collapsed.
+   * @param {object} page - The Puppeteer page object.
+   * @param {string} selector - Selector for the section to expand.
+   * @param {string} controlButtonSelector - Selector for the control button to expand the section.
+   * @param {boolean|null} active - Optional condition for checking if the section is active.
    */
   static async expandSectionIfCollapsed(page, selector, controlButtonSelector, active = null) {
     const isCollapsed = await page.$eval(selector, el => el.classList.contains('collapse'));
@@ -60,10 +66,9 @@ export class Utils {
 
   }
 
-
   /**
-   * Aguarda o carregamento do DataTable ao observar a classe `c-hidden` aplicada durante o carregamento.
-   * @param {object} page - A página Puppeteer.
+   * Waits for the DataTable to load by observing the `c-hidden` class applied during loading.
+   * @param {object} page - The Puppeteer page object.
    */
   static async waitForLoading(page) {
     await page.waitForFunction(() => {
@@ -78,9 +83,9 @@ export class Utils {
   }
 
   /**
-   * Obtém os resultados do DataTable, excluindo linhas de carregamento ou atualização.
-   * @param {object} page - A página Puppeteer.
-   * @returns {array} Array contendo as linhas de resultados visíveis no DataTable.
+   * Retrieves results from the DataTable, excluding loading or updating rows.
+   * @param {object} page - The Puppeteer page object.
+   * @returns {Array} An array containing visible DataTable row results.
    */
   static async getTableResults(page) {
     return await page.evaluate(() => {
@@ -91,10 +96,10 @@ export class Utils {
   }
 
   /**
-   * Aguarda até que o DataTable exiba linhas de resultados ou uma mensagem.
-   * @param {object} page - A página Puppeteer.
-   * @returns {Promise<void>} Promise que se resolve quando a condição é atendida.
-   */
+  * Waits until the DataTable displays result rows or a message.
+  * @param {object} page - The Puppeteer page object.
+  * @returns {Promise<void>} A promise resolved when the condition is met.
+  */
   static async waitForTableResults(page) {
     await page.waitForFunction(() => {
       const tableRows = document.querySelectorAll('.card-datatable tbody tr');
@@ -104,31 +109,31 @@ export class Utils {
   }
 
   /**
- * Captura a mensagem do toastr exibida na página.
- * @param {object} page - A página atual.
- * @param {number} timeout - O tempo máximo de espera (em milissegundos) para o toastr aparecer.
- * @returns {Promise<string>} - A mensagem do toastr capturada.
- */
+     * Captures the toastr message displayed on the page.
+     * @param {object} page - The Puppeteer page object.
+     * @param {number} timeout - The maximum wait time (in milliseconds) for the toastr to appear.
+     * @returns {Promise<string>} - The captured toastr message.
+     */
   static async getToastrMessage(page) {
     const toastrElement = await page.waitForSelector('.toast-message', { visible: true });
     return await page.evaluate(element => element.innerText, toastrElement);
   }
 
-/**
- * Força um clique com base no seletor
- * @param {object} page - A página atual.
- * @param {string} select - Item a ser clicado.
- */
-static async forcedClick(page, select) {
-  return await page.evaluate((selector) => {
+  /**
+     * Forces a click on an element based on its selector.
+     * @param {object} page - The Puppeteer page object.
+     * @param {string} selector - The selector for the element to click.
+     */
+  static async forcedClick(page, select) {
+    return await page.evaluate((selector) => {
       const button = document.querySelector(selector);
       if (button) {
-          button.click();
+        button.click();
       } else {
-          throw new Error('Elemento não encontrado!');
+        throw new Error('Elemento não encontrado!');
       }
-  }, select);
-}
+    }, select);
+  }
 
 }
 
