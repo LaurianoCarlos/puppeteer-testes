@@ -17,6 +17,7 @@ export const ROUTE = {
     WALLET_CREATE_BASE: `${BASE_URL}wallet/create`,
     DC_SEARCH_BASE: `${BASE_URL}dcs/search`,
     DC_CREATE_BASE: `${BASE_URL}dcs`,
+    CERTIFICATE_SEARCH_BASE: `${BASE_URL}certificate`,
     PROTOCOL_SEARCH_BASE: `${BASE_URL}protocol/search`,
     DUPLICATE_MERCANTIL_SEARCH_BASE: `${BASE_URL}duplicate-mercantil/search`,
     DUPLICATE_MERCANTIL_CREATE_BASE: `${BASE_URL}duplicate-mercantil/create`,

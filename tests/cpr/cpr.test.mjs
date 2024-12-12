@@ -74,7 +74,7 @@ describe("CPR Test", function () {
         protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.OPENED, SERVICES.CPR);
     });
 
-    it.only('You must fill in the fields, except green CPR, and send it for registration', async () => {
+    it('You must fill in the fields, except green CPR, and send it for registration', async () => {
         const page = await getAppPage();
         const formData = mockFormData();
         formData.wallet = cpr.wallet;
