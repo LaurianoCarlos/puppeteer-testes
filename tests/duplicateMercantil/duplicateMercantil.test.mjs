@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { getAppPage } from "../../service/loginSetup.mjs";
 import { generateDuplicateMercantilForm, cnpj, uuid } from '../../helpers/mock.js';
-import { TIME, SLUG, PROTOCOL_STATUS, SERVICES } from '../../config/constant.mjs';
+import { TIME, SLUG, PROTOCOL_STATUS, SERVICES, BASE_URL } from '../../config/constant.mjs';
 import { searchById } from '../../service/duplicateMercantilService/searchById.mjs'
 import { create } from '../../service/duplicateMercantilService/create.mjs'
 import { searchByWallet, searchByWalletNotFound } from '../../service/duplicateMercantilService/searchByWallet.mjs'
@@ -9,7 +9,7 @@ import { findWalletsParticipant, searchWalletsParticipant } from '../../service/
 
 import protocolLogger from'../../service/ProtocolCSVLogger.js';
 import ApiInterfaceService  from '../../core/api-de-interface-clientes.js';
-import { addPayment } from '../../service/duplicateMercantilService/addPayment.mjs';
+import { Utils } from '../../helpers/Utils.js';
 
 
 let duplicate;
@@ -82,10 +82,12 @@ describe("Duplicate Mercantil Test", function () {
         protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.DUPLICATE_MERCANTIL);
     })
 
-    it('Should fill out all form fields and submit for registration: (ADD PAYMENT)', async () => {
+    it.only('Should fill out all form fields and submit for registration: (ADD PAYMENT)', async () => {
         const page = await getAppPage();
         const formData = generateDuplicateMercantilForm();
-        const { successMessage, protocolData } = await addPayment(page, formData, duplicate.asset_uuid);
+        const route = `${BASE_URL}duplicate-mercantil/liquidations/${duplicate.asset_uuid}/create`
+
+        const { successMessage, protocolData } = await Utils.liquidationAddPayment(page, route, formData);
       
         expect(successMessage).to.include('Protocolo para liquidação criado com sucesso');
         expect(protocolData).to.not.be.null;

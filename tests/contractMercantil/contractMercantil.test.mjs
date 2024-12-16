@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { TIME, PROTOCOL_STATUS, SERVICES } from '../../config/constant.mjs';
+import { TIME, PROTOCOL_STATUS, SERVICES, BASE_URL } from '../../config/constant.mjs';
 import { uuid, cnpj, generateContratoMercantilForm } from '../../helpers/mock.js';
 import { SLUG } from '../../config/constant.mjs';
 import { getAppPage } from "../../service/loginSetup.mjs";
@@ -10,6 +10,7 @@ import { create } from "../../service/contractMercantilService/create.mjs";
 
 import protocolLogger from '../../service/ProtocolCSVLogger.js';
 import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
+import { Utils } from '../../helpers/Utils.js';
 
 let contract;
 
@@ -83,4 +84,16 @@ describe("Contract Mercantil Test", function () {
         protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.CONTRACT_MERCANTIL);
     })
 
+    it.only('Should fill out all form fields and submit for registration: (ADD PAYMENT)', async () => {
+        const page = await getAppPage();
+        const formData = generateContratoMercantilForm();
+        const route = `${BASE_URL}mercantil-contract/liquidations/${contract.asset_uuid}/create`
+
+        const { successMessage, protocolData } = await Utils.liquidationAddPayment(page, route, formData);
+      
+        expect(successMessage).to.include('Protocolo para liquidação criado com sucesso');
+        expect(protocolData).to.not.be.null;
+
+        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.LIQUIDATION_CONTRACT_MERCANTIL);
+    })
 });

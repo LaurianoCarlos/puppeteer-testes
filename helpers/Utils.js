@@ -135,5 +135,29 @@ export class Utils {
     }, select);
   }
 
+  static async liquidationAddPayment(page, route, formData) {
+
+    const fields = [
+        { selector: '#payment_value', value: formData.assetValue },
+        { selector: '#payment_date', value: formData.issuanceDate },
+        { selector: '#liquidation_type', value: formData.holderDocumentType, type: 'select' },
+    ];
+
+    await page.goto(route);
+
+    await Utils.fillInFields(page, fields);
+    
+    await page.waitForSelector('button[type="submit"]', { visible: true });
+    await page.evaluate(() => document.querySelector('button[type="submit"]').click());
+
+
+    await page.waitForSelector('.toast-success', { visible: true });
+
+    const successMessage = await Utils.getToastrMessage(page);
+    const protocolData = await Utils.getProtocol(page);
+
+    return { successMessage, protocolData };
+  }
+
 }
 
