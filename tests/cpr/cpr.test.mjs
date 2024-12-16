@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { TIME, PROTOCOL_STATUS, SERVICES } from '../../config/constant.mjs';
-import { uuid, mockFormData } from '../../helpers/mock.js';
+import { TIME, PROTOCOL_STATUS, SERVICES, BASE_URL } from '../../config/constant.mjs';
+import { uuid, mockCpr } from '../../helpers/mock.js';
 import { SLUG } from '../../config/constant.mjs';
 import { getAppPage } from "../../service/loginSetup.mjs";
 import { searchById } from "../../service/cprService/searchById.mjs";
@@ -10,6 +10,7 @@ import { create } from "../../service/cprService/create.mjs";
 
 import protocolLogger from '../../service/ProtocolCSVLogger.js';
 import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
+import { Utils } from '../../helpers/Utils.js';
 
 let cpr;
 
@@ -63,7 +64,7 @@ describe("CPR Test", function () {
 
     it('Should fill out all form fields and submit for registration', async () => {
         const page = await getAppPage();
-        const formData = mockFormData();
+        const formData = mockCpr();
         formData.wallet = cpr.wallet;
 
         const { successMessage, protocolData } = await create(page, formData);
@@ -76,7 +77,7 @@ describe("CPR Test", function () {
 
     it('You must fill in the fields, except green CPR, and send it for registration', async () => {
         const page = await getAppPage();
-        const formData = mockFormData();
+        const formData = mockCpr();
         formData.wallet = cpr.wallet;
 
         const { successMessage, protocolData } = await create(page, formData, false);
@@ -86,4 +87,23 @@ describe("CPR Test", function () {
 
         protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.CPR);
     });
+
+    it('Should fill out all form fields and submit for registration: (ADD PAYMENT)', async () => {
+        const page = await getAppPage();
+        const data = mockCpr();
+        const formData = {
+            assetValue: data.cpr_value,
+            issuanceDate: data.date,
+            holderDocumentType: data.cpr_type
+        };
+
+        const route = `${BASE_URL}cpr/liquidations/${cpr.achievement_id}/create`
+        
+        const { successMessage, protocolData } = await Utils.liquidationAddPayment(page, route, formData);
+      
+        expect(successMessage).to.include('Protocolo para liquidação criado com sucesso');
+        expect(protocolData).to.not.be.null;
+
+        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.LIQUIDATION_CPR);
+    })
 });

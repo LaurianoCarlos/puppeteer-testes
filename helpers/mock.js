@@ -494,7 +494,7 @@ export function generateContratoMercantilForm() {
     };
 }
 
-export function mockFormData() {
+export function mockCpr() {
     return {
         ...generateCprData(),
         ...generateAssetInformation(),

@@ -84,7 +84,7 @@ describe("Contract Mercantil Test", function () {
         protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.CONTRACT_MERCANTIL);
     })
 
-    it.only('Should fill out all form fields and submit for registration: (ADD PAYMENT)', async () => {
+    it('Should fill out all form fields and submit for registration: (ADD PAYMENT)', async () => {
         const page = await getAppPage();
         const formData = generateContratoMercantilForm();
         const route = `${BASE_URL}mercantil-contract/liquidations/${contract.asset_uuid}/create`

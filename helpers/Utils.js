@@ -144,13 +144,9 @@ export class Utils {
     ];
 
     await page.goto(route);
-
     await Utils.fillInFields(page, fields);
-    
     await page.waitForSelector('button[type="submit"]', { visible: true });
     await page.evaluate(() => document.querySelector('button[type="submit"]').click());
-
-
     await page.waitForSelector('.toast-success', { visible: true });
 
     const successMessage = await Utils.getToastrMessage(page);
