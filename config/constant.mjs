@@ -18,6 +18,7 @@ export const ROUTE = {
     DC_SEARCH_BASE: `${BASE_URL}dcs/search`,
     DC_CREATE_BASE: `${BASE_URL}dcs`,
     CERTIFICATE_SEARCH_BASE: `${BASE_URL}certificate`,
+    CERTIFICATE_CREATE_BASE: `${BASE_URL}certificate/create`,
     PROTOCOL_SEARCH_BASE: `${BASE_URL}protocol/search`,
     DUPLICATE_MERCANTIL_SEARCH_BASE: `${BASE_URL}duplicate-mercantil/search`,
     DUPLICATE_MERCANTIL_CREATE_BASE: `${BASE_URL}duplicate-mercantil/create`,
@@ -75,6 +76,7 @@ export const SERVICES = {
     DUPLICATE_MERCANTIL: process.env.SERVICE_DUPLICATE_MERCANTIL,
     SERVICE_DUPLICATE: process.env.SERVICE_DUPLICATE,
     CONTRACT_MERCANTIL: process.env.SERVICE_CONTRACT_MERCANTIL,
+    CERTIFICATE: process.env.CERTFICATE,
 };
 
 export const TIME = {
