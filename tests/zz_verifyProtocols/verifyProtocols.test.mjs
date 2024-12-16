@@ -12,8 +12,9 @@ describe('TESTE DE PROTOCOLOS', function () {
   });
 
   after(async () => {
-    
-    const testRunner = new ProtocolTestRunner().runTests();
     await closeBrowser();
   });
+
+  const testRunner = new ProtocolTestRunner();
+  testRunner.runTests();
 });

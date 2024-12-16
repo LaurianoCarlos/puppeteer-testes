@@ -22,6 +22,6 @@ describe("UR Test", function () {
         expect(successMessage).to.include('UR enviada para registro com sucesso!');
         expect(protocolData).to.not.be.null;
 
-        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.OPENED, SERVICES.UR);
+        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.UR);
     });
 });
