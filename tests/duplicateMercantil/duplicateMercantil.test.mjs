@@ -9,6 +9,7 @@ import { findWalletsParticipant, searchWalletsParticipant } from '../../service/
 
 import protocolLogger from'../../service/ProtocolCSVLogger.js';
 import ApiInterfaceService  from '../../core/api-de-interface-clientes.js';
+import { addPayment } from '../../service/duplicateMercantilService/addPayment.mjs';
 
 
 let duplicate;
@@ -79,6 +80,17 @@ describe("Duplicate Mercantil Test", function () {
         expect(protocolData).to.not.be.null;
 
         protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.DUPLICATE_MERCANTIL);
+    })
+
+    it('Should fill out all form fields and submit for registration: (ADD PAYMENT)', async () => {
+        const page = await getAppPage();
+        const formData = generateDuplicateMercantilForm();
+        const { successMessage, protocolData } = await addPayment(page, formData, duplicate.asset_uuid);
+      
+        expect(successMessage).to.include('Protocolo para liquidação criado com sucesso');
+        expect(protocolData).to.not.be.null;
+
+        protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.LIQUIDATION_DUPLICATE_MERCANTIL);
     })
 })
 
