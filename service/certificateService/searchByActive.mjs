@@ -17,8 +17,17 @@ export async function searchByActive(page, assetType) {
     await page.waitForSelector('button[type="submit"]', { visible: true });
     await page.evaluate(() => document.querySelector('button[type="submit"]').click());
   
+    await waitForLoadingToDisappear(page);
+    
     await Utils.waitForTableResults(page);
     const results = await Utils.getTableResults(page);
     
     return results;
   }
+
+  async function waitForLoadingToDisappear(page) {
+    await page.waitForFunction(() => {
+        const loadingElement = document.querySelector('#loading');
+        return loadingElement && getComputedStyle(loadingElement).display === 'none';
+    });
+}
