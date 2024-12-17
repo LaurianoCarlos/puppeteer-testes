@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import { TIME } from '../../config/constant.mjs';
 import { uuid, genericName } from '../../helpers/mock.js'
 import { PROTOCOL_STATUS, SERVICES } from '../../config/constant.mjs';
 import { getAppPage, closeBrowser } from '../../service/loginSetup.mjs';
