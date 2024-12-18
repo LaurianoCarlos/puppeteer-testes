@@ -1,7 +1,6 @@
 import { expect } from 'chai';
-import { TIME } from '../../config/constant.mjs';
 import { uuid, genericName } from '../../helpers/mock.js'
-import { PROTOCOL_STATUS, SERVICES } from '../../config/constant.mjs';
+import { PROTOCOL_STATUS, ROUTE, SERVICES } from '../../config/constant.mjs';
 import { getAppPage, closeBrowser } from '../../service/loginSetup.mjs';
 import { searchById } from '../../service/walletService/searchById.mjs';
 import { searchByName } from '../../service/walletService/searchByWallet.mjs';
@@ -9,6 +8,10 @@ import { create } from '../../service/walletService/create.mjs';
 import protocolLogger from '../../service/ProtocolCSVLogger.js';
 
 import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
+import { DataTableService } from '../../service/DataTableService.mjs';
+
+
+
 
 let wallet;
 
@@ -20,6 +23,28 @@ describe('Wallet Search Test', function () {
 
   after(async () => {
     await closeBrowser();
+  });
+
+  it('Must navigate to next page', async () => {
+    const page = await getAppPage();
+
+    const isPreviousEnabled = await DataTableService.goToNextPage(page, ROUTE.WALLET_SEARCH_BASE);
+    expect(isPreviousEnabled).to.be.true;
+  });
+
+  it('Must load a specific page', async () => {
+    const page = await getAppPage();
+    const isLoaded = await DataTableService.goToPage(page, 2, ROUTE.WALLET_SEARCH_BASE);
+    expect(isLoaded).to.be.true;
+  });
+
+  it('Must change the number of records per pages', async () => {
+    const page = await getAppPage();
+    const value = '500';
+    const { quantity, message } = await DataTableService.perPage(page, value, ROUTE.WALLET_SEARCH_BASE);
+   
+    expect(quantity).equals(value);
+    expect(message).to.include(`Exibindo ${value} registros por página`);
   });
 
   it('Should find a Wallet by ID', async () => {

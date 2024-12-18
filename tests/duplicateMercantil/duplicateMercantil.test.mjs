@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { getAppPage } from "../../service/loginSetup.mjs";
 import { generateDuplicateMercantilForm, cnpj, uuid } from '../../helpers/mock.js';
-import { TIME, SLUG, PROTOCOL_STATUS, SERVICES, BASE_URL } from '../../config/constant.mjs';
+import { TIME, SLUG, PROTOCOL_STATUS, SERVICES, BASE_URL, ROUTE } from '../../config/constant.mjs';
 import { searchById } from '../../service/duplicateMercantilService/searchById.mjs'
 import { create } from '../../service/duplicateMercantilService/create.mjs'
 import { searchByWallet, searchByWalletNotFound } from '../../service/duplicateMercantilService/searchByWallet.mjs'
@@ -10,6 +10,7 @@ import { findWalletsParticipant, searchWalletsParticipant } from '../../service/
 import protocolLogger from'../../service/ProtocolCSVLogger.js';
 import ApiInterfaceService  from '../../core/api-de-interface-clientes.js';
 import { Utils } from '../../helpers/Utils.js';
+import { DataTableService } from '../../service/DataTableService.mjs';
 
 
 let duplicate;
@@ -19,6 +20,28 @@ describe("Duplicate Mercantil Test", function () {
     before(async () => {
         duplicate =  (await ApiInterfaceService.findDuplicates(SLUG.DUPLICATE_MERCANTIL_SLUG))[0];
     });
+
+    it.only('Must navigate to next page', async () => {
+        const page = await getAppPage();
+    
+        const isPreviousEnabled = await DataTableService.goToNextPage(page, ROUTE.DUPLICATE_MERCANTIL_SEARCH_BASE);
+        expect(isPreviousEnabled).to.be.true;
+      });
+    
+      it.only('Must load a specific page', async () => {
+        const page = await getAppPage();
+        const isLoaded = await DataTableService.goToPage(page, 2, ROUTE.DUPLICATE_MERCANTIL_SEARCH_BASE);
+        expect(isLoaded).to.be.true;
+      });
+    
+      it.only('Must change the number of records per pages', async () => {
+        const page = await getAppPage();
+        const value = '500';
+        const { quantity, message } = await DataTableService.perPage(page, value, ROUTE.DUPLICATE_MERCANTIL_SEARCH_BASE);
+       
+        expect(quantity).equals(value);
+        expect(message).to.include(`Exibindo ${value} registros por página`);
+      }); 
 
 
     it('Should find a Mercantile Duplicate by ID', async () => {
