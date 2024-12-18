@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { TIME, PROTOCOL_STATUS, SERVICES, BASE_URL } from '../../config/constant.mjs';
+import { TIME, PROTOCOL_STATUS, SERVICES, BASE_URL, PER_PAGE, ROUTE } from '../../config/constant.mjs';
 import { uuid, cnpj, generateContratoMercantilForm } from '../../helpers/mock.js';
 import { SLUG } from '../../config/constant.mjs';
 import { getAppPage } from "../../service/loginSetup.mjs";
@@ -11,6 +11,7 @@ import { create } from "../../service/contractMercantilService/create.mjs";
 import protocolLogger from '../../service/ProtocolCSVLogger.js';
 import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
 import { Utils } from '../../helpers/Utils.js';
+import { DataTableService } from '../../service/DataTableService.mjs';
 
 let contract;
 
@@ -19,6 +20,33 @@ describe("Contract Mercantil Test", function () {
     before(async () => {
         protocolLogger.reset();
         contract = (await ApiInterfaceService.findDuplicates(SLUG.CONTRACT_MERCANTIL_SLUG))[0];
+    });
+
+    Object.entries(PER_PAGE).forEach(([key, value]) => {
+        it(`Must change the number of records per page: PerPage: ${value}`, async () => {
+            const page = await getAppPage();
+            const { quantity, message } = await DataTableService.perPage(
+                page,
+                value,
+                ROUTE.CONTRACT_MERCANTIL_SEARCH_BASE
+            );
+
+            expect(quantity).to.equal(value);
+            expect(message).to.include(`Exibindo ${value} registros por página`);
+        });
+    });
+
+    it.skip('Must navigate to next page', async () => {
+        const page = await getAppPage();
+
+        const isPreviousEnabled = await DataTableService.goToNextPage(page, ROUTE.CONTRACT_MERCANTIL_SEARCH_BASE);
+        expect(isPreviousEnabled).to.be.true;
+    });
+
+    it.skip('Must load a specific page', async () => {
+        const page = await getAppPage();
+        const isLoaded = await DataTableService.goToPage(page, 2, ROUTE.CONTRACT_MERCANTIL_SEARCH_BASE);
+        expect(isLoaded).to.be.true;
     });
 
     it('Should find a Contract Mercantil by ID', async () => {

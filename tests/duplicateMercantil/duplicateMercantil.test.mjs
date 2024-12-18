@@ -48,15 +48,6 @@ describe("Duplicate Mercantil Test", function () {
         expect(isLoaded).to.be.true;
     });
 
-    it('Must change the number of records per pages', async () => {
-        const page = await getAppPage();
-        const value = '500';
-        const { quantity, message } = await DataTableService.perPage(page, value, ROUTE.DUPLICATE_MERCANTIL_SEARCH_BASE);
-
-        expect(quantity).equals(value);
-        expect(message).to.include(`Exibindo ${value} registros por página`);
-    });
-
     it('Should find a Mercantile Duplicate by ID', async () => {
         const page = await getAppPage();
         const results = await searchById(page, duplicate.asset_uuid);
