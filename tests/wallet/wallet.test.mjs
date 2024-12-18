@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { uuid, genericName } from '../../helpers/mock.js'
-import { PROTOCOL_STATUS, ROUTE, SERVICES } from '../../config/constant.mjs';
+import { PER_PAGE, PROTOCOL_STATUS, ROUTE, SERVICES } from '../../config/constant.mjs';
 import { getAppPage, closeBrowser } from '../../service/loginSetup.mjs';
 import { searchById } from '../../service/walletService/searchById.mjs';
 import { searchByName } from '../../service/walletService/searchByWallet.mjs';
@@ -25,6 +25,20 @@ describe('Wallet Search Test', function () {
     await closeBrowser();
   });
 
+  Object.entries(PER_PAGE).forEach(([key, value]) => {
+    it(`Must change the number of records per page: PerPage: ${value}`, async () => {
+      const page = await getAppPage();
+      const { quantity, message } = await DataTableService.perPage(
+        page,
+        value,
+        ROUTE.WALLET_SEARCH_BASE
+      );
+
+      expect(quantity).to.equal(value);
+      expect(message).to.include(`Exibindo ${value} registros por página`);
+    });
+  });
+
   it('Must navigate to next page', async () => {
     const page = await getAppPage();
 
@@ -42,7 +56,7 @@ describe('Wallet Search Test', function () {
     const page = await getAppPage();
     const value = '500';
     const { quantity, message } = await DataTableService.perPage(page, value, ROUTE.WALLET_SEARCH_BASE);
-   
+
     expect(quantity).equals(value);
     expect(message).to.include(`Exibindo ${value} registros por página`);
   });

@@ -90,3 +90,10 @@ export const TIME = {
     FOUR_MINUTES: 240000,  
     FIVE_MINUTES: 300000,
 };
+
+export const PER_PAGE = {
+    optin1: '50',
+    optin2: '100',
+    optin3: '200',
+    optin4: '500'
+  }

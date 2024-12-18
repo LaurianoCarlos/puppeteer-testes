@@ -1,14 +1,14 @@
 import { expect } from 'chai';
 import { getAppPage } from "../../service/loginSetup.mjs";
 import { generateDuplicateMercantilForm, cnpj, uuid } from '../../helpers/mock.js';
-import { TIME, SLUG, PROTOCOL_STATUS, SERVICES, BASE_URL, ROUTE } from '../../config/constant.mjs';
+import { TIME, SLUG, PROTOCOL_STATUS, SERVICES, BASE_URL, ROUTE, PER_PAGE } from '../../config/constant.mjs';
 import { searchById } from '../../service/duplicateMercantilService/searchById.mjs'
 import { create } from '../../service/duplicateMercantilService/create.mjs'
 import { searchByWallet, searchByWalletNotFound } from '../../service/duplicateMercantilService/searchByWallet.mjs'
 import { findWalletsParticipant, searchWalletsParticipant } from '../../service/duplicateMercantilService/searchByWalletParticipant.mjs'
 
-import protocolLogger from'../../service/ProtocolCSVLogger.js';
-import ApiInterfaceService  from '../../core/api-de-interface-clientes.js';
+import protocolLogger from '../../service/ProtocolCSVLogger.js';
+import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
 import { Utils } from '../../helpers/Utils.js';
 import { DataTableService } from '../../service/DataTableService.mjs';
 
@@ -16,33 +16,46 @@ import { DataTableService } from '../../service/DataTableService.mjs';
 let duplicate;
 
 describe("Duplicate Mercantil Test", function () {
-  
+
     before(async () => {
-        duplicate =  (await ApiInterfaceService.findDuplicates(SLUG.DUPLICATE_MERCANTIL_SLUG))[0];
+        duplicate = (await ApiInterfaceService.findDuplicates(SLUG.DUPLICATE_MERCANTIL_SLUG))[0];
     });
 
-    it.only('Must navigate to next page', async () => {
+    Object.entries(PER_PAGE).forEach(([key, value]) => {
+        it(`Must change the number of records per page: PerPage: ${value}`, async () => {
+            const page = await getAppPage();
+            const { quantity, message } = await DataTableService.perPage(
+                page,
+                value,
+                ROUTE.DUPLICATE_MERCANTIL_SEARCH_BASE
+            );
+
+            expect(quantity).to.equal(value);
+            expect(message).to.include(`Exibindo ${value} registros por página`);
+        });
+    });
+
+    it('Must navigate to next page', async () => {
         const page = await getAppPage();
-    
+
         const isPreviousEnabled = await DataTableService.goToNextPage(page, ROUTE.DUPLICATE_MERCANTIL_SEARCH_BASE);
         expect(isPreviousEnabled).to.be.true;
-      });
-    
-      it.only('Must load a specific page', async () => {
+    });
+
+    it('Must load a specific page', async () => {
         const page = await getAppPage();
         const isLoaded = await DataTableService.goToPage(page, 2, ROUTE.DUPLICATE_MERCANTIL_SEARCH_BASE);
         expect(isLoaded).to.be.true;
-      });
-    
-      it.only('Must change the number of records per pages', async () => {
+    });
+
+    it('Must change the number of records per pages', async () => {
         const page = await getAppPage();
         const value = '500';
         const { quantity, message } = await DataTableService.perPage(page, value, ROUTE.DUPLICATE_MERCANTIL_SEARCH_BASE);
-       
+
         expect(quantity).equals(value);
         expect(message).to.include(`Exibindo ${value} registros por página`);
-      }); 
-
+    });
 
     it('Should find a Mercantile Duplicate by ID', async () => {
         const page = await getAppPage();
@@ -78,7 +91,7 @@ describe("Duplicate Mercantil Test", function () {
 
     it('Should search and return no wallets for the participant', async () => {
         const page = await getAppPage();
-        const { message } = await searchWalletsParticipant(page,  cnpj());
+        const { message } = await searchWalletsParticipant(page, cnpj());
         expect(message).to.be.oneOf([
             'Participante não encontrado ou sem permissão para esse usuário',
             'Não existe carteiras para esse participante',
@@ -111,7 +124,7 @@ describe("Duplicate Mercantil Test", function () {
         const route = `${BASE_URL}duplicate-mercantil/liquidations/${duplicate.asset_uuid}/create`
 
         const { successMessage, protocolData } = await Utils.liquidationAddPayment(page, route, formData);
-      
+
         expect(successMessage).to.include('Protocolo para liquidação criado com sucesso');
         expect(protocolData).to.not.be.null;
 
