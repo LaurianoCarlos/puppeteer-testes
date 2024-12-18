@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { TIME, PROTOCOL_STATUS, SERVICES, BASE_URL } from '../../config/constant.mjs';
+import { TIME, PROTOCOL_STATUS, SERVICES, BASE_URL, ROUTE, PER_PAGE } from '../../config/constant.mjs';
 import { uuid, cnpj, generateServiceDuplicateForm } from '../../helpers/mock.js';
 import { SLUG } from '../../config/constant.mjs';
 import { getAppPage } from "../../service/loginSetup.mjs";
@@ -11,6 +11,7 @@ import { create } from "../../service/serviceDuplicateService/create.mjs";
 import protocolLogger from '../../service/ProtocolCSVLogger.js';
 import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
 import { Utils } from '../../helpers/Utils.js';
+import { DataTableService } from '../../service/DataTableService.mjs';
 
 let duplicate;
 
@@ -18,6 +19,43 @@ describe("Service Duplicate Test", function () {
     this.timeout(TIME.FOUR_MINUTES);
     before(async () => {
         duplicate = (await ApiInterfaceService.findDuplicates(SLUG.DUPLICATE_SERVICE_SLUG))[0];
+    });
+
+
+    Object.entries(PER_PAGE).forEach(([key, value]) => {
+        it(`Must change the number of records per page: PerPage: ${value}`, async () => {
+            const page = await getAppPage();
+            const { quantity, message } = await DataTableService.perPage(
+                page,
+                value,
+                ROUTE.DUPLICATE_SERVICE_SEARCH_BASE
+            );
+
+            expect(quantity).to.equal(value);
+            expect(message).to.include(`Exibindo ${value} registros por página`);
+        });
+    });
+
+    it('Must navigate to next page', async () => {
+        const page = await getAppPage();
+
+        const isPreviousEnabled = await DataTableService.goToNextPage(page, ROUTE.DUPLICATE_SERVICE_SEARCH_BASE);
+        expect(isPreviousEnabled).to.be.true;
+    });
+
+    it.skip('Must load a specific page', async () => {
+        const page = await getAppPage();
+        const isLoaded = await DataTableService.goToPage(page, 2, ROUTE.DUPLICATE_SERVICE_SEARCH_BASE);
+        expect(isLoaded).to.be.true;
+    });
+
+    it('Must change the number of records per pages', async () => {
+        const page = await getAppPage();
+        const value = '500';
+        const { quantity, message } = await DataTableService.perPage(page, value, ROUTE.DUPLICATE_SERVICE_SEARCH_BASE);
+
+        expect(quantity).equals(value);
+        expect(message).to.include(`Exibindo ${value} registros por página`);
     });
 
     it('Should find a Service Duplicate by ID', async () => {
@@ -89,7 +127,7 @@ describe("Service Duplicate Test", function () {
         const route = `${BASE_URL}service-duplicate/liquidations/${duplicate.asset_uuid}/create`
 
         const { successMessage, protocolData } = await Utils.liquidationAddPayment(page, route, formData);
-      
+
         expect(successMessage).to.include('Protocolo para liquidação criado com sucesso');
         expect(protocolData).to.not.be.null;
 
