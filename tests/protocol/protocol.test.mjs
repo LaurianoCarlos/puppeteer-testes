@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { uuid } from '../../helpers/mock.js';
-import { PROTOCOL_STATUS } from '../../config/constant.mjs';
+import { PER_PAGE, PROTOCOL_STATUS, ROUTE } from '../../config/constant.mjs';
 import { getAppPage } from '../../service/loginSetup.mjs';
 import { searchById } from '../../service/protocolService/searchById.mjs';
 import { searchByStatus } from '../../service/protocolService/searchByStatus.mjs';
@@ -8,12 +8,40 @@ import { searchByDateRange } from '../../service/protocolService/searchByDateRan
 import { searchAll, searchByAllFilters } from '../../service/protocolService/searchAll.mjs';
 
 import ApiInterfaceService from '../../core/api-de-interface-clientes.js';
+import { DataTableService } from '../../service/DataTableService.mjs';
 
 let protocol;
 
 describe('Protocol search Test', function () {
   before(async () => {
     protocol = (await ApiInterfaceService.getProtocols())[0];
+  });
+
+    Object.entries(PER_PAGE).forEach(([key, value]) => {
+      it(`Must change the number of records per page: PerPage: ${value}`, async () => {
+          const page = await getAppPage();
+          const { quantity, message } = await DataTableService.perPage(
+              page,
+              value,
+              ROUTE.PROTOCOL_SEARCH_BASE
+          );
+
+          expect(quantity).to.equal(value);
+          expect(message).to.include(`Exibindo ${value} registros por página`);
+      });
+  });
+
+  it.skip('Must navigate to next page', async () => {
+      const page = await getAppPage();
+
+      const isPreviousEnabled = await DataTableService.goToNextPage(page, ROUTE.PROTOCOL_SEARCH_BASE);
+      expect(isPreviousEnabled).to.be.true;
+  });
+
+  it.skip('Must load a specific page', async () => {
+      const page = await getAppPage();
+      const isLoaded = await DataTableService.goToPage(page, 2, ROUTE.PROTOCOL_SEARCH_BASE);
+      expect(isLoaded).to.be.true;
   });
 
   it('should find the protocol by ID', async () => {
