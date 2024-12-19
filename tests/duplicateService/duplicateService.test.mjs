@@ -21,7 +21,6 @@ describe("Service Duplicate Test", function () {
         duplicate = (await ApiInterfaceService.findDuplicates(SLUG.DUPLICATE_SERVICE_SLUG))[0];
     });
 
-
     Object.entries(PER_PAGE).forEach(([key, value]) => {
         it(`Must change the number of records per page: PerPage: ${value}`, async () => {
             const page = await getAppPage();
@@ -56,6 +55,13 @@ describe("Service Duplicate Test", function () {
 
         expect(quantity).equals(value);
         expect(message).to.include(`Exibindo ${value} registros por página`);
+    });
+
+    it('Must check CSV download', async () => {
+        const page = await getAppPage();
+    
+        const isDownload = await DataTableService.verifyLoadingCsv(page, ROUTE.DUPLICATE_SERVICE_SEARCH_BASE);
+        expect(isDownload).to.be.true;
     });
 
     it('Should find a Service Duplicate by ID', async () => {

@@ -49,6 +49,13 @@ describe("Contract Mercantil Test", function () {
         expect(isLoaded).to.be.true;
     });
 
+    it('Must check CSV download', async () => {
+        const page = await getAppPage();
+    
+        const isDownload = await DataTableService.verifyLoadingCsv(page, ROUTE.CONTRACT_MERCANTIL_SEARCH_BASE);
+        expect(isDownload).to.be.true;
+    });
+
     it('Should find a Contract Mercantil by ID', async () => {
         const page = await getAppPage();
         const results = await searchById(page, contract.asset_uuid);

@@ -126,5 +126,46 @@ export class DataTableService {
 
         return { quantity: selectedValue, message: infoText };
     }
+
+    static async verifyLoadingCsv(page, route) {
+        const buttonSelector = '#exportCsv';
+        const loadingSelector = '.spinner-border.spinner-border-sm.text-white.ms-1';
+    
+        await page.goto(route);
+        await page.waitForFunction(
+            (selector) => document.querySelector(selector)?.style.display === 'none',
+            {},
+            '#loading'
+        );
+    
+        await page.waitForSelector(buttonSelector, { visible: true });
+        await page.evaluate((selector) => {
+            document.querySelector(selector).scrollIntoView();
+        }, buttonSelector);
+        await page.click(buttonSelector);
+    
+        await page.waitForFunction(
+            (selector) => {
+                const element = document.querySelector(selector);
+                return element && getComputedStyle(element).display !== 'none';
+            },
+            {},
+            loadingSelector
+        );    
+        const isLoadingHidden = await page.waitForFunction(
+            (selector) => {
+                const element = document.querySelector(selector);
+                return element && getComputedStyle(element).display === 'none';
+            },
+            {},
+            loadingSelector
+        );
+    
+        if (!isLoadingHidden) {
+            return false;
+        }
+        return true;
+    }
+    
 }
 

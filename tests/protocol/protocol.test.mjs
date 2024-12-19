@@ -44,6 +44,13 @@ describe('Protocol search Test', function () {
       expect(isLoaded).to.be.true;
   });
 
+  it('Must check CSV download', async () => {
+    const page = await getAppPage();
+
+    const isDownload = await DataTableService.verifyLoadingCsv(page, ROUTE.PROTOCOL_SEARCH_BASE);
+    expect(isDownload).to.be.true;
+  });
+
   it('should find the protocol by ID', async () => {
     const page = await getAppPage();
     const results = await searchById(page, protocol.protocol_id);

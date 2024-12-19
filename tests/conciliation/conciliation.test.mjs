@@ -39,6 +39,13 @@ describe("Conciliation Test", function () {
         expect(isLoaded).to.be.true;
     });
 
+    it('Must check CSV download', async () => {
+        const page = await getAppPage();
+    
+        const isDownload = await DataTableService.verifyLoadingCsv(page, ROUTE.CONCILIATION_SEARCH_BASE);
+        expect(isDownload).to.be.true;
+    });
+
     it('You must fill in the fields and send it for registration', async () => {
         const page = await getAppPage();
         const conciliation = (await ApiInterfaceService.getConciliation())[0];

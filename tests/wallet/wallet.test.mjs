@@ -61,6 +61,13 @@ describe('Wallet Search Test', function () {
     expect(message).to.include(`Exibindo ${value} registros por página`);
   });
 
+  it('Must check CSV download', async () => {
+    const page = await getAppPage();
+
+    const isDownload = await DataTableService.verifyLoadingCsv(page, ROUTE.WALLET_SEARCH_BASE);
+    expect(isDownload).to.be.true;
+  });
+
   it('Should find a Wallet by ID', async () => {
     const page = await getAppPage();
     const results = await searchById(page, wallet.wallet_id);
@@ -91,7 +98,7 @@ describe('Wallet Search Test', function () {
     expect(results.some(result => result.includes(walletName))).to.be.false;
   });
 
-  it.only('Must create a new wallet successfully and generate a protocol successfully', async () => {
+  it('Must create a new wallet successfully and generate a protocol successfully', async () => {
     const page = await getAppPage();
     const walletData = await mockWallet();
     const { successMessage, protocolData } = await create(page, walletData);

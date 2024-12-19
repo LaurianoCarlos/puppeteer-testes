@@ -48,6 +48,13 @@ describe("Duplicate Mercantil Test", function () {
         expect(isLoaded).to.be.true;
     });
 
+    it('Must check CSV download', async () => {
+        const page = await getAppPage();
+    
+        const isDownload = await DataTableService.verifyLoadingCsv(page, ROUTE.DUPLICATE_MERCANTIL_SEARCH_BASE);
+        expect(isDownload).to.be.true;
+    });
+
     it('Should find a Mercantile Duplicate by ID', async () => {
         const page = await getAppPage();
         const results = await searchById(page, duplicate.asset_uuid);

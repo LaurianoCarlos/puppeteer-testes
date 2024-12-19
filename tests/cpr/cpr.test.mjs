@@ -49,6 +49,13 @@ describe("CPR Test", function () {
         expect(isLoaded).to.be.true;
     });
 
+    it('Must check CSV download', async () => {
+        const page = await getAppPage();
+    
+        const isDownload = await DataTableService.verifyLoadingCsv(page, ROUTE.CPR_SEARCH_BASE);
+        expect(isDownload).to.be.true;
+    });
+
     it('Should find a CPR by ID', async () => {
         const page = await getAppPage();
         const results = await searchById(page, cpr.achievement_id);
