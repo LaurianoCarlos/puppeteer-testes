@@ -634,6 +634,17 @@ export function mockContractEffects() {
     };
 }
 
+/**
+ * Generates formData with reused data from existing generators.
+ * @returns {object} Generated formData.
+ */
+export function mockWallet() {
+    return {
+        name: genericName(),
+        description: genericName(),
+        achievementId: faker.helpers.arrayElement(['1','2','3','4','5','6','7','8','9','10','12'])
+    };
+};
 
 /**
  * Generates formData with reused data from existing generators.

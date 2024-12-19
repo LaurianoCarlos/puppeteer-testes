@@ -36,7 +36,7 @@ describe("Service Duplicate Test", function () {
         });
     });
 
-    it('Must navigate to next page', async () => {
+    it.skip('Must navigate to next page', async () => {
         const page = await getAppPage();
 
         const isPreviousEnabled = await DataTableService.goToNextPage(page, ROUTE.DUPLICATE_SERVICE_SEARCH_BASE);

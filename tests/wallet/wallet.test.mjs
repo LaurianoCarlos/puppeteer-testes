@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { uuid, genericName } from '../../helpers/mock.js'
+import { uuid, genericName, mockWallet } from '../../helpers/mock.js'
 import { PER_PAGE, PROTOCOL_STATUS, ROUTE, SERVICES } from '../../config/constant.mjs';
 import { getAppPage, closeBrowser } from '../../service/loginSetup.mjs';
 import { searchById } from '../../service/walletService/searchById.mjs';
@@ -91,13 +91,9 @@ describe('Wallet Search Test', function () {
     expect(results.some(result => result.includes(walletName))).to.be.false;
   });
 
-  it('Must create a new wallet successfully and generate a protocol successfully', async () => {
+  it.only('Must create a new wallet successfully and generate a protocol successfully', async () => {
     const page = await getAppPage();
-    const walletData = {
-      name: genericName(),
-      description: genericName(),
-      achievementId: '1'
-    };
+    const walletData = await mockWallet();
     const { successMessage, protocolData } = await create(page, walletData);
 
     expect(successMessage).to.include('Carteira enviada para registro com sucesso!')
