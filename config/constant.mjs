@@ -46,6 +46,7 @@ export const ROUTE = {
     OPTIN_CREATE_BASE: `${BASE_URL}optin`,
     CCB_SEARCH_BASE: `${BASE_URL}ccb/search`,
     CCB_CREATE_BASE: `${BASE_URL}ccb`,
+    AUDIT_SEARCH_BASE: `${BASE_URL}audit`,
 };
 
 export const SLUG = {
