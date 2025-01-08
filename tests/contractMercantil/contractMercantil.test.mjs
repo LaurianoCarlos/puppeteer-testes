@@ -105,7 +105,7 @@ describe("Contract Mercantil Test", function () {
         ]);
     });
 
-    it.only('Should fill out all form fields and submit for registration', async () => {
+    it('Should fill out all form fields and submit for registration', async () => {
         const page = await getAppPage();
         const formData = generateContratoMercantilForm();
     
