@@ -155,5 +155,24 @@ export class Utils {
     return { successMessage, protocolData };
   }
 
+  static async selectRandomOption(page, selectSelector) {
+    await page.waitForSelector(selectSelector, { visible: true });
+    const randomOptionValue = await page.evaluate((selector) => {
+        const select = document.querySelector(selector);
+        const options = Array.from(select.options);
+
+        const validOptions = options.filter(option => option.value.trim() !== '');
+        if (validOptions.length === 0) throw new Error("Nenhuma opção válida disponível.");
+
+        const randomValidIndex = Math.floor(Math.random() * validOptions.length);
+        const randomOption = validOptions[randomValidIndex];
+        select.value = randomOption.value;
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+
+        return randomOption.value;
+    }, selectSelector);
+    return randomOptionValue;
+}
+
 }
 
