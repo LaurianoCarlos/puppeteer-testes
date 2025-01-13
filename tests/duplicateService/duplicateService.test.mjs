@@ -127,7 +127,7 @@ describe("Service Duplicate Test", function () {
         protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.SERVICE_DUPLICATE);
     })
 
-    it.only('Should fill out all form fields and submit for registration: (ADD PAYMENT)', async () => {
+    it('Should fill out all form fields and submit for registration: (ADD PAYMENT)', async () => {
         const page = await getAppPage();
         const formData = generateServiceDuplicateForm();
         const route = `${BASE_URL}service-duplicate/liquidations/${duplicate.asset_uuid}/create`

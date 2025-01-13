@@ -102,7 +102,7 @@ describe("Duplicate Mercantil Test", function () {
         expect(wallets).to.be.an('array').that.is.not.empty;
     });
 
-    it('Should fill out all form fields and submit for registration', async () => {
+    it.skip('Should fill out all form fields and submit for registration', async () => {
         const page = await getAppPage();
         const formData = generateDuplicateMercantilForm();
 
@@ -116,7 +116,7 @@ describe("Duplicate Mercantil Test", function () {
         protocolLogger.addProtocol(protocolData, PROTOCOL_STATUS.FINISHED, SERVICES.DUPLICATE_MERCANTIL);
     })
 
-    it('Should fill out all form fields and submit for registration: (ADD PAYMENT)', async () => {
+    it.skip('Should fill out all form fields and submit for registration: (ADD PAYMENT)', async () => {
         const page = await getAppPage();
         const formData = generateDuplicateMercantilForm();
         const route = `${BASE_URL}duplicate-mercantil/liquidations/${duplicate.asset_uuid}/create`

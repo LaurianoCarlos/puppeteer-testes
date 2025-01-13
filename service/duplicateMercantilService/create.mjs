@@ -1,27 +1,6 @@
 import { ROUTE, TIME } from '../../config/constant.mjs';
 import { Utils } from '../../helpers/Utils.js';
 
-
-async function selectRandomOption(page, selectSelector) {
-    await page.waitForSelector(selectSelector, { visible: true });
-    const randomOptionValue = await page.evaluate((selector) => {
-        const select = document.querySelector(selector);
-        const options = Array.from(select.options);
-
-        const validOptions = options.filter(option => option.value.trim() !== '');
-        if (validOptions.length === 0) throw new Error("Nenhuma opção válida disponível.");
-
-        const randomValidIndex = Math.floor(Math.random() * validOptions.length);
-        const randomOption = validOptions[randomValidIndex];
-        select.value = randomOption.value;
-        select.dispatchEvent(new Event('change', { bubbles: true }));
-
-        return randomOption.value;
-    }, selectSelector);
-    return randomOptionValue;
-}
-
-
 async function fillActionData(page, formData) {
     await page.waitForSelector('#collapseActionData', { visible: true });
     await page.select('#occurrence', formData.occurrence);
@@ -39,7 +18,7 @@ async function fillActionData(page, formData) {
         return walletField && !walletField.disabled;
     });
 
-    await selectRandomOption(page, '#wallet');
+    await Utils.selectRandomOption(page, '#wallet');
     await page.type('#external_reference', formData.externalReference);
 }
 
